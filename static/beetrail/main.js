@@ -1,12 +1,15 @@
 import {Item} from '/beetrail/item.js';
 import {Hub} from '/beetrail/stages/hub.js'
+import {Test} from '/beetrail/stages/test.js'
+import {MeadowStage} from '/beetrail/stages/meadow.js'
 
 //Create a Pixi Application
 var app = new PIXI.Application({ 
     width: 256, 
     height: 256,                       
     antialias: true, 
-    transparent: false, 
+    transparent: false,
+    resizeTo: window,
     resolution: 1
   }
 );
@@ -42,5 +45,5 @@ function test(){
 */
 
 //app.stage.addChild(bee);
-let hub = new Hub(app);
+let hub = new MeadowStage(app);
 //hub.loop(app);
