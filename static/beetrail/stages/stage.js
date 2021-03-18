@@ -1,12 +1,44 @@
-export class Stage {
-    constructor(appStage){
-        this.music = "";
-        this.stage = appStage;
+import {Foreground} from '/beetrail/foregroundContainer.js'
 
-        this.setup();
+export class Stage {
+    constructor(app){
+        this.assetsTextures = [];
+        this.app = app;
+        this.fSprites = {}
+        this.bSprites = {}
+
+        this.foreground = new Foreground();
+        this.foreground.tick();
     }
+
+
+    centerAndScaleSprites(sprites){
+        for(let singleSprite in sprites){
+            this.bSprites[singleSprite].centerX();
+            this.bSprites[singleSprite].scaleByHeight(window.innerHeight);
+        }
+    }
+
+
+    /* Abstract Methods to be Overwritten by Child Game Stages */
     setup(){
-        
+        throw new Error("You need to override method: setup");
     }
+    loadSprites(){
+        throw new Error("You need to override method: loadSprites");
+    }
+    miscAssetCreation(){
+        throw new Error("You need to override method: assetCreation");
+    }
+    containerAssignment(){
+        throw new Error("You need to override method: containerAssignment");
+    }
+    assetPositioning(){
+        throw new Error("You need to override method: assetPositioning");
+    }
+    eventChainsDef(){
+        throw new Error("You need to override method: eventChainsDef");
+    }
+
     
 }
