@@ -22,7 +22,8 @@ export class MeadowStage extends Stage{
                                 "assets/Artboard 1meadow-foreground.png",
                                 "assets/Artboard 1honeyb-profile-left.png",
                                 "assets/Artboard 1honey-bee-small.png",
-                                "assets/square.png"];
+                                "assets/square.png",
+                                "assets/hill-background-merged-1280x960.png"];
         PIXI.loader.add(this.assetsTextures).load((loader, resources) => {
             this.loadSprites();            
             this.miscAssetCreation();
@@ -43,6 +44,7 @@ export class MeadowStage extends Stage{
         this.bSprites.background2 = new Item("assets/Artboard 1grass-middleground.png", true);
         this.bSprites.background3 = new Item("assets/Artboard 1grass-foreground.png", true);
         this.bSprites.foregroundMeadow = new Item("assets/Artboard 1meadow-foreground.png", true);
+        this.fSprites.background1 = new Item("assets/hill-background-merged-1280x960.png", true);
         this.fSprites.bee1 = new Item("assets/Artboard 1honey-bee-small.png", true);
         this.fSprites.bee2 = new Item("assets/Artboard 1honey-bee-small.png", true);
         this.fSprites.square = new Item("assets/square.png", true);
@@ -76,6 +78,7 @@ export class MeadowStage extends Stage{
         this.fSprites.bee1.setLocation(200, 100);
         this.fSprites.bee2.setLocation(300, 100);
         this.fSprites.square.setLocation(300, 100);
+        this.fSprites.background1.set
     }
 
     //Defining the event chain(s) used in this stage.
