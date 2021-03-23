@@ -17,14 +17,13 @@ export class MeadowStage extends Stage{
     }
 
     setup(){
-        this.assetsTextures = ["assets/Artboard 1grass-background.png",
-                                "assets/Artboard 1grass-foreground.png",
-                                "assets/Artboard 1grass-middleground.png",
-                                "assets/Artboard 1meadow-foreground.png",
-                                "assets/Artboard 1honeyb-profile-left.png",
-                                "assets/Artboard 1honey-bee-small.png",
-                                "assets/square.png",
-                                "assets/hill-background-merged-1280x960.png",
+        this.assetsTextures = ["assets/bSprites/Artboard 1grass-background.png",
+                                "assets/bSprites/Artboard 1grass-foreground.png",
+                                "assets/bSprites/Artboard 1grass-middleground.png",
+                                "assets/bSprites/Artboard 1meadow-foreground.png",
+                                "assets/fSprites/bees/Small-buff-tail-profile.png",
+                                "assets/fSprites/bees/Small-honey-bee-profile.png",
+                                "assets/fSprites/bees/Small-red-tail-profile.png",
                                 "assets/fSprites/backgrounds/background3.fw.png",
                                 "assets/fSprites/backgrounds/background2.fw.png",
                                 "assets/fSprites/backgrounds/background1.fw.png"];
@@ -44,17 +43,18 @@ export class MeadowStage extends Stage{
 
     //Creating new Item objects used in this stage
     loadSprites(){
-        this.bSprites.background1 = new Item("assets/Artboard 1grass-background.png", true);
-        this.bSprites.background2 = new Item("assets/Artboard 1grass-middleground.png", true);
-        this.bSprites.background3 = new Item("assets/Artboard 1grass-foreground.png", true);
-        this.bSprites.foregroundMeadow = new Item("assets/Artboard 1meadow-foreground.png", true);
+        this.bSprites.background1 = new Item("assets/bSprites/Artboard 1grass-background.png", true);
+        this.bSprites.background2 = new Item("assets/bSprites/Artboard 1grass-middleground.png", true);
+        this.bSprites.background3 = new Item("assets/bSprites/Artboard 1grass-foreground.png", true);
+        this.bSprites.foregroundMeadow = new Item("assets/bSprites/Artboard 1meadow-foreground.png", true);
         //------------------//
         this.fSprites.background3 = new Item("assets/fSprites/backgrounds/background3.fw.png", true);
         this.fSprites.background2 = new Item("assets/fSprites/backgrounds/background2.fw.png", true);
         this.fSprites.background1 = new Item("assets/fSprites/backgrounds/background1.fw.png", true);
-        this.fSprites.bee1 = new Item("assets/Artboard 1honey-bee-small.png", true);
-        this.fSprites.bee2 = new Item("assets/Artboard 1honey-bee-small.png", true);
-        this.fSprites.square = new Item("assets/square.png", true);
+
+        this.fSprites.buffBee = new Item("assets/fSprites/bees/Small-buff-tail-profile.png", true);
+        this.fSprites.honeyBee = new Item("assets/fSprites/bees/Small-honey-bee-profile.png", true);
+        this.fSprites.redBee = new Item("assets/fSprites/bees/Small-red-tail-profile.png", true);
     }
 
     //Creating any Misc assets here
@@ -81,46 +81,33 @@ export class MeadowStage extends Stage{
         this.fSprites.background3.setSize(1280, 960);
         this.fSprites.background2.setSize(1280, 960);
         this.fSprites.background1.setSize(1280, 960);
-        this.fSprites.bee1.setScale(0.8);
-        this.fSprites.bee2.setScale(0.8);
-        this.fSprites.bee1.bringBehind(this.fSprites.background1);
-        this.fSprites.bee1.centerPivot();
-        this.fSprites.bee2.centerPivot();
-        this.fSprites.bee1.setSpriteDirection('r');
+        this.fSprites.buffBee.setScale(0.8);
+        this.fSprites.honeyBee.setScale(0.8);
+        this.fSprites.buffBee.bringBehind(this.fSprites.background1);
+        this.fSprites.buffBee.centerPivot();
+        this.fSprites.honeyBee.centerPivot();
+        this.fSprites.buffBee.setSpriteDirection('r');
         
-        this.fSprites.bee1.setLocation(1000, 550);
-        this.fSprites.bee2.setLocation(300, 100);
+        this.fSprites.buffBee.setLocation(1000, 550);
+        this.fSprites.honeyBee.setLocation(300, 100);
 
-        this.fSprites.square.setLocation(400, 500);
     }
 
     //Defining the event chain(s) used in this stage.
     eventChainsDef(){
         this.eventChainBee1
-            .addIdle(this.fSprites.bee1)
-            .addClickEvent(this.fSprites.bee1)
+            .addIdle(this.fSprites.buffBee)
+            .addClickEvent(this.fSprites.buffBee)
             .next()
-            .addDragEvent(this.fSprites.bee1)
-            .addIdle(this.fSprites.bee1)
-            .addCollisionEvent(this.fSprites.bee1, this.fSprites.square)
+            .addDragEvent(this.fSprites.buffBee)
+            .addIdle(this.fSprites.buffBee)
             .next()
-            .addForceLocationEvent(this.fSprites.bee1, [400, 500])
-            .addEventChainWait(this.fSprites.bee1, this.eventChainBee2, 2)
+            .addForceLocationEvent(this.fSprites.buffBee, [400, 500])
             .next()
-            .addMovement(this.fSprites.bee1, [700, 300], 3, Movement.sinMvPattern);
+            .addMovement(this.fSprites.buffBee, [700, 300], 3, Movement.sinMvPattern);
 
-        this.eventChainBee2
-            .addIdle(this.fSprites.bee2)
-            .addClickEvent(this.fSprites.bee2)
-            .next()
-            .addDragEvent(this.fSprites.bee2)
-            .addIdle(this.fSprites.bee2)
-            .addCollisionEvent(this.fSprites.bee2, this.fSprites.square)
-            .next()
-            .addForceLocationEvent(this.fSprites.bee2, [400, 500])
-            .addEventChainWait(this.fSprites.bee2, this.eventChainBee1, 2)
-            .next()
-            .addMovement(this.fSprites.bee2, [300, 300], 3, Movement.sinMvPattern);
+
+
 
         /*
         .addRotationEvent(this.fSprites.bee1, 0, 360, 3)
