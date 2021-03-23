@@ -9,7 +9,7 @@ export class MeadowStage extends Stage{
         super(app);
         this.setup(app);
 
-        this.states = [this.start, this.main, this.end];
+        this.states = [this.start, this.main];
         this.state = this.start;
         
         this.eventChainBee1 = new EventChain();
@@ -165,9 +165,6 @@ export class MeadowStage extends Stage{
 
     }
 
-    end(delta){
-
-    }
 
 
     
