@@ -34,6 +34,9 @@ export class EventChain{
         
         for(i=0; i<this.chain[this.eventNumber].length; i++){
             if(this.chain[this.eventNumber][i].type == "movement"){
+                console.log("Current Position of Item: ", 
+                    this.chain[this.eventNumber][i].item.getX(),
+                    this.chain[this.eventNumber][i].item.getY());
                 if(this.chain[this.eventNumber][i].origin[0] < this.chain[this.eventNumber][i].dest[0]){
                     this.chain[this.eventNumber][i].item.setSpriteDirection('r');
                 }else{
@@ -175,6 +178,18 @@ export class EventChain{
         return this;
     }
 
+    addCollisionEvent(item1, item2){
+        this.chain[this.chain.length-1].push({
+            'type':'collision',
+            'item':item1,
+            'item2':item2,
+            'completed':false
+        });
+        return this;
+    }
+
+
+
     addCustomAction(itemFunction){
         this.chain[this.chain.length-1].push({
             'type':'customAction',
@@ -258,6 +273,18 @@ export class EventChain{
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
                     break;
+                
+                    case 'collision':
+                        if(!this.chain[this.eventNumber][i].completed){
+                            if(Movement.testCollision(
+                                this.chain[this.eventNumber][i].item,
+                                this.chain[this.eventNumber][i].item2
+                            )){
+                                this.chain[this.eventNumber][i].completed = true;
+                            }
+                            eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                        }
+                        break;
 
                 case 'drag':
                     if(this.chain[this.eventNumber][i].item.getDragState()){
