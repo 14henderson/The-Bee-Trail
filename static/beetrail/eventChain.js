@@ -129,6 +129,19 @@ export class EventChain{
         return this;
     }
 
+    addRotationEvent(item, startAngle, stopAngle, speed){
+        this.chain[this.chain.length-1].push({
+            'type': 'rotation',
+            'item':item,
+            'start':startAngle,
+            'stop':stopAngle,
+            'speed':speed,
+            'progress':0,
+            'completed':false
+        });
+        return this;
+    }
+
     addFade(item, delta, min, max){
         this.chain[this.chain.length-1].push({
             'type':'fade',
@@ -258,6 +271,20 @@ export class EventChain{
                             this.chain[this.eventNumber][i].dest[1]
                         );
                         this.chain[this.eventNumber][i].completed = true;
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                    break;
+
+                case 'rotation':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].item.setRotation(
+                            this.chain[this.eventNumber][i].start 
+                            + this.chain[this.eventNumber][i].progress
+                        );
+                        this.chain[this.eventNumber][i].progress += this.chain[this.eventNumber][i].speed;
+                        if(this.chain[this.eventNumber][i].item.getRotation() >= this.chain[this.eventNumber][i].stop){
+                            this.chain[this.eventNumber][i].completed = true;
+                        }
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
                     break;

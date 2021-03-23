@@ -98,6 +98,13 @@ export class Item {
         return this.sprite;
     }
 
+    centerPivot(){
+        this.sprite.pivot.set(
+            this.sprite.width/2,
+            this.sprite.height/2
+        );
+    }
+
     setDirection(degrees){
         degrees = degrees % 360
         let radians = degrees * (Math.PI/180) % 180;
@@ -156,6 +163,10 @@ export class Item {
         }
     }
     
+    setRotation(angle){
+        this.sprite.angle = angle;
+    }
+    getRotation(){return this.sprite.angle;}
 
     setSpriteDirection(dir){
         if(dir != this.spriteDirection){
