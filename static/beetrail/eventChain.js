@@ -23,17 +23,28 @@ export class EventChain{
         return this;
     }
     nextEvent(){
+        console.log("---------- Next Event Function ----------");
+        console.log("Event ", this.eventNumber, " of ", this.chain.length);
         this.eventNumber += 1;
-        if(this.eventNumber >= this.chain.length){return;}
+        if(this.eventNumber >= this.chain.length){
+            console.log("End of Event Chain!");
+            return;
+        }
 
         let i;
+        
+        console.log("First Loop! Dissables all by default");
         for(i=0; i<this.chain[this.eventNumber].length; i++){
             this.chain[this.eventNumber][i].item.dissableInteractiveState();
             this.chain[this.eventNumber][i].item.dissableDrag();
         }
         
+        console.log("Second loop! Enables if neceessary");
         for(i=0; i<this.chain[this.eventNumber].length; i++){
             if(this.chain[this.eventNumber][i].type == "movement"){
+                //console.log("Current Position of Item: ", 
+                //    this.chain[this.eventNumber][i].item.getX(),
+                //    this.chain[this.eventNumber][i].item.getY());
                 if(this.chain[this.eventNumber][i].origin[0] < this.chain[this.eventNumber][i].dest[0]){
                     this.chain[this.eventNumber][i].item.setSpriteDirection('r');
                 }else{
@@ -45,6 +56,7 @@ export class EventChain{
                 this.chain[this.eventNumber][i].item.enableInteractiveState();
             }
             if(this.chain[this.eventNumber][i].type == "drag"){
+                console.log("Dragging enabled from nextEvent() function");
                 this.chain[this.eventNumber][i].item.enableDrag();
             }
             
@@ -129,6 +141,19 @@ export class EventChain{
         return this;
     }
 
+    addRotationEvent(item, startAngle, stopAngle, speed){
+        this.chain[this.chain.length-1].push({
+            'type': 'rotation',
+            'item':item,
+            'start':startAngle,
+            'stop':stopAngle,
+            'speed':speed,
+            'progress':0,
+            'completed':false
+        });
+        return this;
+    }
+
     addFade(item, delta, min, max){
         this.chain[this.chain.length-1].push({
             'type':'fade',
@@ -161,6 +186,18 @@ export class EventChain{
         });
         return this;
     }
+
+    addCollisionEvent(item1, item2){
+        this.chain[this.chain.length-1].push({
+            'type':'collision',
+            'item':item1,
+            'item2':item2,
+            'completed':false
+        });
+        return this;
+    }
+
+
 
     addCustomAction(itemFunction){
         this.chain[this.chain.length-1].push({
@@ -245,6 +282,18 @@ export class EventChain{
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
                     break;
+                
+                    case 'collision':
+                        if(!this.chain[this.eventNumber][i].completed){
+                            if(Movement.testCollision(
+                                this.chain[this.eventNumber][i].item,
+                                this.chain[this.eventNumber][i].item2
+                            )){
+                                this.chain[this.eventNumber][i].completed = true;
+                            }
+                            eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                        }
+                        break;
 
                 case 'drag':
                     if(this.chain[this.eventNumber][i].item.getDragState()){
@@ -258,6 +307,20 @@ export class EventChain{
                             this.chain[this.eventNumber][i].dest[1]
                         );
                         this.chain[this.eventNumber][i].completed = true;
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                    break;
+
+                case 'rotation':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].item.setRotation(
+                            this.chain[this.eventNumber][i].start 
+                            + this.chain[this.eventNumber][i].progress
+                        );
+                        this.chain[this.eventNumber][i].progress += this.chain[this.eventNumber][i].speed;
+                        if(this.chain[this.eventNumber][i].item.getRotation() >= this.chain[this.eventNumber][i].stop){
+                            this.chain[this.eventNumber][i].completed = true;
+                        }
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
                     break;
@@ -331,7 +394,7 @@ export class EventChain{
         let i, eventI;
         for(i = this.chain.length-1; i>= 0; i--){   //make sure this movement starts where the last one ended.
             for(eventI=0; eventI<this.chain[i].length; eventI++){
-                if(this.chain[i][eventI].type == "movement"){
+                if(this.chain[i][eventI].type == "movement" || this.chain[i][eventI].type == "location"){
                     return this.chain[i][eventI].dest;
                 }
             }

@@ -49,7 +49,7 @@ export class Item {
             //console.log("Mouse Moved!");
             if(this.dragged && this._beingDragged){
                 this.sprite.x = event.data.getLocalPosition(this.sprite.parent).x;// - this.sprite.anchor.x*(this.sprite.width/2);
-                this.sprite.y = event.data.getLocalPosition(this.sprite.parent).y - (this.sprite.height/2);
+                this.sprite.y = event.data.getLocalPosition(this.sprite.parent).y;// - (this.sprite.height/2);
 
                 console.log("Mouse Lcation: ", 
                     event.data.getLocalPosition(this.sprite.parent).x,
@@ -70,15 +70,16 @@ export class Item {
         return this._clicked;
     }
     getDragState(){
-        return this._dragged;
+        return this._beingDragged;
     }
     resetClickedState(){
         this._clicked = false;
-        this._dragged = false;
+        this._beingDragged = false;
     }
     enableDrag(){
         console.log("Dragging enabled!");
         this.dragged = true;
+        this._beingDragged = false;
     }
     dissableDrag(){
         console.log("Dragging dissabled!");
@@ -96,6 +97,19 @@ export class Item {
 
     getSprite(){
         return this.sprite;
+    }
+
+    centerPivot(){
+        this.sprite.pivot.set(
+            this.sprite.width/2,
+            this.sprite.height/2
+        );
+    }
+    getXPivot(){
+        return this.sprite.pivot.x;
+    }
+    getYPivot(){
+        return this.sprite.pivot.y;
     }
 
     setDirection(degrees){
@@ -156,6 +170,10 @@ export class Item {
         }
     }
     
+    setRotation(angle){
+        this.sprite.angle = angle;
+    }
+    getRotation(){return this.sprite.angle;}
 
     setSpriteDirection(dir){
         if(dir != this.spriteDirection){
