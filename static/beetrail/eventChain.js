@@ -394,7 +394,7 @@ export class EventChain{
         let i, eventI;
         for(i = this.chain.length-1; i>= 0; i--){   //make sure this movement starts where the last one ended.
             for(eventI=0; eventI<this.chain[i].length; eventI++){
-                if(this.chain[i][eventI].type == "movement"){
+                if(this.chain[i][eventI].type == "movement" || this.chain[i][eventI].type == "location"){
                     return this.chain[i][eventI].dest;
                 }
             }
