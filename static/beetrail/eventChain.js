@@ -23,20 +23,28 @@ export class EventChain{
         return this;
     }
     nextEvent(){
+        console.log("---------- Next Event Function ----------");
+        console.log("Event ", this.eventNumber, " of ", this.chain.length);
         this.eventNumber += 1;
-        if(this.eventNumber >= this.chain.length){return;}
+        if(this.eventNumber >= this.chain.length){
+            console.log("End of Event Chain!");
+            return;
+        }
 
         let i;
+        
+        console.log("First Loop! Dissables all by default");
         for(i=0; i<this.chain[this.eventNumber].length; i++){
             this.chain[this.eventNumber][i].item.dissableInteractiveState();
             this.chain[this.eventNumber][i].item.dissableDrag();
         }
         
+        console.log("Second loop! Enables if neceessary");
         for(i=0; i<this.chain[this.eventNumber].length; i++){
             if(this.chain[this.eventNumber][i].type == "movement"){
-                console.log("Current Position of Item: ", 
-                    this.chain[this.eventNumber][i].item.getX(),
-                    this.chain[this.eventNumber][i].item.getY());
+                //console.log("Current Position of Item: ", 
+                //    this.chain[this.eventNumber][i].item.getX(),
+                //    this.chain[this.eventNumber][i].item.getY());
                 if(this.chain[this.eventNumber][i].origin[0] < this.chain[this.eventNumber][i].dest[0]){
                     this.chain[this.eventNumber][i].item.setSpriteDirection('r');
                 }else{
@@ -48,6 +56,7 @@ export class EventChain{
                 this.chain[this.eventNumber][i].item.enableInteractiveState();
             }
             if(this.chain[this.eventNumber][i].type == "drag"){
+                console.log("Dragging enabled from nextEvent() function");
                 this.chain[this.eventNumber][i].item.enableDrag();
             }
             

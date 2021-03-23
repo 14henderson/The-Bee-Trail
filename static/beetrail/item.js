@@ -70,15 +70,16 @@ export class Item {
         return this._clicked;
     }
     getDragState(){
-        return this._dragged;
+        return this._beingDragged;
     }
     resetClickedState(){
         this._clicked = false;
-        this._dragged = false;
+        this._beingDragged = false;
     }
     enableDrag(){
         console.log("Dragging enabled!");
         this.dragged = true;
+        this._beingDragged = false;
     }
     dissableDrag(){
         console.log("Dragging dissabled!");
