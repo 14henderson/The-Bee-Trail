@@ -9,7 +9,9 @@ export class EventChain{
         this._creationMode = false;
         this._creationEvent
     }
-    
+    getCurrentEventNumber(){
+        return this.eventNumber;
+    }
     startCreation(){
         this._creationMode = true;
         return this;
@@ -197,7 +199,16 @@ export class EventChain{
         return this;
     }
 
-
+    addEventChainWait(item, eventChain, eventNumber){
+        this.chain[this.chain.length-1].push({
+            'type':'chain-wait',
+            'item':item,
+            'chain':eventChain,
+            'eventNumber':eventNumber,
+            'completed':false
+        });
+        return this;
+    }
 
     addCustomAction(itemFunction){
         this.chain[this.chain.length-1].push({
@@ -252,6 +263,17 @@ export class EventChain{
                         if(this._locProgress == this.chain[this.eventNumber][i].length){
                             this.chain[this.eventNumber][i].completed = true;
                         }
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                    break;
+
+                case 'chain-wait':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        if(this.chain[this.eventNumber][i].chain.getCurrentEventNumber()
+                        >= this.chain[this.eventNumber][i].eventNumber){
+                            this.chain[this.eventNumber][i].completed = true;
+                        }
+
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
                     break;
