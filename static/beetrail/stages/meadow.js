@@ -84,16 +84,17 @@ export class MeadowStage extends Stage{
 
 
         this.fSprites.buffBee.setScale(0.5);
-        this.fSprites.buffBee.bringBehind(this.fSprites.background1);
+        this.fSprites.buffBee.bringBehind(this.fSprites.background2);
         this.fSprites.buffBee.centerPivot();
         this.fSprites.buffBee.setSpriteDirection('l');
         this.fSprites.buffBee.setLocation(1200, 500);
-        this.fSprites.buffBee.setAlpha(1);
+        this.fSprites.buffBee.setAlpha(0);
 
         this.fSprites.honeyBee.centerPivot();
-        this.fSprites.honeyBee.setScale(0.7);
-        this.fSprites.honeyBee.setLocation(300, 100);
-        this.fSprites.honeyBee.setAlpha(1);
+        this.fSprites.honeyBee.setScale(0.5);
+        this.fSprites.honeyBee.setLocation(1200, 420);
+        this.fSprites.honeyBee.setAlpha(0);
+        this.fSprites.honeyBee.bringBehind(this.fSprites.background2);
 
         this.fSprites.redBee.centerPivot();
         this.fSprites.redBee.setScale(0.4);
@@ -117,9 +118,26 @@ export class MeadowStage extends Stage{
             .addIdle(this.fSprites.redBee)
             .addClickEvent(this.fSprites.redBee)
             .next()
-            .addMovement(this.fSprites.buffBee, [1100, 400], 3, Movement.quadCurveMvPattern, -30)
+            .addMovement(this.fSprites.buffBee, [1150, 400], 3, Movement.quadCurveMvPattern, -25)
+            .addFade(this.fSprites.buffBee, 1.5, 0, .5)
             .next()
-            .addMovement(this.fSprites.buffBee, [1050, 700], 3, Movement.quadCurveMvPattern, -10);
+            .addBringBehind(this.fSprites.buffBee, this.fSprites.background1)
+            .addMovement(this.fSprites.buffBee, [1100, 500], 3, Movement.quadCurveMvPattern, -40)
+            .addFade(this.fSprites.buffBee, 1.5, 0, 1)
+            .next()
+            .addMovement(this.fSprites.buffBee, [1050, 600], 3, Movement.quadCurveMvPattern, 10)
+            .next()
+            .addIdle(this.fSprites.buffBee)
+            .addClickEvent(this.fSprites.buffBee)
+            .next()
+            .addMovement(this.fSprites.honeyBee, [1050, 420], 1, Movement.sinMvPattern)
+            .addFade(this.fSprites.honeyBee, 1, 0, 1)
+            .next()
+            .addIdle(this.fSprites.honeyBee)
+            .addClickEvent(this.fSprites.honeyBee);
+
+
+
         //this.eventChainBee1
 
 
