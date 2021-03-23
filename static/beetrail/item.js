@@ -1,6 +1,7 @@
 export class Item {
     constructor(textureURI, textured){
-        
+        this.ID = Math.random().toString(36).substring(7);
+        console.log("ID: ", this.ID);
         this.rotation = 0;
         this.direction = 90;
         this.speed = 0;
@@ -61,6 +62,9 @@ export class Item {
         });
     }
 
+    getID(){
+        return this.ID;
+    }
     _onClick(){
         console.log("Internal Item Clicked!");
         this._clicked = true;
