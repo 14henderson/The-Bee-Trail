@@ -108,6 +108,7 @@ export class MeadowStage extends Stage{
 
 
 
+
         /*
         .addRotationEvent(this.fSprites.bee1, 0, 360, 3)
             .addClickEvent(this.fSprites.bee1)
