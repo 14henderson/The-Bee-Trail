@@ -12,8 +12,7 @@ export class MeadowStage extends Stage{
         this.states = [this.start, this.main];
         this.state = this.start;
         
-        this.eventChainBee1 = new EventChain();
-        this.eventChainBee2 = new EventChain();
+        this.eventChain = new EventChain();
     }
 
     setup(){
@@ -82,29 +81,46 @@ export class MeadowStage extends Stage{
         this.fSprites.background2.setSize(1280, 960);
         this.fSprites.background1.setSize(1280, 960);
 
-        this.fSprites.buffBee.setScale(0.7);
+
+
+        this.fSprites.buffBee.setScale(0.5);
         this.fSprites.buffBee.bringBehind(this.fSprites.background1);
         this.fSprites.buffBee.centerPivot();
-        this.fSprites.buffBee.setSpriteDirection('r');
-        this.fSprites.buffBee.setLocation(1000, 550);
-        this.fSprites.buffBee.setAlpha(0);
+        this.fSprites.buffBee.setSpriteDirection('l');
+        this.fSprites.buffBee.setLocation(1200, 500);
+        this.fSprites.buffBee.setAlpha(1);
 
         this.fSprites.honeyBee.centerPivot();
         this.fSprites.honeyBee.setScale(0.7);
         this.fSprites.honeyBee.setLocation(300, 100);
-        this.fSprites.honeyBee.setAlpha(0);
+        this.fSprites.honeyBee.setAlpha(1);
 
         this.fSprites.redBee.centerPivot();
-        this.fSprites.redBee.setScale(0.7);
-        this.fSprites.redBee.setLocation(500, 100);
+        this.fSprites.redBee.setScale(0.4);
+        this.fSprites.redBee.setLocation(150, 400);
         this.fSprites.redBee.setAlpha(0);
+        this.fSprites.redBee.setSpriteDirection('r');
+        this.fSprites.redBee.bringBehind(this.fSprites.background3);
+
 
     }
 
     //Defining the event chain(s) used in this stage.
     eventChainsDef(){
+
         //this.eventChainBee1
 
+        this.eventChain
+            .addMovement(this.fSprites.redBee, [500, 200], 3, Movement.quadCurveMvPattern, 50)
+            .addFade(this.fSprites.redBee, 1, 0, 1)
+            .next()
+            .addIdle(this.fSprites.redBee)
+            .addClickEvent(this.fSprites.redBee)
+            .next()
+            .addMovement(this.fSprites.buffBee, [1100, 400], 3, Movement.quadCurveMvPattern, -30)
+            .next()
+            .addMovement(this.fSprites.buffBee, [1050, 700], 3, Movement.quadCurveMvPattern, -10);
+        //this.eventChainBee1
 
 
 
@@ -126,8 +142,7 @@ export class MeadowStage extends Stage{
 
 
 
-        this.eventChainBee1.initialise();
-        this.eventChainBee2.initialise();
+        this.eventChain.initialise();
     }
 
 
@@ -144,8 +159,7 @@ export class MeadowStage extends Stage{
         this.centerAndScaleSprites(this.bSprites);
 
         this.foreground.tick();
-        this.eventChainBee1.tick();
-        this.eventChainBee2.tick();
+        this.eventChain.tick();
     }
 
     main(delta){
