@@ -105,6 +105,12 @@ export class Item {
             this.sprite.height/2
         );
     }
+    getXPivot(){
+        return this.sprite.pivot.x;
+    }
+    getYPivot(){
+        return this.sprite.pivot.y;
+    }
 
     setDirection(degrees){
         degrees = degrees % 360
