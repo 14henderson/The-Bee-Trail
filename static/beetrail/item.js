@@ -8,6 +8,8 @@ export class Item {
         if(textured){
             this.texture = textureURI;
             this.sprite = new PIXI.Sprite(PIXI.loader.resources[this.texture].texture);
+            this._oriWidth = this.sprite.width;
+            this._oriHeight = this.sprite.height;
         }else{
             this.sprite = textureURI;
         }
@@ -215,8 +217,8 @@ export class Item {
     }
     setScale(s){
         this.scale = s;
-        this.sprite.width *= s;
-        this.sprite.height *= s;
+        this.sprite.width = this._oriWidth*s;
+        this.sprite.height = this._oriHeight*s;
     }
     getScale(){
         return this.scale;

@@ -143,6 +143,21 @@ export class EventChain{
         return this;
     }
 
+
+    addScaleEvent(item, delta, min, max){
+        this.chain[this.chain.length-1].push({
+            'type':'scale',
+            'item':item,
+            'delta':delta,
+            'min':min,
+            'max':max,
+            'progress':0,
+            'completed':false
+        });
+        return this;
+    }
+
+
     addRotationEvent(item, startAngle, stopAngle, speed){
         this.chain[this.chain.length-1].push({
             'type': 'rotation',
@@ -305,17 +320,17 @@ export class EventChain{
                     }
                     break;
                 
-                    case 'collision':
-                        if(!this.chain[this.eventNumber][i].completed){
-                            if(Movement.testCollision(
-                                this.chain[this.eventNumber][i].item,
-                                this.chain[this.eventNumber][i].item2
-                            )){
-                                this.chain[this.eventNumber][i].completed = true;
-                            }
-                            eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                case 'collision':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        if(Movement.testCollision(
+                            this.chain[this.eventNumber][i].item,
+                            this.chain[this.eventNumber][i].item2
+                        )){
+                            this.chain[this.eventNumber][i].completed = true;
                         }
-                        break;
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                    break;
 
                 case 'drag':
                     if(this.chain[this.eventNumber][i].item.getDragState()){
@@ -376,6 +391,22 @@ export class EventChain{
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
                     break;
+                
+                case 'scale':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        console.log("Current Scale: ", this.chain[this.eventNumber][i].item.getScale());
+                        console.log("Current Delta: ", this.chain[this.eventNumber][i].delta);
+                        this.chain[this.eventNumber][i].item.setScale(
+                            this.chain[this.eventNumber][i].item.getScale()
+                            +this.chain[this.eventNumber][i].delta/100);
+                        if(this.chain[this.eventNumber][i].item.getScale() < this.chain[this.eventNumber][i].min
+                        || this.chain[this.eventNumber][i].item.getScale() > this.chain[this.eventNumber][i].max){
+                            this.chain[this.eventNumber][i].completed = true;
+                        }
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                    break;
+
 
                 case 'customAction':
                     if(!this.chain[this.eventNumber][i].completed){
