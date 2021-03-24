@@ -102,6 +102,15 @@ export class EventChain{
         return this;
     }
 
+    addFrameEvent(item, frameNum){
+        this.chain[this.chain.length-1].push({
+            'type':'frame',
+            'item':item,
+            'frameNum':frameNum,
+            'completed':false
+        });
+        return this;
+    }
 
     addMovement(item, dest, speed, mvtFunction, amplification=10){
         let origin = this._getLastEventDest(item);
@@ -316,6 +325,17 @@ export class EventChain{
                             this.chain[this.eventNumber][i].item.dissableInteractiveState();
                             this.chain[this.eventNumber][i].completed = true;
                         }
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                    break;
+
+                case 'frame':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].item.gotoFrame(
+                            this.chain[this.eventNumber][i].frameNum
+                        );
+                        console.log("MOVED TO FRAME: ", this.chain[this.eventNumber][i].frameNum);
+                        this.chain[this.eventNumber][i].completed = true;
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
                     break;

@@ -1,4 +1,4 @@
-import {Item} from '/beetrail/item.js';
+import {Item} from '/beetrail/item/item.js';
 import {Hub} from '/beetrail/stages/hub.js'
 import {Test} from '/beetrail/stages/test.js'
 import {MeadowStage} from '/beetrail/stages/meadow.js'
