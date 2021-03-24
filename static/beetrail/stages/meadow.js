@@ -1,7 +1,10 @@
 import {Stage} from '/beetrail/stages/stage.js';
-import {Item} from '/beetrail/item.js';
+import {Item} from '/beetrail/item/item.js';
+import {SpriteItem} from '/beetrail/item/spriteItem.js';
+import {ShapeItem} from '/beetrail/item/shapeItem.js';
 import {EventChain} from '/beetrail/eventChain.js';
 import {Movement} from '/beetrail/movementMisc.js';
+import { AnimatedItem } from '/beetrail/item/animatedItem.js';
 
 
 export class MeadowStage extends Stage{
