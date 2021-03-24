@@ -118,6 +118,13 @@ export class MeadowStage extends Stage{
             .addIdle(this.fSprites.redBee)
             .addClickEvent(this.fSprites.redBee)
             .next()
+            .addScaleEvent(this.fSprites.redBee, 1.5, 0.4, 0.8)
+            .addBringBefore(this.fSprites.redBee, this.fSprites.background1)
+            .next()
+            .addIdle(this.fSprites.redBee)
+            .addClickEvent(this.fSprites.redBee)
+            //redBee Found!
+            .next()
             .addMovement(this.fSprites.buffBee, [1150, 400], 3, Movement.quadCurveMvPattern, -25)
             .addFade(this.fSprites.buffBee, 1.5, 0, .5)
             .next()
