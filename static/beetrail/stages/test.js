@@ -1,5 +1,5 @@
 import {Stage} from '/beetrail/stages/stage.js';
-import {Item} from '/beetrail/item.js';
+import {Item} from '/beetrail/item/item.js';
 import {Foreground} from '/beetrail/foregroundContainer.js'
 
 export class Test{
