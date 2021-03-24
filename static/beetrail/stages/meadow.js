@@ -2,9 +2,11 @@ import {Stage} from '/beetrail/stages/stage.js';
 import {Item} from '/beetrail/item/item.js';
 import {SpriteItem} from '/beetrail/item/spriteItem.js';
 import {ShapeItem} from '/beetrail/item/shapeItem.js';
+import { AnimatedItem } from '/beetrail/item/animatedItem.js';
+
 import {EventChain} from '/beetrail/eventChain.js';
 import {Movement} from '/beetrail/movementMisc.js';
-import { AnimatedItem } from '/beetrail/item/animatedItem.js';
+
 
 
 export class MeadowStage extends Stage{
@@ -24,8 +26,11 @@ export class MeadowStage extends Stage{
                                 "assets/bSprites/Artboard 1grass-middleground.png",
                                 "assets/bSprites/Artboard 1meadow-foreground.png",
                                 "assets/fSprites/bees/Small-buff-tail-profile.png",
+                                "assets/fSprites/bees/Small-buff-tail-facing.png",
                                 "assets/fSprites/bees/Small-honey-bee-profile.png",
+                                "assets/fSprites/bees/Small-honey-bee-facing.png",
                                 "assets/fSprites/bees/Small-red-tail-profile.png",
+                                "assets/fSprites/bees/Small-redtail-facing.png",
                                 "assets/fSprites/backgrounds/background3.fw.png",
                                 "assets/fSprites/backgrounds/background2.fw.png",
                                 "assets/fSprites/backgrounds/background1.fw.png"];
@@ -45,18 +50,27 @@ export class MeadowStage extends Stage{
 
     //Creating new Item objects used in this stage
     loadSprites(){
-        this.bSprites.background1 = new Item("assets/bSprites/Artboard 1grass-background.png", true);
-        this.bSprites.background2 = new Item("assets/bSprites/Artboard 1grass-middleground.png", true);
-        this.bSprites.background3 = new Item("assets/bSprites/Artboard 1grass-foreground.png", true);
-        this.bSprites.foregroundMeadow = new Item("assets/bSprites/Artboard 1meadow-foreground.png", true);
+        this.bSprites.background1 = new SpriteItem("assets/bSprites/Artboard 1grass-background.png");
+        this.bSprites.background2 = new SpriteItem("assets/bSprites/Artboard 1grass-middleground.png");
+        this.bSprites.background3 = new SpriteItem("assets/bSprites/Artboard 1grass-foreground.png");
+        this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png");
         //------------------//
-        this.fSprites.background3 = new Item("assets/fSprites/backgrounds/background3.fw.png", true);
-        this.fSprites.background2 = new Item("assets/fSprites/backgrounds/background2.fw.png", true);
-        this.fSprites.background1 = new Item("assets/fSprites/backgrounds/background1.fw.png", true);
+        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png");
+        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png");
+        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png");
 
-        this.fSprites.buffBee = new Item("assets/fSprites/bees/Small-buff-tail-profile.png", true);
-        this.fSprites.honeyBee = new Item("assets/fSprites/bees/Small-honey-bee-profile.png", true);
-        this.fSprites.redBee = new Item("assets/fSprites/bees/Small-red-tail-profile.png", true);
+        this.fSprites.buffBee = new AnimatedItem([
+            "assets/fSprites/bees/Small-buff-tail-profile.png",
+            "assets/fSprites/bees/Small-buff-tail-facing.png"
+        ]);
+        this.fSprites.honeyBee = new AnimatedItem([
+            "assets/fSprites/bees/Small-honey-bee-profile.png",
+            "assets/fSprites/bees/Small-honey-bee-facing.png"
+        ]);
+        this.fSprites.redBee = new AnimatedItem([
+            "assets/fSprites/bees/Small-red-tail-profile.png",
+            "assets/fSprites/bees/Small-redtail-facing.png"
+        ]);
     }
 
     //Creating any Misc assets here
@@ -65,7 +79,7 @@ export class MeadowStage extends Stage{
             .beginFill(0xE8E8E8)
             .drawRect(0, 0, this.bSprites.background1.getSprite().width, window.innerHeight)
             .endFill();
-        this.bSprites.backgroundCol = new Item(backColour, false);
+        this.bSprites.backgroundCol = new ShapeItem(backColour, false);
     }
 
     //Assigning all Items to both parent and foreground containers.
@@ -122,6 +136,7 @@ export class MeadowStage extends Stage{
             .addClickEvent(this.fSprites.redBee)
             .next()
             .addScaleEvent(this.fSprites.redBee, 1.5, 0.4, 0.8)
+            .addFrameEvent(this.fSprites.redBee, 1)
             .addBringBefore(this.fSprites.redBee, this.fSprites.background1)
             .next()
             .addIdle(this.fSprites.redBee)
