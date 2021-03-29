@@ -13,7 +13,7 @@ export class AnimatedItem extends Item{
         this.size = [this.sprite.width, this.sprite.height];
         this._oriWidth = this.sprite.width;
         this._oriHeight = this.sprite.height;
-        this._onHover = false;
+        this._hoverEnabled = false;
         this.hoverFrame = 0;
 
 
@@ -34,12 +34,12 @@ export class AnimatedItem extends Item{
         });
 
         this.sprite.on('mouseover', event => {
-            if(this._onHover){
+            if(this._hoverEnabled){
                 this.gotoFrame(this.hoverFrame);
             }
         })
         this.sprite.on('mouseout', event => {
-            if(this._onHover){
+            if(this._hoverEnabled){
                 this.gotoFrame(0);
             }
         })
@@ -53,7 +53,7 @@ export class AnimatedItem extends Item{
     }
 
     enableMouseHoverFrame(fNum){
-        this._onHover = true;
+        this._hoverEnabled = true;
         this.hoverFrame = fNum;
     }
 }

@@ -7,6 +7,7 @@ export class ShapeItem extends Item{
         this.sprite = spriteObj;
         this.sprite.interactive = false;
         this.size = [this.sprite.width, this.sprite.height];
+        this._mouseHovered = false;
 
 
         this.sprite.on('mousedown', event =>{
@@ -24,5 +25,16 @@ export class ShapeItem extends Item{
                 this.sprite.y = event.data.getLocalPosition(this.sprite.parent).y;// - (this.sprite.height/2);                
             }
         });
+
+        this.sprite.on('mouseover', event => {
+            this._mouseHovered = true;
+        });
+        this.sprite.on('mouseout', event => {
+            this._mouseHovered = false;
+        });
+    }
+
+    onMouseHover(){
+        return this._mouseHovered;
     }
 }

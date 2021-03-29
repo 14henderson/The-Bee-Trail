@@ -32,7 +32,9 @@ export class Hub extends Stage{
                                 "assets/fSprites/backgrounds/background2.fw.png",
                                 "assets/fSprites/backgrounds/background1.fw.png",
 
-                                "assets/fSprites/objects/Artboard 1newspaper-front-cover.png"
+                                "assets/fSprites/objects/Artboard 1newspaper-front-cover.png",
+                                "assets/fSprites/buttons/play-button-hover.png",
+                                "assets/fSprites/buttons/static-play-button-click.png"
                             ];
 
 
@@ -62,6 +64,11 @@ export class Hub extends Stage{
         this.fSprites.laptop = new SpriteItem("assets/fSprites/objects/laptop.png");
         this.fSprites.minION = new SpriteItem("assets/fSprites/objects/minion-cable.png");
         this.fSprites.newspaper = new SpriteItem("assets/fSprites/objects/Artboard 1newspaper-front-cover.png");
+
+        this.fSprites.playButton = new AnimatedItem([
+            "assets/fSprites/buttons/static-play-button-click.png",
+            "assets/fSprites/buttons/play-button-hover.png"
+        ])
     }
 
     miscAssetCreation(){
@@ -70,7 +77,7 @@ export class Hub extends Stage{
             .beginFill(0xE8E8E8)
             .drawRoundedRect(0, 0, 900, (window.innerHeight/2)-40, 10)
             .endFill();
-        //this.fSprites.meadowNav = new ShapeItem(hoverBox1);
+       // this.fSprites.meadowNav = new ShapeItem(hoverBox1);
 
         let hoverBox2 = new PIXI.Graphics()
             .lineStyle(2, 0xBABABA, 1)
@@ -111,27 +118,32 @@ export class Hub extends Stage{
         this.fSprites.newspaper.setAlpha(0);
 
         this.fSprites.bench.setScale(1280/2639);
-        this.fSprites.bench.setLocation(0, 576);
+        this.fSprites.bench.setLocation(0, 686);
 
         this.fSprites.laptop.setScale(0.5);
-        this.fSprites.laptop.setLocation(650, 400);
+        this.fSprites.laptop.setLocation(700, 550);
         this.fSprites.minION.setScale(0.4);
-        this.fSprites.minION.setLocation(700, 600);
-        //this.fSprites.bench.centerX();
+        this.fSprites.minION.setLocation(750, 750);
 
-        //this.sprites.background.scaleByHeight(window.innerHeight);
-        //this.sprites.meadowNav.getSprite().position.set(20, 20);
-        //this.sprites.meadowNav.getSprite().alpha = 0.2;
-       // this.sprites.PollenNav.getSprite().position.set(20, (window.innerHeight/2));
-        //this.sprites.PollenNav.getSprite().alpha = 0.2;
-        //this.sprites.minIONNav.getSprite().position.set((window.innerWidth/2)+10, (window.innerHeight/2));
-        //this.sprites.minIONNav.getSprite().alpha = 0.2;
-        //this.sprites.bee.setLocation(0, 0); 
+        this.fSprites.playButton.setScale(0.2);
+        this.fSprites.playButton.centerPivot();
+        this.fSprites.playButton.setLocation(1000, 880);
+        this.fSprites.playButton.enableInteractiveState();
+        this.fSprites.playButton.enableMouseHoverFrame(1);
+        this.fSprites.playButton.setAlpha(0);
+
+     //   this.fSprites.meadowNav.enableInteractiveState();
     }
 
     eventChainsDef(){
         this.eventChain
-            .addFade(this.fSprites.newspaper, 3, 0, 1);
+            .addFade(this.fSprites.newspaper, 3, 0, 1)
+            .addFade(this.fSprites.playButton, 3, 0, 1)
+            .next()
+            .addClickEvent(this.fSprites.playButton)
+            .next()
+            .addFade(this.fSprites.newspaper, -3, 0, 1)
+            .addFade(this.fSprites.playButton, -3, 0, 1);
 
             
         this.eventChain.initialise();
@@ -154,10 +166,12 @@ export class Hub extends Stage{
     main(delta){
         this.centerAndScaleSprites(this.bSprites);
         
-
-       /* if(this.fSprites.meadowNav.onMouseHover(this.app)){
+/*
+        if(this.fSprites.meadowNav.onMouseHover()){
+            console.log("hovering!");
             this.fSprites.meadowNav.setFadeAnimation(0.2, 0.8, -0.05);
         }else{
+            console.log()
             this.fSprites.meadowNav.setFadeAnimation(0.2, 0.8, 0.05);
         }
 
