@@ -1,5 +1,6 @@
 export class Foreground{
     constructor(){
+        this.ID = Math.random().toString(36).substring(7);
         this.sprite = new PIXI.Container();
         this.sprite.sortableChildren = true;
 
@@ -24,12 +25,29 @@ export class Foreground{
         this.fitToWindow();
     }
 
+    getID(){
+        return this.ID;
+    }
     addChild(sprite){
         this.sprite.addChild(sprite);
         sprite.zIndex = this._zCounter;
         this._zCounter += 2;
     }
+    dissableInteractiveState(){
+        //do nothing
+    }
+    enableInteractiveState(){
 
+    }
+    dissableDrag(){
+        //do nothing
+    }
+    enableDrag(){
+        
+    }
+    resetClickedState(){
+        //do nothing
+    }
     centerContainer(){
         this.sprite.y = 0;
         this.sprite.x = (window.innerWidth/2)-(this.sprite.width/2);

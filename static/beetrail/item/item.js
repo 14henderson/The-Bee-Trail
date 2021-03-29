@@ -71,6 +71,12 @@ export class Item {
         return this.sprite;
     }
 
+    setPivot(xf, yf){
+        this.sprite.pivot.set(
+            this._oriWidth*xf,
+            this._oriHeight*yf
+        );
+    }
     centerPivot(){
         this.sprite.pivot.set(
             this._oriWidth/2,
