@@ -1,17 +1,15 @@
 export class Item {
-    constructor(textureURI, textured){
-        
+    ID;
+    sprite;
+    _oriWidth; _oriHeight;
+    size;
+
+    constructor(){
+        this.ID = Math.random().toString(36).substring(7);
         this.rotation = 0;
         this.direction = 90;
         this.speed = 0;
-        if(textured){
-            this.texture = textureURI;
-            this.sprite = new PIXI.Sprite(PIXI.loader.resources[this.texture].texture);
-        }else{
-            this.sprite = textureURI;
-        }
-        this.size = [this.sprite.width, this.sprite.height];
-        this.location = [0, 0];
+
         this._centered = false;
         this._locAbsFlag = [true, true];
         this._xMovementScaler = 1;
@@ -27,42 +25,16 @@ export class Item {
         this.spriteDirection = 'l';
         this.animationTick = 0;
 
-        this.sprite.interactive = false;
-
         this.dragged = false;
         this._clicked = false;
         this._beingDragged = false;
-
-        this.sprite.on('mousedown', event =>{
-            this._clicked = true;
-            this._beingDragged = true;
-            console.log("Internal Item Mousedown");
-            console.log("width & height: ", this.sprite.width, this.sprite.height);
-        });
-
-        this.sprite.on('mouseup', event =>{
-            this._beingDragged = false;
-            console.log("Internal Item Mouseup");
-        });
-
-        this.sprite.on('mousemove', event => {
-            //console.log("Mouse Moved!");
-            if(this.dragged && this._beingDragged){
-                this.sprite.x = event.data.getLocalPosition(this.sprite.parent).x;// - this.sprite.anchor.x*(this.sprite.width/2);
-                this.sprite.y = event.data.getLocalPosition(this.sprite.parent).y;// - (this.sprite.height/2);
-
-                console.log("Mouse Lcation: ", 
-                    event.data.getLocalPosition(this.sprite.parent).x,
-                    event.data.getLocalPosition(this.sprite.parent).y);
-                console.log("New Location: ", this.sprite.x, this.sprite.y);
-                
-            }
-            
-        });
+        
     }
 
+    getID(){
+        return this.ID;
+    }
     _onClick(){
-        console.log("Internal Item Clicked!");
         this._clicked = true;
     }
     getClickedState(){
@@ -101,8 +73,8 @@ export class Item {
 
     centerPivot(){
         this.sprite.pivot.set(
-            this.sprite.width/2,
-            this.sprite.height/2
+            this._oriWidth/2,
+            this._oriHeight/2
         );
     }
     getXPivot(){
@@ -135,7 +107,6 @@ export class Item {
     }
 
     setLocation(x, y){
-        this.location = [x, y];
         if(this._locAbsFlag[0] == false){
             this.sprite.x = (window.innerWidth/2) - (this.size[0]/2) + x;
         }else{
@@ -177,22 +148,15 @@ export class Item {
 
     setSpriteDirection(dir){
         if(dir != this.spriteDirection){
-            
             if(dir == 'l'){
                 this.sprite.scale.x = Math.abs(this.getScale())*1;
-                //this.sprite.x += this.sprite.width;
             }else if(dir == 'r'){
                 this.sprite.scale.x = Math.abs(this.getScale())*-1;
-               // this.sprite.x -= this.sprite.width;
             }
-            
             this.spriteDirection = dir;
-            //this.sprite.anchor.x = 0;
-            //this.sprite.anchor.y = 0;
         }
-        
-
     }
+
     setSpriteAnchor(x, y){
         this.sprite.anchor.x = x;
         this.sprite.anchor.y = y;
@@ -211,8 +175,8 @@ export class Item {
     }
     setScale(s){
         this.scale = s;
-        this.sprite.width *= s;
-        this.sprite.height *= s;
+        this.sprite.width = this._oriWidth*s;
+        this.sprite.height = this._oriHeight*s;
     }
     getScale(){
         return this.scale;
@@ -230,10 +194,6 @@ export class Item {
     getWidth(){return this.sprite.width;}
     getHeight(){return this.sprite.height;}
     getAlpha(){return this.sprite.alpha;}
-
-    ///hide(){
-    //    this.sprite.vis
-   // }
 
     flip(axis){
         if(axis=='x'){
@@ -286,8 +246,8 @@ export class Item {
 
     centerX(){
         this._centered = true;
-        this.location[0] = (window.innerWidth/2)-(this.getSize()[0]/2)
+        this.sprite.x = (window.innerWidth/2)-(this.getSize()[0]/2)
        // console.log(this.size[0]);
-        this.sprite.x = this.location[0];
+        // = this.location[0];
     }
 }

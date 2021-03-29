@@ -102,6 +102,15 @@ export class EventChain{
         return this;
     }
 
+    addFrameEvent(item, frameNum){
+        this.chain[this.chain.length-1].push({
+            'type':'frame',
+            'item':item,
+            'frameNum':frameNum,
+            'completed':false
+        });
+        return this;
+    }
 
     addMovement(item, dest, speed, mvtFunction, amplification=10){
         let origin = this._getLastEventDest(item);
@@ -142,6 +151,21 @@ export class EventChain{
         });
         return this;
     }
+
+
+    addScaleEvent(item, delta, min, max){
+        this.chain[this.chain.length-1].push({
+            'type':'scale',
+            'item':item,
+            'delta':delta,
+            'min':min,
+            'max':max,
+            'progress':0,
+            'completed':false
+        });
+        return this;
+    }
+
 
     addRotationEvent(item, startAngle, stopAngle, speed){
         this.chain[this.chain.length-1].push({
@@ -304,18 +328,29 @@ export class EventChain{
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
                     break;
+
+                case 'frame':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].item.gotoFrame(
+                            this.chain[this.eventNumber][i].frameNum
+                        );
+                        console.log("MOVED TO FRAME: ", this.chain[this.eventNumber][i].frameNum);
+                        this.chain[this.eventNumber][i].completed = true;
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                    break;
                 
-                    case 'collision':
-                        if(!this.chain[this.eventNumber][i].completed){
-                            if(Movement.testCollision(
-                                this.chain[this.eventNumber][i].item,
-                                this.chain[this.eventNumber][i].item2
-                            )){
-                                this.chain[this.eventNumber][i].completed = true;
-                            }
-                            eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                case 'collision':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        if(Movement.testCollision(
+                            this.chain[this.eventNumber][i].item,
+                            this.chain[this.eventNumber][i].item2
+                        )){
+                            this.chain[this.eventNumber][i].completed = true;
                         }
-                        break;
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                    break;
 
                 case 'drag':
                     if(this.chain[this.eventNumber][i].item.getDragState()){
@@ -376,6 +411,22 @@ export class EventChain{
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
                     break;
+                
+                case 'scale':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        console.log("Current Scale: ", this.chain[this.eventNumber][i].item.getScale());
+                        console.log("Current Delta: ", this.chain[this.eventNumber][i].delta);
+                        this.chain[this.eventNumber][i].item.setScale(
+                            this.chain[this.eventNumber][i].item.getScale()
+                            +this.chain[this.eventNumber][i].delta/100);
+                        if(this.chain[this.eventNumber][i].item.getScale() < this.chain[this.eventNumber][i].min
+                        || this.chain[this.eventNumber][i].item.getScale() > this.chain[this.eventNumber][i].max){
+                            this.chain[this.eventNumber][i].completed = true;
+                        }
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                    break;
+
 
                 case 'customAction':
                     if(!this.chain[this.eventNumber][i].completed){
@@ -416,7 +467,8 @@ export class EventChain{
         let i, eventI;
         for(i = this.chain.length-1; i>= 0; i--){   //make sure this movement starts where the last one ended.
             for(eventI=0; eventI<this.chain[i].length; eventI++){
-                if(this.chain[i][eventI].type == "movement" || this.chain[i][eventI].type == "location"){
+                if(this.chain[i][eventI].item.getID() == item.getID() &&
+                    (this.chain[i][eventI].type == "movement" || this.chain[i][eventI].type == "location")){
                     return this.chain[i][eventI].dest;
                 }
             }

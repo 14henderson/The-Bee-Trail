@@ -1,7 +1,10 @@
 import {Stage} from '/beetrail/stages/stage.js';
-import {Item} from '/beetrail/item.js';
+import {Item} from '/beetrail/item/item.js';
+import {SpriteItem} from '/beetrail/item/spriteItem.js';
+import {ShapeItem} from '/beetrail/item/shapeItem.js';
 import {EventChain} from '/beetrail/eventChain.js';
 import {Movement} from '/beetrail/movementMisc.js';
+import { AnimatedItem } from '/beetrail/item/animatedItem.js';
 
 
 export class MeadowStage extends Stage{
@@ -9,21 +12,24 @@ export class MeadowStage extends Stage{
         super(app);
         this.setup(app);
 
-        this.states = [this.start, this.main, this.end];
+        this.states = [this.start, this.main];
         this.state = this.start;
         
-        this.eventChain = new EventChain();
+        this.eventChainBee1 = new EventChain();
+        this.eventChainBee2 = new EventChain();
     }
 
     setup(){
-        this.assetsTextures = ["assets/Artboard 1grass-background.png",
-                                "assets/Artboard 1grass-foreground.png",
-                                "assets/Artboard 1grass-middleground.png",
-                                "assets/Artboard 1meadow-foreground.png",
-                                "assets/Artboard 1honeyb-profile-left.png",
-                                "assets/Artboard 1honey-bee-small.png",
-                                "assets/square.png",
-                                "assets/hill-background-merged-1280x960.png"];
+        this.assetsTextures = ["assets/bSprites/Artboard 1grass-background.png",
+                                "assets/bSprites/Artboard 1grass-foreground.png",
+                                "assets/bSprites/Artboard 1grass-middleground.png",
+                                "assets/bSprites/Artboard 1meadow-foreground.png",
+                                "assets/fSprites/bees/Small-buff-tail-profile.png",
+                                "assets/fSprites/bees/Small-honey-bee-profile.png",
+                                "assets/fSprites/bees/Small-red-tail-profile.png",
+                                "assets/fSprites/backgrounds/background3.fw.png",
+                                "assets/fSprites/backgrounds/background2.fw.png",
+                                "assets/fSprites/backgrounds/background1.fw.png"];
         PIXI.loader.add(this.assetsTextures).load((loader, resources) => {
             this.loadSprites();            
             this.miscAssetCreation();
@@ -40,14 +46,18 @@ export class MeadowStage extends Stage{
 
     //Creating new Item objects used in this stage
     loadSprites(){
-        this.bSprites.background1 = new Item("assets/Artboard 1grass-background.png", true);
-        this.bSprites.background2 = new Item("assets/Artboard 1grass-middleground.png", true);
-        this.bSprites.background3 = new Item("assets/Artboard 1grass-foreground.png", true);
-        this.bSprites.foregroundMeadow = new Item("assets/Artboard 1meadow-foreground.png", true);
-        this.fSprites.background1 = new Item("assets/hill-background-merged-1280x960.png", true);
-        this.fSprites.bee1 = new Item("assets/Artboard 1honey-bee-small.png", true);
-        this.fSprites.bee2 = new Item("assets/Artboard 1honey-bee-small.png", true);
-        this.fSprites.square = new Item("assets/square.png", true);
+        this.bSprites.background1 = new Item("assets/bSprites/Artboard 1grass-background.png", true);
+        this.bSprites.background2 = new Item("assets/bSprites/Artboard 1grass-middleground.png", true);
+        this.bSprites.background3 = new Item("assets/bSprites/Artboard 1grass-foreground.png", true);
+        this.bSprites.foregroundMeadow = new Item("assets/bSprites/Artboard 1meadow-foreground.png", true);
+        //------------------//
+        this.fSprites.background3 = new Item("assets/fSprites/backgrounds/background3.fw.png", true);
+        this.fSprites.background2 = new Item("assets/fSprites/backgrounds/background2.fw.png", true);
+        this.fSprites.background1 = new Item("assets/fSprites/backgrounds/background1.fw.png", true);
+
+        this.fSprites.buffBee = new Item("assets/fSprites/bees/Small-buff-tail-profile.png", true);
+        this.fSprites.honeyBee = new Item("assets/fSprites/bees/Small-honey-bee-profile.png", true);
+        this.fSprites.redBee = new Item("assets/fSprites/bees/Small-red-tail-profile.png", true);
     }
 
     //Creating any Misc assets here
@@ -71,37 +81,56 @@ export class MeadowStage extends Stage{
 
     //Positioning and scaling of Items
     assetPositioning(){
-        this.fSprites.bee1.setScale(0.8);
-        this.fSprites.bee1.setSpriteAnchor(0.5, 0);
-        this.fSprites.bee1.setSpriteDirection('r');
-        this.fSprites.bee2.setScale(0.8);
-        this.fSprites.bee1.setLocation(200, 100);
-        this.fSprites.bee2.setLocation(300, 100);
-        this.fSprites.square.setLocation(300, 100);
-        this.fSprites.background1.set
+        this.fSprites.background3.setSize(1280, 960);
+        this.fSprites.background2.setSize(1280, 960);
+        this.fSprites.background1.setSize(1280, 960);
+        this.fSprites.buffBee.setScale(0.8);
+        this.fSprites.honeyBee.setScale(0.8);
+        this.fSprites.buffBee.bringBehind(this.fSprites.background1);
+        this.fSprites.buffBee.centerPivot();
+        this.fSprites.honeyBee.centerPivot();
+        this.fSprites.buffBee.setSpriteDirection('r');
+        
+        this.fSprites.buffBee.setLocation(1000, 550);
+        this.fSprites.honeyBee.setLocation(300, 100);
+
     }
 
     //Defining the event chain(s) used in this stage.
     eventChainsDef(){
-        this.eventChain
+        this.eventChainBee1
+            .addIdle(this.fSprites.buffBee)
+            .addClickEvent(this.fSprites.buffBee)
+            .next()
+            .addDragEvent(this.fSprites.buffBee)
+            .addIdle(this.fSprites.buffBee)
+            .next()
+            .addForceLocationEvent(this.fSprites.buffBee, [400, 500])
+            .next()
+            .addMovement(this.fSprites.buffBee, [700, 300], 3, Movement.sinMvPattern);
+
+
+
+
+        /*
+        .addRotationEvent(this.fSprites.bee1, 0, 360, 3)
             .addClickEvent(this.fSprites.bee1)
             .addIdle(this.fSprites.bee1)
-            .next()
             .addMovement(this.fSprites.bee1, [500, 200], 3, Movement.sinMvPattern)
-            .next()
             .addIdle(this.fSprites.bee1)
             .addClickEvent(this.fSprites.bee1)
-            .next()
             .addForceLocationEvent(this.fSprites.bee1, [700, 500])
-            .next()
             .addClickEvent(this.fSprites.bee1)
-            .next()
             .addDragEvent(this.fSprites.bee1)
-            .addIdle(this.fSprites.bee1)
-            .addSleep(this.fSprites.bee1, 500)
-            .next()
-            .addMovement(this.fSprites.bee1, [100, 0], 1, Movement.quadCurveMvPattern);
-        this.eventChain.initialise();
+            .addCollisionEvent(this.fSprites.bee1, this.fSprites.square)
+            .addForceLocationEvent(this.fSprites.bee1, [400, 300])
+            .addMovement(this.fSprites.bee1, [100, 100], 1, Movement.quadCurveMvPattern);
+        */
+
+
+
+        this.eventChainBee1.initialise();
+        this.eventChainBee2.initialise();
     }
 
 
@@ -118,16 +147,14 @@ export class MeadowStage extends Stage{
         this.centerAndScaleSprites(this.bSprites);
 
         this.foreground.tick();
-        this.eventChain.tick();
+        this.eventChainBee1.tick();
+        this.eventChainBee2.tick();
     }
 
     main(delta){
 
     }
 
-    end(delta){
-
-    }
 
 
     

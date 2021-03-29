@@ -4,7 +4,7 @@ export class Foreground{
         this.sprite.sortableChildren = true;
 
         this.mask = new PIXI.Graphics() //container is only the size of it's contents...
-            .lineStyle(4, 0xFF3300, 1)  //...a Graphics object defines the whole play area.
+            .lineStyle(4, 0xFF3300, 0)  //...a Graphics object defines the whole play area.
             .drawRect(0, 0, 1280, 960);
         this.sprite.addChild(this.mask);
         this._zCounter = 0;
