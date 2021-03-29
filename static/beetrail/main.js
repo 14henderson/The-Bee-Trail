@@ -45,5 +45,5 @@ function test(){
 */
 
 //app.stage.addChild(bee);
-let hub = new MeadowStage(app);
+let hub = new Hub(app);
 //hub.loop(app);

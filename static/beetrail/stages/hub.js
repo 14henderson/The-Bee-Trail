@@ -3,15 +3,15 @@ import {Item} from '/beetrail/item.js';
 import {Foreground} from '/beetrail/foregroundContainer.js'
 
 
-export class Hub{
+export class Hub extends Stage{
     constructor(app){
-        this.assetsTextures = [];
-        this.assets = {}
-        this.sprites = {}
+        super(app);
         this.setup(app);
-        this.states = [this.start, this.main, this.end];
+        
+        this.states = [this.start, this.main];
         this.state = this.start;
-        this.app = app;
+        
+        this.eventChain = new EventChain();
     }
 
     setup(){
