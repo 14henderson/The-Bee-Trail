@@ -1,11 +1,20 @@
 import {Foreground} from '/beetrail/foregroundContainer.js'
 
 export class Stage {
+    assetsTextures;
+    app;
+    fSprites;
+    bSprites;
+    states;
+    state;
+
     constructor(app){
         this.assetsTextures = [];
         this.app = app;
         this.fSprites = {}
         this.bSprites = {}
+        this.states = [];
+        this.state;
 
         this.foreground = new Foreground();
         this.foreground.tick();
@@ -19,6 +28,9 @@ export class Stage {
         }
     }
 
+    setState(stateNum){
+        this.state = this.states[stateNum];
+    }
 
     /* Abstract Methods to be Overwritten by Child Game Stages */
     setup(){

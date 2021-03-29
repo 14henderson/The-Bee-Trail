@@ -234,6 +234,17 @@ export class EventChain{
         return this;
     }
 
+    addChangeStateEvent(item, stage, stateNum){
+        this.chain[this.chain.length-1].push({
+            'type':'state-change',
+            'item':item,
+            'stage':stage,
+            'stateNum':stateNum,
+            'completed':false
+        });
+        return this;
+    }
+
     addCustomAction(itemFunction){
         this.chain[this.chain.length-1].push({
             'type':'customAction',
@@ -302,6 +313,14 @@ export class EventChain{
                     }
                     break;
 
+                case 'state-change':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].stage.setState(
+                            this.chain[this.eventNumber][i].stateNum
+                        );
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                    break;
 
                 case 'movement':
                     if(!this.chain[this.eventNumber][i].completed){
