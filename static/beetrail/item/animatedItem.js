@@ -13,6 +13,8 @@ export class AnimatedItem extends Item{
         this.size = [this.sprite.width, this.sprite.height];
         this._oriWidth = this.sprite.width;
         this._oriHeight = this.sprite.height;
+        this._onHover = false;
+        this.hoverFrame = 0;
 
 
         this.sprite.on('mousedown', event =>{
@@ -30,6 +32,17 @@ export class AnimatedItem extends Item{
                 this.sprite.y = event.data.getLocalPosition(this.sprite.parent).y;// - (this.sprite.height/2);                
             }
         });
+
+        this.sprite.on('mouseover', event => {
+            if(this._onHover){
+                this.gotoFrame(this.hoverFrame);
+            }
+        })
+        this.sprite.on('mouseout', event => {
+            if(this._onHover){
+                this.gotoFrame(0);
+            }
+        })
     }
 
     gotoFrame(num){
@@ -37,5 +50,10 @@ export class AnimatedItem extends Item{
         this._oriWidth = this.sprite.textures[this.sprite.currentFrame].width;
         this._oriHeight = this.sprite.textures[this.sprite.currentFrame].height;
         this.centerPivot();
+    }
+
+    enableMouseHoverFrame(fNum){
+        this._onHover = true;
+        this.hoverFrame = fNum;
     }
 }

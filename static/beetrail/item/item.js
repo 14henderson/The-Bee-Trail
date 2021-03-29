@@ -118,6 +118,7 @@ export class Item {
         }else{
             if(x - (this.sprite.anchor.x*this.sprite.width) >= 0){
                 this.sprite.x = x;
+                console.log("Setting x Locaiton from here");
             }
         }
         if(this._locAbsFlag[1] == false){
@@ -125,6 +126,7 @@ export class Item {
         }else{
             if(y - (this.sprite.anchor.y*this.sprite.height) >= 0){
                 this.sprite.y = y;
+                console.log("Setting y Locaiton from here");
             }
         }
     }
@@ -237,13 +239,16 @@ export class Item {
         this._alphaMax = max;
         this._alphaDelta = delta;
     }
-
+/*
     onMouseHover(app){
-        return (app.renderer.plugins.interaction.mouse.global.x > this.getX()
-            && app.renderer.plugins.interaction.mouse.global.x < this.getX()+this.size[0]
-            && app.renderer.plugins.interaction.mouse.global.y > this.getY()
-            && app.renderer.plugins.interaction.mouse.global.y < this.getY()+this.size[1]);    
-    }
+        //console.log(app.renderer.plugins.interaction.mouse.global.x-this.sprite.parent.x,
+        //    app.renderer.plugins.interaction.mouse.global.y-this.sprite.parent.y
+         //   );
+        return ((app.renderer.plugins.interaction.mouse.global.x-this.sprite.parent.x) > this.getX()
+            && (app.renderer.plugins.interaction.mouse.global.x-this.sprite.parent.x) < this.getX()+this.size[0]
+            && (app.renderer.plugins.interaction.mouse.global.y-this.sprite.parent.y) > this.getY()
+            && (app.renderer.plugins.interaction.mouse.global.y-this.sprite.parent.y) < this.getY()+this.size[1]);    
+    }*/
 
     getSize(){
         this.size = [this.sprite.width, this.sprite.height];
