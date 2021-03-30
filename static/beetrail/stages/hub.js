@@ -15,7 +15,8 @@ export class Hub extends Stage{
         this.states = [this.start, this.main];
         this.state = this.start;
         
-        this.eventChain = new EventChain();
+        this.startEventChain = new EventChain();
+        this.mainEventChain = new EventChain();
     }
 
     setup(){
@@ -34,7 +35,11 @@ export class Hub extends Stage{
 
                                 "assets/fSprites/objects/Artboard 1newspaper-front-cover.png",
                                 "assets/fSprites/buttons/play-button-hover.png",
-                                "assets/fSprites/buttons/static-play-button-click.png"
+                                "assets/fSprites/buttons/static-play-button-click.png",
+
+                                "assets/fSprites/buttons/meadowNav.fw.png",
+                                "assets/fSprites/buttons/minIONNav.fw.png",
+                                "assets/fSprites/buttons/pollenNav.fw.png",
                             ];
 
 
@@ -64,6 +69,15 @@ export class Hub extends Stage{
         this.fSprites.laptop = new SpriteItem("assets/fSprites/objects/laptop.png");
         this.fSprites.minION = new SpriteItem("assets/fSprites/objects/minion-cable.png");
         this.fSprites.newspaper = new SpriteItem("assets/fSprites/objects/Artboard 1newspaper-front-cover.png");
+        //---------------------------
+        this.fSprites.meadowNav = new SpriteItem("assets/fSprites/buttons/meadowNav.fw.png");
+        this.fSprites.pollenNav = new SpriteItem("assets/fSprites/buttons/pollenNav.fw.png");
+        this.fSprites.minIONNav = new SpriteItem("assets/fSprites/buttons/minIONNav.fw.png");
+
+
+
+
+
 
         this.fSprites.playButton = new AnimatedItem([
             "assets/fSprites/buttons/static-play-button-click.png",
@@ -73,25 +87,25 @@ export class Hub extends Stage{
 
     miscAssetCreation(){
         let hoverBox1 = new PIXI.Graphics()
-            .lineStyle(2, 0xBABABA, 1)
+            .lineStyle(2, 0xffd026, 1)
             .beginFill(0xE8E8E8)
-            .drawRoundedRect(0, 0, 900, (window.innerHeight/2)-40, 10)
+            .drawRoundedRect(0, 0, 1279, 400, 10)
             .endFill();
-       // this.fSprites.meadowNav = new ShapeItem(hoverBox1);
+        //this.fSprites.meadowNav = new ShapeItem(hoverBox1);
 
         let hoverBox2 = new PIXI.Graphics()
-            .lineStyle(2, 0xBABABA, 1)
+            .lineStyle(2, 0xffd026, 1)
             .beginFill(0xE8E8E8)
             .drawRoundedRect(0, 0, (window.innerWidth/2)-30, (window.innerHeight/2)-40, 10)
             .endFill();
-       // this.fSprites.PollenNav = new ShapeItem(hoverBox2);
+        //this.fSprites.pollenNav = new ShapeItem(hoverBox2);
 
         let hoverBox3 = new PIXI.Graphics()
-            .lineStyle(2, 0xBABABA, 1)
+            .lineStyle(2, 0xffd026, 1)
             .beginFill(0xE8E8E8)
             .drawRoundedRect(0, 0, (window.innerWidth/2)-30, (window.innerHeight/2)-40, 10)
             .endFill();
-      //  this.fSprites.minIONNav = new ShapeItem(hoverBox3);
+        //this.fSprites.minIONNav = new ShapeItem(hoverBox3);
 
         let backColour = new PIXI.Graphics()
             .beginFill(0xE8E8E8)
@@ -132,21 +146,36 @@ export class Hub extends Stage{
         this.fSprites.playButton.enableMouseHoverFrame(1);
         this.fSprites.playButton.setAlpha(0);
 
-     //   this.fSprites.meadowNav.enableInteractiveState();
+        this.fSprites.meadowNav.enableInteractiveState();
+        this.fSprites.meadowNav.setAlpha(0.2);
+        this.fSprites.meadowNav.setLocation(0, 50);
+
+        this.fSprites.pollenNav.enableInteractiveState();
+        this.fSprites.pollenNav.setAlpha(0.2);
+        this.fSprites.pollenNav.setLocation(0, 470);
+
+        this.fSprites.minIONNav.enableInteractiveState();
+        this.fSprites.minIONNav.setAlpha(0.2);
+        this.fSprites.minIONNav.setLocation(655, 470);
     }
 
     eventChainsDef(){
-        this.eventChain
+        this.startEventChain
             .addFade(this.fSprites.newspaper, 3, 0, 1)
             .addFade(this.fSprites.playButton, 3, 0, 1)
             .next()
             .addClickEvent(this.fSprites.playButton)
             .next()
             .addFade(this.fSprites.newspaper, -3, 0, 1)
-            .addFade(this.fSprites.playButton, -3, 0, 1);
+            .addFade(this.fSprites.playButton, -3, 0, 1)
+            .next()
+            .addChangeStateEvent(this.fSprites.playButton, this, 1);
 
-            
-        this.eventChain.initialise();
+        this.mainEventChain
+            .addFade(this.fSprites.meadowNav, 1, 0, 0.8);
+
+        this.startEventChain.initialise();
+        this.mainEventChain.initialise();
     }
 
     loop(delta){
@@ -159,41 +188,39 @@ export class Hub extends Stage{
     start(delta){
         this.centerAndScaleSprites(this.bSprites);
         this.foreground.tick();
-        this.eventChain.tick();
-
+        this.startEventChain.tick();
     }
 
     main(delta){
         this.centerAndScaleSprites(this.bSprites);
         
-/*
+
         if(this.fSprites.meadowNav.onMouseHover()){
-            console.log("hovering!");
-            this.fSprites.meadowNav.setFadeAnimation(0.2, 0.8, -0.05);
+            this.fSprites.meadowNav.setFadeAnimation(0.2, 1, 0.05);
         }else{
             console.log()
-            this.fSprites.meadowNav.setFadeAnimation(0.2, 0.8, 0.05);
+            this.fSprites.meadowNav.setFadeAnimation(0.2, 1, -0.05);
+        }    
+        if(this.fSprites.pollenNav.onMouseHover()){
+            this.fSprites.pollenNav.setFadeAnimation(0.2, 1, 0.05);
+        }else{
+            this.fSprites.pollenNav.setFadeAnimation(0.2, 1, -0.05);
+        }
+        
+        if(this.fSprites.minIONNav.onMouseHover()){
+            this.fSprites.minIONNav.setFadeAnimation(0.2, 1, 0.05);
+        }else{
+            this.fSprites.minIONNav.setFadeAnimation(0.2, 1, -0.05);
         }
 
-        if(this.fSprites.PollenNav.onMouseHover(this.app)){
-            this.fSprites.PollenNav.setFadeAnimation(0.2, 0.8, -0.05);
-        }else{
-            this.fSprites.PollenNav.setFadeAnimation(0.2, 0.8, 0.05);
-        }
 
-        if(this.fSprites.minIONNav.onMouseHover(this.app)){
-            this.fSprites.minIONNav.setFadeAnimation(0.2, 0.8, -0.05);
-        }else{
-            this.fSprites.minIONNav.setFadeAnimation(0.2, 0.8, 0.05);
-        }*/
-
-
-        //this.fSprites.meadowNav.tick();
-       // this.fSprites.PollenNav.tick();
-        //this.fSprites.minIONNav.tick();
+        this.fSprites.meadowNav.tick();
+        this.fSprites.pollenNav.tick();
+        this.fSprites.minIONNav.tick();
 
 
         this.foreground.tick();
+        this.mainEventChain.tick();
     }
 
     end(delta){

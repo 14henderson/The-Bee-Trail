@@ -5,6 +5,8 @@ export class ShapeItem extends Item{
     constructor(spriteObj){
         super();
         this.sprite = spriteObj;
+        //this.sprite.anchor.x = 0;
+       // this.sprite.anchor.y = 0;
         this.sprite.interactive = false;
         this.size = [this.sprite.width, this.sprite.height];
         this._mouseHovered = false;

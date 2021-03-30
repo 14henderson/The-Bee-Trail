@@ -1,3 +1,4 @@
+
 export class Item {
     ID;
     sprite;
@@ -113,20 +114,26 @@ export class Item {
     }
 
     setLocation(x, y){
-        if(this._locAbsFlag[0] == false){
-            this.sprite.x = (window.innerWidth/2) - (this.size[0]/2) + x;
-        }else{
-            if(x - (this.sprite.anchor.x*this.sprite.width) >= 0){
-                this.sprite.x = x;
-                console.log("Setting x Locaiton from here");
-            }
+        if(this.sprite.anchor == null){
+            this.sprite.x = x;
+            this.sprite.y = y;
         }
-        if(this._locAbsFlag[1] == false){
-            this.sprite.y = window.innerHeight/2 + y;
-        }else{
-            if(y - (this.sprite.anchor.y*this.sprite.height) >= 0){
-                this.sprite.y = y;
-                console.log("Setting y Locaiton from here");
+        else {
+            if(this._locAbsFlag[0] == false){
+                this.sprite.x = (window.innerWidth/2) - (this.size[0]/2) + x;
+            }else{
+                if(x - (this.sprite.anchor.x*this.sprite.width) >= 0){
+                    this.sprite.x = x;
+                    console.log("Setting x Locaiton from here");
+                }
+            }
+            if(this._locAbsFlag[1] == false){
+                this.sprite.y = window.innerHeight/2 + y;
+            }else{
+                if(y - (this.sprite.anchor.y*this.sprite.height) >= 0){
+                    this.sprite.y = y;
+                    console.log("Setting y Locaiton from here");
+                }
             }
         }
     }
