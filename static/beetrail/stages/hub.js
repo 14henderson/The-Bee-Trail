@@ -38,8 +38,11 @@ export class Hub extends Stage{
                                 "assets/fSprites/buttons/static-play-button-click.png",
 
                                 "assets/fSprites/buttons/meadowNav.fw.png",
+                                "assets/fSprites/buttons/meadowNav_L.fw.png",
                                 "assets/fSprites/buttons/minIONNav.fw.png",
+                                "assets/fSprites/buttons/minIONNav_L.fw.png",
                                 "assets/fSprites/buttons/pollenNav.fw.png",
+                                "assets/fSprites/buttons/pollenNav_L.fw.png",
                             ];
 
 
@@ -70,9 +73,18 @@ export class Hub extends Stage{
         this.fSprites.minION = new SpriteItem("assets/fSprites/objects/minion-cable.png");
         this.fSprites.newspaper = new SpriteItem("assets/fSprites/objects/Artboard 1newspaper-front-cover.png");
         //---------------------------
-        this.fSprites.meadowNav = new SpriteItem("assets/fSprites/buttons/meadowNav.fw.png");
-        this.fSprites.pollenNav = new SpriteItem("assets/fSprites/buttons/pollenNav.fw.png");
-        this.fSprites.minIONNav = new SpriteItem("assets/fSprites/buttons/minIONNav.fw.png");
+        this.fSprites.meadowNav = new AnimatedItem([
+            "assets/fSprites/buttons/meadowNav.fw.png",
+            "assets/fSprites/buttons/meadowNav_L.fw.png"
+        ]);
+        this.fSprites.pollenNav = new AnimatedItem([
+            "assets/fSprites/buttons/pollenNav.fw.png",
+            "assets/fSprites/buttons/pollenNav_L.fw.png"
+        ]);
+        this.fSprites.minIONNav = new AnimatedItem([
+            "assets/fSprites/buttons/minIONNav.fw.png",
+            "assets/fSprites/buttons/minIONNav_L.fw.png"
+        ]);
 
 
 
@@ -147,16 +159,26 @@ export class Hub extends Stage{
         this.fSprites.playButton.setAlpha(0);
 
         this.fSprites.meadowNav.enableInteractiveState();
-        this.fSprites.meadowNav.setAlpha(0.2);
-        this.fSprites.meadowNav.setLocation(0, 50);
+        this.fSprites.meadowNav.setAlpha(1);
+        this.fSprites.meadowNav.centerPivot();
+        this.fSprites.meadowNav.setLocation(650, 300);
+        
 
         this.fSprites.pollenNav.enableInteractiveState();
-        this.fSprites.pollenNav.setAlpha(0.2);
-        this.fSprites.pollenNav.setLocation(0, 470);
+        this.fSprites.pollenNav.setAlpha(1);
+        this.fSprites.pollenNav.centerPivot();
+        this.fSprites.pollenNav.setLocation(320, 720);
+        this.fSprites.pollenNav.gotoFrame(1);
+        
 
         this.fSprites.minIONNav.enableInteractiveState();
-        this.fSprites.minIONNav.setAlpha(0.2);
-        this.fSprites.minIONNav.setLocation(655, 470);
+        this.fSprites.minIONNav.setAlpha(1);
+        this.fSprites.minIONNav.centerPivot();
+        this.fSprites.minIONNav.setLocation(975, 720);
+        this.fSprites.minIONNav.gotoFrame(1);
+        
+        this.fSprites.newspaper.bringBefore(this.fSprites.minIONNav);
+        
     }
 
     eventChainsDef(){
