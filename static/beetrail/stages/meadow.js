@@ -1,4 +1,5 @@
 import {Stage} from '/beetrail/stages/stage.js';
+import {Item} from '/beetrail/item/item.js';
 import {SpriteItem} from '/beetrail/item/spriteItem.js';
 import {ShapeItem} from '/beetrail/item/shapeItem.js';
 import { AnimatedItem } from '/beetrail/item/animatedItem.js';
@@ -292,6 +293,13 @@ export class MeadowStage extends Stage{
             .addFade(this.fSprites.ElieSpeech2, 3, 0, 1)
             ;
 
+
+
+        //this.eventChainBee1
+
+
+
+
         /*
         .addRotationEvent(this.fSprites.bee1, 0, 360, 3)
             .addClickEvent(this.fSprites.bee1)
@@ -306,6 +314,8 @@ export class MeadowStage extends Stage{
             .addForceLocationEvent(this.fSprites.bee1, [400, 300])
             .addMovement(this.fSprites.bee1, [100, 100], 1, Movement.quadCurveMvPattern);
         */
+
+
 
         this.eventChain.initialise();
     }
