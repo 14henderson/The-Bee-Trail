@@ -124,7 +124,7 @@ export class Item {
             }else{
                 if(x - (this.sprite.anchor.x*this.sprite.width) >= 0){
                     this.sprite.x = x;
-                 //   console.log("Setting x Locaiton from here");
+                   // console.log("Setting x Locaiton from here");
                 }
             }
             if(this._locAbsFlag[1] == false){
@@ -132,7 +132,7 @@ export class Item {
             }else{
                 if(y - (this.sprite.anchor.y*this.sprite.height) >= 0){
                     this.sprite.y = y;
-                  //  console.log("Setting y Locaiton from here");
+                    //console.log("Setting y Locaiton from here");
                 }
             }
         }

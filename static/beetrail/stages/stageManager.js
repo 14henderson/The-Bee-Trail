@@ -1,5 +1,6 @@
 import {HubStage} from '/beetrail/stages/hub.js';
 import {MeadowStage} from '/beetrail/stages/meadow.js';
+import {PollenStage} from '/beetrail/stages/pollen.js';
 
 export class StageManager{
     #stages;
@@ -10,9 +11,10 @@ export class StageManager{
     constructor(app){
         this.stages = {
             "hub":new HubStage(app, this),
-            "meadow":new MeadowStage(app, this)
+            "meadow":new MeadowStage(app, this),
+            "pollen":new PollenStage(app, this)
         };
-        this.stage = "hub";
+        this.stage = "pollen";
         this.app = app;
     }
 

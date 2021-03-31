@@ -402,6 +402,7 @@ export class EventChain{
                             this.chain[this.eventNumber][i].dest[0],
                             this.chain[this.eventNumber][i].dest[1]
                         );
+                        console.log("Location Set!");
                         this.chain[this.eventNumber][i].completed = true;
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
