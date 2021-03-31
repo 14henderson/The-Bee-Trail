@@ -214,7 +214,6 @@ export class HubStage extends Stage{
             this.changeStage("meadow");
         }
         if(this.fSprites.meadowNav.onMouseHover()){
-            this.changeStage("meadow");
             this.fSprites.meadowNav.setFadeAnimation(0.2, 1, 0.05);
         }else{
             console.log()
