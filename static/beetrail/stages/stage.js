@@ -1,14 +1,15 @@
 import {Foreground} from '/beetrail/foregroundContainer.js'
 
-export class Stage {
+export class Stage{//} extends PIXI.Container{
     assetsTextures;
     app;
     fSprites;
     bSprites;
     states;
     state;
+    manager;
 
-    constructor(app){
+    constructor(app, manager){
         this.assetsTextures = [];
         this.app = app;
         this.fSprites = {}
@@ -18,6 +19,8 @@ export class Stage {
 
         this.foreground = new Foreground();
         this.foreground.tick();
+
+        this.stageManager = manager;
     }
 
 
@@ -30,6 +33,22 @@ export class Stage {
 
     setState(stateNum){
         this.state = this.states[stateNum];
+    }
+
+    changeStage(stage){
+        this.stageManager.changeStage(stage);
+    }
+    destroyAllItems(){
+        for(let singleSprite in this.bSprites){
+            console.log(singleSprite);
+            this.bSprites[singleSprite].getSprite().destroy();
+        }
+        this.bSprites = {}
+
+        for(let singleSprite in this.fSprites){
+            this.fSprites[singleSprite].getSprite().destroy();
+        }
+        this.fSprites = {}
     }
 
     /* Abstract Methods to be Overwritten by Child Game Stages */
