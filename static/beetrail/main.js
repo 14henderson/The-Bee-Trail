@@ -48,7 +48,7 @@ function test(){
 //app.stage.addChild(bee);
 let manager = new StageManager(app);
 
-
+/*
 let textures = [
     "assets/bSprites/Artboard 1grass-background.png",
     "assets/bSprites/Artboard 1grass-foreground.png",
@@ -91,15 +91,12 @@ let textures = [
     "assets/fSprites/buttons/minIONNav_L.fw.png",
     "assets/fSprites/buttons/pollenNav.fw.png",
     "assets/fSprites/buttons/pollenNav_L.fw.png",
-];
+];*/
 
 
-//manager.addTextures(textures);
 
-
+document.addEventListener('wheel', function(e) {
+  e.preventDefault();
+}, { passive: false });
 
 manager.start();
-//let hub = new Hub(app);
-//app.ticker.add(hub.loop, hub);
-//console.log("AFTER HUB CREWATION!!");
-//hub.loop(app);
