@@ -301,6 +301,9 @@ export class MeadowStage extends Stage{
             .next()
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .addFade(this.fSprites.ElieSpeech2, 3, 0, 1)
+            .addClickEvent(this.fSprites.ElieSpeech2)
+            .next()
+            .addChangeStageEvent(this.fSprites.ElieSpeech2, this, "hub")
             ;
 
         this.eventChain.initialise();
