@@ -10,99 +10,112 @@ import {Movement} from '/beetrail/movementMisc.js';
 
 
 export class MeadowStage extends Stage{
-    constructor(app){
-        super(app);
-        this.setup(app);
+    eventChain;
+    loader;
+    textures;
+
+    constructor(app, stageManager){
+        super(app, stageManager);
 
         this.states = [this.start, this.main];
         this.state = this.start;
         
         this.eventChain = new EventChain();
+        this.loader = new PIXI.Loader();
     }
 
-    setup(){
-        this.assetsTextures = ["assets/bSprites/Artboard 1grass-background.png",
-                                "assets/bSprites/Artboard 1grass-foreground.png",
-                                "assets/bSprites/Artboard 1grass-middleground.png",
-                                "assets/bSprites/Artboard 1meadow-foreground.png",
+    play(){
+        this.textures = [
+            "assets/bSprites/Artboard 1grass-background.png",
+            "assets/bSprites/Artboard 1grass-foreground.png",
+            "assets/bSprites/Artboard 1grass-middleground.png",
+            "assets/bSprites/Artboard 1meadow-foreground.png",
 
-                                "assets/fSprites/bees/Small-buff-tail-profile.png",
-                                "assets/fSprites/bees/Small-buff-tail-facing.png",
-                                "assets/fSprites/bees/Small-honey-bee-profile.png",
-                                "assets/fSprites/bees/Small-honey-bee-facing.png",
-                                "assets/fSprites/bees/Small-red-tail-profile.png",
-                                "assets/fSprites/bees/Small-redtail-facing.png",
+            "assets/fSprites/bees/Small-buff-tail-profile.png",
+            "assets/fSprites/bees/Small-buff-tail-facing.png",
+            "assets/fSprites/bees/Small-honey-bee-profile.png",
+            "assets/fSprites/bees/Small-honey-bee-facing.png",
+            "assets/fSprites/bees/Small-red-tail-profile.png",
+            "assets/fSprites/bees/Small-redtail-facing.png",
 
-                                "assets/fSprites/backgrounds/background3.fw.png",
-                                "assets/fSprites/backgrounds/background2.fw.png",
-                                "assets/fSprites/backgrounds/background1.fw.png",
-                            
-                                "assets/fSprites/objects/elie-standing.png",
-                                "assets/fSprites/objects/elie-waving.png",
-                                "assets/fSprites/objects/net-yellow.png",
+            "assets/fSprites/backgrounds/background3.fw.png",
+            "assets/fSprites/backgrounds/background2.fw.png",
+            "assets/fSprites/backgrounds/background1.fw.png",
+        
+            "assets/fSprites/objects/elie-standing.png",
+            "assets/fSprites/objects/elie-waving.png",
+            "assets/fSprites/objects/net-yellow.png",
 
-                                "assets/fSprites/speech-bubbles/1-billie-speech-bubble.png",
-                                "assets/fSprites/speech-bubbles/2-billie-speech-bubble.png",
-                                "assets/fSprites/speech-bubbles/barney-speech-bubble.png",
-                                "assets/fSprites/speech-bubbles/bella-speech-bubble.png",
-                                "assets/fSprites/speech-bubbles/elie-speech-bubble.png",
-                                "assets/fSprites/speech-bubbles/elie-speech-bubble-2.png"
+            "assets/fSprites/speech-bubbles/1-billie-speech-bubble.png",
+            "assets/fSprites/speech-bubbles/2-billie-speech-bubble.png",
+            "assets/fSprites/speech-bubbles/barney-speech-bubble.png",
+            "assets/fSprites/speech-bubbles/bella-speech-bubble.png",
+            "assets/fSprites/speech-bubbles/elie-speech-bubble.png",
+            "assets/fSprites/speech-bubbles/elie-speech-bubble-2.png"
+        ];
 
-                            ];
-        PIXI.loader.add(this.assetsTextures).load((loader, resources) => {
+        this.loader.add(this.textures);
+        this.loader.load((loader, resources) => {
             this.loadSprites();            
             this.miscAssetCreation();
+        });
+
+        this.loader.onComplete.add(() => {
             this.containerAssignment();
             this.assetPositioning();
-            this.eventChainsDef();
-            
             this.app.stage.addChild(this.foreground.getSprite());
             this.app.stage.addChild(this.bSprites.foregroundMeadow.getSprite());
-            this.app.ticker.add(delta => this.loop(delta));
-        });        
+            this.eventChainsDef();
+            this.app.ticker.add(this.loop, this);
+        });
+    }
+
+    stop(){
+        this.app.ticker.remove(this.loop, this);
+        this.loader.destroy();
     }
 
 
     //Creating new Item objects used in this stage
     loadSprites(){
-        this.bSprites.background1 = new SpriteItem("assets/bSprites/Artboard 1grass-background.png");
-        this.bSprites.background2 = new SpriteItem("assets/bSprites/Artboard 1grass-middleground.png");
-        this.bSprites.background3 = new SpriteItem("assets/bSprites/Artboard 1grass-foreground.png");
-        this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png");
+        this.bSprites.background1 = new SpriteItem("assets/bSprites/Artboard 1grass-background.png", this.loader);
+        this.bSprites.background2 = new SpriteItem("assets/bSprites/Artboard 1grass-middleground.png", this.loader);
+        this.bSprites.background3 = new SpriteItem("assets/bSprites/Artboard 1grass-foreground.png", this.loader);
+        this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png", this.loader);
         //------------------//
-        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png");
-        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png");
-        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png");
+        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", this.loader);
+        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", this.loader);
+        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", this.loader);
 
 
         this.fSprites.honeyBee = new AnimatedItem([
             "assets/fSprites/bees/Small-honey-bee-profile.png",
             "assets/fSprites/bees/Small-honey-bee-facing.png"
-        ]);
-        this.fSprites.honeySpeech = new SpriteItem("assets/fSprites/speech-bubbles/barney-speech-bubble.png");
+        ], this.loader);
+        this.fSprites.honeySpeech = new SpriteItem("assets/fSprites/speech-bubbles/barney-speech-bubble.png", this.loader);
 
         this.fSprites.buffBee = new AnimatedItem([
             "assets/fSprites/bees/Small-buff-tail-profile.png",
             "assets/fSprites/bees/Small-buff-tail-facing.png"
-        ]);
-        this.fSprites.buffSpeech = new SpriteItem("assets/fSprites/speech-bubbles/bella-speech-bubble.png");
+        ], this.loader);
+        this.fSprites.buffSpeech = new SpriteItem("assets/fSprites/speech-bubbles/bella-speech-bubble.png", this.loader);
         this.fSprites.redBee = new AnimatedItem([
             "assets/fSprites/bees/Small-red-tail-profile.png",
             "assets/fSprites/bees/Small-redtail-facing.png"
-        ]);
-        this.fSprites.redSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/1-billie-speech-bubble.png");
-        this.fSprites.redSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/2-billie-speech-bubble.png");
+        ], this.loader);
+        this.fSprites.redSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/1-billie-speech-bubble.png", this.loader);
+        this.fSprites.redSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/2-billie-speech-bubble.png", this.loader);
 
         this.fSprites.Elie = new AnimatedItem([
             "assets/fSprites/objects/elie-standing.png",
             "assets/fSprites/objects/elie-waving.png"
-        ]);
-        this.fSprites.ElieSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble.png");
-        this.fSprites.ElieSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble-2.png");
+        ], this.loader);
+        this.fSprites.ElieSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble.png", this.loader);
+        this.fSprites.ElieSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble-2.png", this.loader);
 
-        this.fSprites.net1 = new SpriteItem("assets/fSprites/objects/net-yellow.png");
-        this.fSprites.net2 = new SpriteItem("assets/fSprites/objects/net-yellow.png");
-        this.fSprites.net3 = new SpriteItem("assets/fSprites/objects/net-yellow.png");
+        this.fSprites.net1 = new SpriteItem("assets/fSprites/objects/net-yellow.png", this.loader);
+        this.fSprites.net2 = new SpriteItem("assets/fSprites/objects/net-yellow.png", this.loader);
+        this.fSprites.net3 = new SpriteItem("assets/fSprites/objects/net-yellow.png", this.loader);
     }
 
     //Creating any Misc assets here
@@ -197,9 +210,6 @@ export class MeadowStage extends Stage{
 
     //Defining the event chain(s) used in this stage.
     eventChainsDef(){
-
-        //this.eventChainBee1
-
         this.eventChain
             .addFade(this.fSprites.ElieSpeech1, 3, 0, 1)
             .addClickEvent(this.fSprites.ElieSpeech1)
@@ -292,30 +302,6 @@ export class MeadowStage extends Stage{
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .addFade(this.fSprites.ElieSpeech2, 3, 0, 1)
             ;
-
-
-
-        //this.eventChainBee1
-
-
-
-
-        /*
-        .addRotationEvent(this.fSprites.bee1, 0, 360, 3)
-            .addClickEvent(this.fSprites.bee1)
-            .addIdle(this.fSprites.bee1)
-            .addMovement(this.fSprites.bee1, [500, 200], 3, Movement.sinMvPattern)
-            .addIdle(this.fSprites.bee1)
-            .addClickEvent(this.fSprites.bee1)
-            .addForceLocationEvent(this.fSprites.bee1, [700, 500])
-            .addClickEvent(this.fSprites.bee1)
-            .addDragEvent(this.fSprites.bee1)
-            .addCollisionEvent(this.fSprites.bee1, this.fSprites.square)
-            .addForceLocationEvent(this.fSprites.bee1, [400, 300])
-            .addMovement(this.fSprites.bee1, [100, 100], 1, Movement.quadCurveMvPattern);
-        */
-
-
 
         this.eventChain.initialise();
     }

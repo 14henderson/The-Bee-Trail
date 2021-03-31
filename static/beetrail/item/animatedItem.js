@@ -2,11 +2,13 @@ import {Item} from '/beetrail/item/item.js';
 
 
 export class AnimatedItem extends Item{
-    constructor(textureURIArray){
+    constructor(textureURIArray, loader){
         super();
         this.textureArray = [];
         for(let i=0; i<textureURIArray.length; i++){
-            this.textureArray.push(PIXI.loader.resources[textureURIArray[i]].texture);
+            this.textureArray.push(loader.resources[textureURIArray[i]].texture);
+            //this.textureArray.push(PIXI.Texture.from(textureURIArray[i]))
+            //this.textureArray.push(PIXI.Loader.shared.resources[textureURIArray[i]].texture);
         }
         this.sprite = new PIXI.AnimatedSprite(this.textureArray);
         this.sprite.interactive = false;

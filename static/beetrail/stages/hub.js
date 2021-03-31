@@ -7,118 +7,114 @@ import {EventChain} from '/beetrail/eventChain.js';
 import {Movement} from '/beetrail/movementMisc.js';
 
 
-export class Hub extends Stage{
-    constructor(app){
-        super(app);
-        this.setup(app);
+export class HubStage extends Stage{
+    startEventChain;
+    mainEventChain;
+    loader;
+    textures;
+
+    constructor(app, stageManager){
+        super(app, stageManager);
         
         this.states = [this.start, this.main];
         this.state = this.start;
         
         this.startEventChain = new EventChain();
         this.mainEventChain = new EventChain();
+        this.loader = new PIXI.Loader();
     }
 
-    setup(){
-        this.assetsTextures = ["assets/bSprites/Artboard 1grass-background.png",
-                                "assets/bSprites/Artboard 1grass-foreground.png",
-                                "assets/bSprites/Artboard 1grass-middleground.png",
-                                "assets/bSprites/Artboard 1meadow-foreground.png",
+    play(){
+        this.textures = [
+            "assets/bSprites/Artboard 1grass-background.png",
+            "assets/bSprites/Artboard 1grass-foreground.png",
+            "assets/bSprites/Artboard 1grass-middleground.png",
+            "assets/bSprites/Artboard 1meadow-foreground.png",
+        
+            "assets/fSprites/backgrounds/background3.fw.png",
+            "assets/fSprites/backgrounds/background2.fw.png",
+            "assets/fSprites/backgrounds/background1.fw.png",
+        
+            "assets/fSprites/objects/elie-standing.png",
+            "assets/fSprites/objects/elie-waving.png",
+            "assets/fSprites/objects/net-yellow.png",
+        
+            "assets/fSprites/objects/bench.png",
+            "assets/fSprites/objects/laptop.png",
+            "assets/fSprites/objects/minion-cable.png",
+        
+            "assets/fSprites/objects/Artboard 1newspaper-front-cover.png",
+            "assets/fSprites/buttons/play-button-hover.png",
+            "assets/fSprites/buttons/static-play-button-click.png",
+        
+            "assets/fSprites/buttons/meadowNav.fw.png",
+            "assets/fSprites/buttons/meadowNav_L.fw.png",
+            "assets/fSprites/buttons/minIONNav.fw.png",
+            "assets/fSprites/buttons/minIONNav_L.fw.png",
+            "assets/fSprites/buttons/pollenNav.fw.png",
+            "assets/fSprites/buttons/pollenNav_L.fw.png",
+        ];
 
-                                "assets/fSprites/objects/bench.png",
-                                "assets/fSprites/objects/laptop.png",
-                                "assets/fSprites/objects/minion-cable.png",
-
-                                "assets/fSprites/backgrounds/background3.fw.png",
-                                "assets/fSprites/backgrounds/background2.fw.png",
-                                "assets/fSprites/backgrounds/background1.fw.png",
-
-                                "assets/fSprites/objects/Artboard 1newspaper-front-cover.png",
-                                "assets/fSprites/buttons/play-button-hover.png",
-                                "assets/fSprites/buttons/static-play-button-click.png",
-
-                                "assets/fSprites/buttons/meadowNav.fw.png",
-                                "assets/fSprites/buttons/meadowNav_L.fw.png",
-                                "assets/fSprites/buttons/minIONNav.fw.png",
-                                "assets/fSprites/buttons/minIONNav_L.fw.png",
-                                "assets/fSprites/buttons/pollenNav.fw.png",
-                                "assets/fSprites/buttons/pollenNav_L.fw.png",
-                            ];
-
-
-        PIXI.loader.add(this.assetsTextures).load((loader, resources) => {
+        this.loader.add(this.textures);
+        this.loader.load((loader, resources) => {
             this.loadSprites();            
             this.miscAssetCreation();
+        });
+
+        this.loader.onComplete.add(() => {
             this.containerAssignment();
             this.assetPositioning();
-            this.eventChainsDef();
-            
             this.app.stage.addChild(this.foreground.getSprite());
-            //this.app.stage.addChild(this.bSprites.foregroundMeadow.getSprite());
-            this.app.ticker.add(delta => this.loop(delta));
-        });        
+            this.eventChainsDef();
+            this.app.ticker.add(this.loop, this);
+        });
     }
+
+
+    stop(){
+        this.app.ticker.remove(this.loop, this);
+        this.loader.destroy();
+    }
+
+
+
     loadSprites(){
-        this.bSprites.background1 = new SpriteItem("assets/bSprites/Artboard 1grass-background.png");
-        this.bSprites.background2 = new SpriteItem("assets/bSprites/Artboard 1grass-middleground.png");
-        this.bSprites.background3 = new SpriteItem("assets/bSprites/Artboard 1grass-foreground.png");
-        this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png");
+        this.bSprites.background1 = new SpriteItem("assets/bSprites/Artboard 1grass-background.png", this.loader);
+        this.bSprites.background2 = new SpriteItem("assets/bSprites/Artboard 1grass-middleground.png", this.loader);
+        this.bSprites.background3 = new SpriteItem("assets/bSprites/Artboard 1grass-foreground.png", this.loader);
+        this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png", this.loader);
         //---------------------------
-        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png");
-        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png");
-        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png");
+        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", this.loader);
+        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", this.loader);
+        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", this.loader);
         //---------------------------
-        this.fSprites.bench = new SpriteItem("assets/fSprites/objects/bench.png");
-        this.fSprites.laptop = new SpriteItem("assets/fSprites/objects/laptop.png");
-        this.fSprites.minION = new SpriteItem("assets/fSprites/objects/minion-cable.png");
-        this.fSprites.newspaper = new SpriteItem("assets/fSprites/objects/Artboard 1newspaper-front-cover.png");
+        this.fSprites.bench = new SpriteItem("assets/fSprites/objects/bench.png", this.loader);
+        this.fSprites.laptop = new SpriteItem("assets/fSprites/objects/laptop.png", this.loader);
+        this.fSprites.minION = new SpriteItem("assets/fSprites/objects/minion-cable.png", this.loader);
+        this.fSprites.newspaper = new SpriteItem("assets/fSprites/objects/Artboard 1newspaper-front-cover.png", this.loader);
         //---------------------------
+        
         this.fSprites.meadowNav = new AnimatedItem([
             "assets/fSprites/buttons/meadowNav.fw.png",
             "assets/fSprites/buttons/meadowNav_L.fw.png"
-        ]);
+        ], this.loader);
         this.fSprites.pollenNav = new AnimatedItem([
             "assets/fSprites/buttons/pollenNav.fw.png",
             "assets/fSprites/buttons/pollenNav_L.fw.png"
-        ]);
+        ], this.loader);
         this.fSprites.minIONNav = new AnimatedItem([
             "assets/fSprites/buttons/minIONNav.fw.png",
             "assets/fSprites/buttons/minIONNav_L.fw.png"
-        ]);
-
-
-
-
-
+        ], this.loader);
 
         this.fSprites.playButton = new AnimatedItem([
             "assets/fSprites/buttons/static-play-button-click.png",
             "assets/fSprites/buttons/play-button-hover.png"
-        ])
+        ], this.loader);
     }
 
+
     miscAssetCreation(){
-        let hoverBox1 = new PIXI.Graphics()
-            .lineStyle(2, 0xffd026, 1)
-            .beginFill(0xE8E8E8)
-            .drawRoundedRect(0, 0, 1279, 400, 10)
-            .endFill();
-        //this.fSprites.meadowNav = new ShapeItem(hoverBox1);
-
-        let hoverBox2 = new PIXI.Graphics()
-            .lineStyle(2, 0xffd026, 1)
-            .beginFill(0xE8E8E8)
-            .drawRoundedRect(0, 0, (window.innerWidth/2)-30, (window.innerHeight/2)-40, 10)
-            .endFill();
-        //this.fSprites.pollenNav = new ShapeItem(hoverBox2);
-
-        let hoverBox3 = new PIXI.Graphics()
-            .lineStyle(2, 0xffd026, 1)
-            .beginFill(0xE8E8E8)
-            .drawRoundedRect(0, 0, (window.innerWidth/2)-30, (window.innerHeight/2)-40, 10)
-            .endFill();
-        //this.fSprites.minIONNav = new ShapeItem(hoverBox3);
-
         let backColour = new PIXI.Graphics()
             .beginFill(0xE8E8E8)
             .drawRect(0, 0, this.bSprites.background1.getSprite().width, window.innerHeight)
@@ -141,7 +137,7 @@ export class Hub extends Stage{
         this.fSprites.background1.setSize(1280, 960);
         
         this.fSprites.newspaper.setSize(1280, 960);
-        this.fSprites.newspaper.setAlpha(0);
+        this.fSprites.newspaper.setAlpha(0.5);
 
         this.fSprites.bench.setScale(1280/2639);
         this.fSprites.bench.setLocation(0, 686);
@@ -162,14 +158,12 @@ export class Hub extends Stage{
         this.fSprites.meadowNav.setAlpha(1);
         this.fSprites.meadowNav.centerPivot();
         this.fSprites.meadowNav.setLocation(650, 300);
-        
 
         this.fSprites.pollenNav.enableInteractiveState();
         this.fSprites.pollenNav.setAlpha(1);
         this.fSprites.pollenNav.centerPivot();
         this.fSprites.pollenNav.setLocation(320, 720);
         this.fSprites.pollenNav.gotoFrame(1);
-        
 
         this.fSprites.minIONNav.enableInteractiveState();
         this.fSprites.minIONNav.setAlpha(1);
@@ -218,6 +212,7 @@ export class Hub extends Stage{
         
 
         if(this.fSprites.meadowNav.onMouseHover()){
+            this.changeStage("meadow");
             this.fSprites.meadowNav.setFadeAnimation(0.2, 1, 0.05);
         }else{
             console.log()
@@ -235,11 +230,9 @@ export class Hub extends Stage{
             this.fSprites.minIONNav.setFadeAnimation(0.2, 1, -0.05);
         }
 
-
         this.fSprites.meadowNav.tick();
         this.fSprites.pollenNav.tick();
         this.fSprites.minIONNav.tick();
-
 
         this.foreground.tick();
         this.mainEventChain.tick();
