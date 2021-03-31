@@ -155,18 +155,18 @@ export class HubStage extends Stage{
         this.fSprites.playButton.setAlpha(0);
 
         this.fSprites.meadowNav.enableInteractiveState();
-        this.fSprites.meadowNav.setAlpha(1);
+        this.fSprites.meadowNav.setAlpha(0.2);
         this.fSprites.meadowNav.centerPivot();
         this.fSprites.meadowNav.setLocation(650, 300);
 
         this.fSprites.pollenNav.enableInteractiveState();
-        this.fSprites.pollenNav.setAlpha(1);
+        this.fSprites.pollenNav.setAlpha(0.2);
         this.fSprites.pollenNav.centerPivot();
         this.fSprites.pollenNav.setLocation(320, 720);
         this.fSprites.pollenNav.gotoFrame(1);
 
         this.fSprites.minIONNav.enableInteractiveState();
-        this.fSprites.minIONNav.setAlpha(1);
+        this.fSprites.minIONNav.setAlpha(0.2);
         this.fSprites.minIONNav.centerPivot();
         this.fSprites.minIONNav.setLocation(975, 720);
         this.fSprites.minIONNav.gotoFrame(1);
@@ -210,9 +210,10 @@ export class HubStage extends Stage{
     main(delta){
         this.centerAndScaleSprites(this.bSprites);
         
-
-        if(this.fSprites.meadowNav.onMouseHover()){
+        if(this.fSprites.meadowNav.getClickedState()){
             this.changeStage("meadow");
+        }
+        if(this.fSprites.meadowNav.onMouseHover()){
             this.fSprites.meadowNav.setFadeAnimation(0.2, 1, 0.05);
         }else{
             console.log()
