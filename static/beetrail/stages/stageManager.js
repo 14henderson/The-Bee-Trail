@@ -14,7 +14,7 @@ export class StageManager{
             "meadow":new MeadowStage(app, this),
             "pollen":new PollenStage(app, this)
         };
-        this.stage = "pollen";
+        this.stage = "hub";
         this.app = app;
     }
 
@@ -22,7 +22,7 @@ export class StageManager{
     changeStage(newStage){
         this.stages[this.stage].stop();
         this.app.stage.removeChildren();
-        this.stages[this.stage].destroyAllItems();
+        //this.stages[this.stage].destroyAllItems();
         
         this.stage = newStage;
         this.stages[newStage].play();

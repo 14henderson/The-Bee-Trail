@@ -25,6 +25,7 @@ export class HubStage extends Stage{
     }
 
     play(){
+        console.log("PLAY IN HUB");
         this.textures = [
             "assets/bSprites/Artboard 1grass-background.png",
             "assets/bSprites/Artboard 1grass-foreground.png",
@@ -137,7 +138,7 @@ export class HubStage extends Stage{
         this.fSprites.background1.setSize(1280, 960);
         
         this.fSprites.newspaper.setSize(1280, 960);
-        this.fSprites.newspaper.setAlpha(0.5);
+        this.fSprites.newspaper.setAlpha(0);
 
         this.fSprites.bench.setScale(1280/2639);
         this.fSprites.bench.setLocation(0, 686);
@@ -216,9 +217,11 @@ export class HubStage extends Stage{
         if(this.fSprites.meadowNav.onMouseHover()){
             this.fSprites.meadowNav.setFadeAnimation(0.2, 1, 0.05);
         }else{
-            console.log()
             this.fSprites.meadowNav.setFadeAnimation(0.2, 1, -0.05);
         }    
+        if(this.fSprites.pollenNav.getClickedState()){
+            this.changeStage("pollen");
+        }
         if(this.fSprites.pollenNav.onMouseHover()){
             this.fSprites.pollenNav.setFadeAnimation(0.2, 1, 0.05);
         }else{

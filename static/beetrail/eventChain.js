@@ -67,6 +67,7 @@ export class EventChain{
     }
 
     initialise(){
+        this.eventNumber = 0;
         let i;
         for(i=0; i<this.chain[0].length; i++){
             if(this.chain[0][i].type == "click" || this.chain[0][i].type == "drag"){

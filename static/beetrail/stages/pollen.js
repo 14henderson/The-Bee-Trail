@@ -22,6 +22,7 @@ export class PollenStage extends Stage{
     }
 
     play(){
+        console.log("PLAY IN POLLEN");
         this.textures = [
             "assets/bSprites/Artboard 1grass-background.png",
             "assets/bSprites/Artboard 1grass-foreground.png",
@@ -253,6 +254,7 @@ export class PollenStage extends Stage{
     }
 
     main(delta){
+        console.log(this.eventChain.eventNumber);
         this.centerAndScaleSprites(this.bSprites);
 
         this.foreground.tick();
