@@ -8,7 +8,6 @@ import {Movement} from '/beetrail/movementMisc.js';
 
 export class PollenStage extends Stage{
     eventChain;
-    loader;
     textures;
 
     constructor(app, stageManager){
@@ -18,17 +17,10 @@ export class PollenStage extends Stage{
         this.state = this.main;
         
         this.eventChain = new EventChain();
-        this.loader = new PIXI.Loader();
     }
 
-    play(){
-        console.log("PLAY IN POLLEN");
+    getTextures(){
         this.textures = [
-            "assets/bSprites/Artboard 1grass-background.png",
-            "assets/bSprites/Artboard 1grass-foreground.png",
-            "assets/bSprites/Artboard 1grass-middleground.png",
-            "assets/bSprites/Artboard 1meadow-foreground.png",
-        
             "assets/fSprites/backgrounds/background3.fw.png",
             "assets/fSprites/backgrounds/background2.fw.png",
             "assets/fSprites/backgrounds/background1.fw.png",
@@ -58,7 +50,13 @@ export class PollenStage extends Stage{
 
             "assets/fSprites/speech-bubbles/speech-bubble-tube-top.png"
         ];
-
+        return this.textures;
+    }
+    createAssets(resources){
+        this.loadSprites(resources);            
+        this.foreground.addAllSprites(this.fSprites);
+    }
+/*
         this.loader.add(this.textures);
         this.loader.load((loader, resources) => {
             this.loadSprites();            
@@ -73,69 +71,47 @@ export class PollenStage extends Stage{
             this.app.ticker.add(this.loop, this);
         });
     }
-
+*/
     stop(){
-        this.app.ticker.remove(this.loop, this);
-        this.loader.destroy();
+        this.eventChain.resetChain();
+        this.eventChain.eventNumber = 0;
     }
 
-    loadSprites(){
-        this.bSprites.background1 = new SpriteItem("assets/bSprites/Artboard 1grass-background.png", this.loader);
-        this.bSprites.background2 = new SpriteItem("assets/bSprites/Artboard 1grass-middleground.png", this.loader);
-        this.bSprites.background3 = new SpriteItem("assets/bSprites/Artboard 1grass-foreground.png", this.loader);
-        this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png", this.loader);
+    loadSprites(resources){
+        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", resources);
+        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", resources);
+        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", resources);
         //---------------------------
-        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", this.loader);
-        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", this.loader);
-        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", this.loader);
-        //---------------------------
-        this.fSprites.bench = new SpriteItem("assets/fSprites/objects/bench.png", this.loader);
-        //this.fSprites.laptop = new SpriteItem("assets/fSprites/objects/laptop.png", this.loader);
-        //this.fSprites.minION = new SpriteItem("assets/fSprites/objects/minion-cable.png", this.loader);
+        this.fSprites.bench = new SpriteItem("assets/fSprites/objects/bench.png", resources);
+        //this.fSprites.laptop = new SpriteItem("assets/fSprites/objects/laptop.png", resources);
+        //this.fSprites.minION = new SpriteItem("assets/fSprites/objects/minion-cable.png", resources);
         //---------------------------
         this.fSprites.honeyBee = new AnimatedItem([
             "assets/fSprites/bees/Small-honey-bee-profile.png",
             "assets/fSprites/bees/Small-honey-bee-facing.png"
-        ], this.loader);
+        ], resources);
         this.fSprites.buffBee = new AnimatedItem([
             "assets/fSprites/bees/Small-buff-tail-profile.png",
             "assets/fSprites/bees/Small-buff-tail-facing.png"
-        ], this.loader);
+        ], resources);
         this.fSprites.redBee = new AnimatedItem([
             "assets/fSprites/bees/Small-red-tail-profile.png",
             "assets/fSprites/bees/Small-redtail-facing.png"
-        ], this.loader);
+        ], resources);
 
-        this.fSprites.tube = new SpriteItem("assets/fSprites/objects/outer-tube.png", this.loader);
-        this.fSprites.net = new SpriteItem("assets/fSprites/objects/net-yellow.png", this.loader);
+        this.fSprites.tube = new SpriteItem("assets/fSprites/objects/outer-tube.png", resources);
+        this.fSprites.net = new SpriteItem("assets/fSprites/objects/net-yellow.png", resources);
 
-        this.fSprites.beeSpeechDrag = new SpriteItem("assets/fSprites/speech-bubbles/speech-bubble-tube-top.png", this.loader);
+        this.fSprites.beeSpeechDrag = new SpriteItem("assets/fSprites/speech-bubbles/speech-bubble-tube-top.png", resources);
+
+        this.miscAssetCreation();//??????
     }
 
     miscAssetCreation(){
-        let backColour = new PIXI.Graphics()
-            .beginFill(0xE8E8E8)
-            .drawRect(0, 0, this.bSprites.background1.getSprite().width, window.innerHeight)
-            .endFill();
-        this.bSprites.backgroundCol = new ShapeItem(backColour, false);
-
-
         let tubeEntranceBox = new PIXI.Graphics()
             .lineStyle(4, 0xFF3300, 1)
             .drawRect(0, 0, 150, 160);
         this.fSprites.tubeEntranceBox = new ShapeItem(tubeEntranceBox, false);
-        
-
-
-    }
-
-    containerAssignment(){
-        this.app.stage.addChild(this.bSprites.backgroundCol.getSprite());
-        this.app.stage.addChild(this.bSprites.background1.getSprite());
-        this.app.stage.addChild(this.bSprites.background2.getSprite());
-        this.app.stage.addChild(this.bSprites.background3.getSprite());
-        
-        this.foreground.addAllSprites(this.fSprites);
     }
 
     assetPositioning(){
@@ -249,15 +225,12 @@ export class PollenStage extends Stage{
         this.eventChain.initialise();
     }
 
-    loop(delta){
-        this.state(delta);
+    loop(delta, context){
+        context.state(delta);
     }
 
-    main(delta){
-        console.log(this.eventChain.eventNumber);
-        this.centerAndScaleSprites(this.bSprites);
-
-        this.foreground.tick();
-        this.eventChain.tick();
+    main(delta, context){
+        context.foreground.tick();
+        context.eventChain.tick();
     }
 }

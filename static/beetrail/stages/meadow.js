@@ -11,7 +11,6 @@ import {Movement} from '/beetrail/movementMisc.js';
 
 export class MeadowStage extends Stage{
     eventChain;
-    loader;
     textures;
 
     constructor(app, stageManager){
@@ -21,16 +20,10 @@ export class MeadowStage extends Stage{
         this.state = this.start;
         
         this.eventChain = new EventChain();
-        this.loader = new PIXI.Loader();
     }
 
-    play(){
+    getTextures(){
         this.textures = [
-            "assets/bSprites/Artboard 1grass-background.png",
-            "assets/bSprites/Artboard 1grass-foreground.png",
-            "assets/bSprites/Artboard 1grass-middleground.png",
-            "assets/bSprites/Artboard 1meadow-foreground.png",
-
             "assets/fSprites/bees/Small-buff-tail-profile.png",
             "assets/fSprites/bees/Small-buff-tail-facing.png",
             "assets/fSprites/bees/Small-honey-bee-profile.png",
@@ -53,89 +46,59 @@ export class MeadowStage extends Stage{
             "assets/fSprites/speech-bubbles/elie-speech-bubble.png",
             "assets/fSprites/speech-bubbles/elie-speech-bubble-2.png"
         ];
+        return this.textures;
+    }
 
-        this.loader.add(this.textures);
-        this.loader.load((loader, resources) => {
-            this.loadSprites();            
-            this.miscAssetCreation();
-        });
-
-        this.loader.onComplete.add(() => {
-            this.containerAssignment();
-            this.assetPositioning();
-            this.app.stage.addChild(this.foreground.getSprite());
-            this.app.stage.addChild(this.bSprites.foregroundMeadow.getSprite());
-            this.eventChainsDef();
-            this.app.ticker.add(this.loop, this);
-        });
+    createAssets(resources){
+        this.loadSprites(resources);
+        this.foreground.addAllSprites(this.fSprites);
     }
 
     stop(){
-        this.app.ticker.remove(this.loop, this);
-        this.loader.destroy();
+        this.eventChain.resetChain();
+        this.eventChain.eventNumber = 0;
     }
 
 
     //Creating new Item objects used in this stage
-    loadSprites(){
-        this.bSprites.background1 = new SpriteItem("assets/bSprites/Artboard 1grass-background.png", this.loader);
-        this.bSprites.background2 = new SpriteItem("assets/bSprites/Artboard 1grass-middleground.png", this.loader);
-        this.bSprites.background3 = new SpriteItem("assets/bSprites/Artboard 1grass-foreground.png", this.loader);
-        this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png", this.loader);
+    loadSprites(resources){
+        //this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png", this.loader);
         //------------------//
-        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", this.loader);
-        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", this.loader);
-        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", this.loader);
+        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", resources);
+        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", resources);
+        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", resources);
 
 
         this.fSprites.honeyBee = new AnimatedItem([
             "assets/fSprites/bees/Small-honey-bee-profile.png",
             "assets/fSprites/bees/Small-honey-bee-facing.png"
-        ], this.loader);
-        this.fSprites.honeySpeech = new SpriteItem("assets/fSprites/speech-bubbles/barney-speech-bubble.png", this.loader);
+        ], resources);
+        this.fSprites.honeySpeech = new SpriteItem("assets/fSprites/speech-bubbles/barney-speech-bubble.png", resources);
 
         this.fSprites.buffBee = new AnimatedItem([
             "assets/fSprites/bees/Small-buff-tail-profile.png",
             "assets/fSprites/bees/Small-buff-tail-facing.png"
-        ], this.loader);
-        this.fSprites.buffSpeech = new SpriteItem("assets/fSprites/speech-bubbles/bella-speech-bubble.png", this.loader);
+        ], resources);
+        this.fSprites.buffSpeech = new SpriteItem("assets/fSprites/speech-bubbles/bella-speech-bubble.png", resources);
         this.fSprites.redBee = new AnimatedItem([
             "assets/fSprites/bees/Small-red-tail-profile.png",
             "assets/fSprites/bees/Small-redtail-facing.png"
-        ], this.loader);
-        this.fSprites.redSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/1-billie-speech-bubble.png", this.loader);
-        this.fSprites.redSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/2-billie-speech-bubble.png", this.loader);
+        ], resources);
+        this.fSprites.redSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/1-billie-speech-bubble.png", resources);
+        this.fSprites.redSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/2-billie-speech-bubble.png", resources);
 
         this.fSprites.Elie = new AnimatedItem([
             "assets/fSprites/objects/elie-standing.png",
             "assets/fSprites/objects/elie-waving.png"
-        ], this.loader);
-        this.fSprites.ElieSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble.png", this.loader);
-        this.fSprites.ElieSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble-2.png", this.loader);
+        ], resources);
+        this.fSprites.ElieSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble.png", resources);
+        this.fSprites.ElieSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble-2.png", resources);
 
-        this.fSprites.net1 = new SpriteItem("assets/fSprites/objects/net-yellow.png", this.loader);
-        this.fSprites.net2 = new SpriteItem("assets/fSprites/objects/net-yellow.png", this.loader);
-        this.fSprites.net3 = new SpriteItem("assets/fSprites/objects/net-yellow.png", this.loader);
+        this.fSprites.net1 = new SpriteItem("assets/fSprites/objects/net-yellow.png", resources);
+        this.fSprites.net2 = new SpriteItem("assets/fSprites/objects/net-yellow.png", resources);
+        this.fSprites.net3 = new SpriteItem("assets/fSprites/objects/net-yellow.png", resources);
     }
 
-    //Creating any Misc assets here
-    miscAssetCreation(){
-        let backColour = new PIXI.Graphics()
-            .beginFill(0xE8E8E8)
-            .drawRect(0, 0, this.bSprites.background1.getSprite().width, window.innerHeight)
-            .endFill();
-        this.bSprites.backgroundCol = new ShapeItem(backColour, false);
-    }
-
-    //Assigning all Items to both parent and foreground containers.
-    containerAssignment(){
-        this.app.stage.addChild(this.bSprites.backgroundCol.getSprite());
-        this.app.stage.addChild(this.bSprites.background1.getSprite());
-        this.app.stage.addChild(this.bSprites.background2.getSprite());
-        this.app.stage.addChild(this.bSprites.background3.getSprite());
-        
-        this.foreground.addAllSprites(this.fSprites);
-    }
 
     //Positioning and scaling of Items
     assetPositioning(){
@@ -150,6 +113,7 @@ export class MeadowStage extends Stage{
         this.fSprites.honeyBee.setAlpha(0);
         this.fSprites.honeyBee.setSpriteDirection('r');
         this.fSprites.honeyBee.bringBehind(this.fSprites.background3);
+        this.fSprites.honeyBee.gotoFrame(0);
 
         this.fSprites.honeySpeech.setScale(.8);
         this.fSprites.honeySpeech.setLocation(570, 100);
@@ -167,6 +131,7 @@ export class MeadowStage extends Stage{
         this.fSprites.buffBee.setSpriteDirection('l');
         this.fSprites.buffBee.setLocation(1200, 500);
         this.fSprites.buffBee.setAlpha(0);
+        this.fSprites.buffBee.gotoFrame(0);
 
         this.fSprites.buffSpeech.setScale(0.8);
         this.fSprites.buffSpeech.setLocation(400, 250);
@@ -182,6 +147,7 @@ export class MeadowStage extends Stage{
         this.fSprites.redBee.setLocation(1200, 420);
         this.fSprites.redBee.setAlpha(0);
         this.fSprites.redBee.bringBehind(this.fSprites.background2);
+        this.fSprites.redBee.gotoFrame(0);
 
         this.fSprites.redSpeech1.setScale(0.8);
         this.fSprites.redSpeech1.setLocation(350, 50);
@@ -205,7 +171,6 @@ export class MeadowStage extends Stage{
         this.fSprites.ElieSpeech2.setLocation(450, 200);
         this.fSprites.ElieSpeech2.setAlpha(0);
 //---------------
-        
     }
 
     //Defining the event chain(s) used in this stage.
@@ -313,17 +278,15 @@ export class MeadowStage extends Stage{
 
 
     //State Loops
-    loop(delta){
-        this.state(delta);
+    loop(delta, context){
+        context.state(delta, context);
     }
     
 
     //STATES
-    start(delta){
-        this.centerAndScaleSprites(this.bSprites);
-
-        this.foreground.tick();
-        this.eventChain.tick();
+    start(delta, context){
+        context.foreground.tick();
+        context.eventChain.tick();
     }
 
     main(delta){
