@@ -99,4 +99,4 @@ document.addEventListener('wheel', function(e) {
   e.preventDefault();
 }, { passive: false });
 
-manager.start();
+//manager.start();

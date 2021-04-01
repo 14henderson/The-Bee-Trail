@@ -1,10 +1,10 @@
 import {Foreground} from '/beetrail/foregroundContainer.js'
 
-export class Stage{//} extends PIXI.Container{
+export class Stage{
     assetsTextures;
     app;
     fSprites;
-    bSprites;
+    //bSprites;
     states;
     state;
     manager;
@@ -13,7 +13,7 @@ export class Stage{//} extends PIXI.Container{
         this.assetsTextures = [];
         this.app = app;
         this.fSprites = {}
-        this.bSprites = {}
+       // this.bSprites = {}
         this.states = [];
         this.state;
 
@@ -23,12 +23,8 @@ export class Stage{//} extends PIXI.Container{
         this.stageManager = manager;
     }
 
-
-    centerAndScaleSprites(sprites){
-        for(let singleSprite in sprites){
-            this.bSprites[singleSprite].centerX();
-            this.bSprites[singleSprite].scaleByHeight(window.innerHeight);
-        }
+    getForeground(){
+        return this.foreground;
     }
 
     setState(stateNum){
@@ -38,6 +34,8 @@ export class Stage{//} extends PIXI.Container{
     changeStage(stage){
         this.stageManager.changeStage(stage);
     }
+
+
     destroyAllItems(){
         for(let singleSprite in this.bSprites){
             console.log(singleSprite);

@@ -3,13 +3,9 @@ import {Item} from '/beetrail/item/item.js';
 
 export class SpriteItem extends Item{
 
-    constructor(textureURI, loader){
+    constructor(textureURI, resources){
         super();
-        //console.log("Sprite Item Texture: ", PIXI.Loader.shared.resources[textureURI]);
-        //console.log("Sprite Item from Load: ", PIXI.Texture.from(textureURI));
-        this.sprite = new PIXI.Sprite(loader.resources[textureURI].texture);
-        //
-        //this.sprite = new PIXI.Sprite(PIXI.Loader.shared.resources[textureURI].texture);
+        this.sprite = new PIXI.Sprite(resources[textureURI].texture);
         this.sprite.interactive = false;
         this.size = [this.sprite.width, this.sprite.height];
         this._oriWidth = this.sprite.width;

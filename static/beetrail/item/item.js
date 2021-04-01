@@ -39,7 +39,6 @@ export class Item {
         this._clicked = true;
     }
     getClickedState(){
-        //console.log("Internal Item Clicked State: ", this._clicked);
         return this._clicked;
     }
     getDragState(){

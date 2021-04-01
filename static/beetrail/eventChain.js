@@ -9,6 +9,9 @@ export class EventChain{
         this._creationMode = false;
         this._creationEvent
     }
+    resetChain(){
+        this.chain = [[]];
+    }
     getCurrentEventNumber(){
         return this.eventNumber;
     }
@@ -339,7 +342,7 @@ export class EventChain{
                         this.chain[this.eventNumber][i].currStage.changeStage(
                             this.chain[this.eventNumber][i].newStageCode
                         );
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                        eGroupComp = eGroupComp && true;
                     }
                     break;
 
