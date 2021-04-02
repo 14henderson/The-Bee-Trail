@@ -260,18 +260,29 @@ export class EventChain{
         return this;
     }
 
-    addPlayItemEvent(item){
+    addPlayVideoEvent(item){
         this.chain[this.chain.length-1].push({
-            'type':'play-item',
+            'type':'play-video',
             'item':item,
             'completed':false
         });
         return this;
     }
-    waitForMediaEvent(item){
+    waitForVideoEvent(item){
         this.chain[this.chain.length-1].push({
-            'type':'media-wait',
+            'type':'video-wait',
             'item':item,
+            'completed':false
+        });
+        return this;
+    }
+
+    addPlaySoundEvent(item, soundManager, code){
+        this.chain[this.chain.length-1].push({
+            'type':'play-sound',
+            'item':item,
+            'soundManager':soundManager,
+            'code':code,
             'completed':false
         });
         return this;
@@ -491,7 +502,7 @@ export class EventChain{
                     }
                     break;
 
-                case 'play-item':
+                case 'play-video':
                     if(!this.chain[this.eventNumber][i].completed){
                         this.chain[this.eventNumber][i].item.play();
                         this.chain[this.eventNumber][i].completed = true;
@@ -499,7 +510,7 @@ export class EventChain{
                     }
                 break;
 
-                case 'media-wait':
+                case 'video-wait':
                     if(!this.chain[this.eventNumber][i].completed){
                         if(this.chain[this.eventNumber][i].item.hasFinished()){
                             this.chain[this.eventNumber][i].completed = true;
@@ -507,6 +518,15 @@ export class EventChain{
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
                 break;
+
+                case 'play-sound':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].soundManager.play(
+                            this.chain[this.eventNumber][i].code
+                        );
+                        this.chain[this.eventNumber][i].completed = true;
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
 
                 case 'customAction':
                     if(!this.chain[this.eventNumber][i].completed){
