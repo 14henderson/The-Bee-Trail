@@ -34,6 +34,7 @@ export class MeadowStage extends Stage{
             "assets/fSprites/backgrounds/background3.fw.png",
             "assets/fSprites/backgrounds/background2.fw.png",
             "assets/fSprites/backgrounds/background1.fw.png",
+            "assets/fSprites/backgrounds/foreground.fw.png",
         
             "assets/fSprites/objects/elie-standing.png",
             "assets/fSprites/objects/elie-waving.png",
@@ -67,6 +68,8 @@ export class MeadowStage extends Stage{
         this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", resources);
         this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", resources);
         this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", resources);
+        this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.fw.png", resources);
+
 
 
         this.fSprites.honeyBee = new AnimatedItem([
@@ -105,6 +108,7 @@ export class MeadowStage extends Stage{
         this.fSprites.background3.setSize(1280, 960);
         this.fSprites.background2.setSize(1280, 960);
         this.fSprites.background1.setSize(1280, 960);
+        this.fSprites.foregroundPlants.setSize(1280, 960);
 
 //------------
         this.fSprites.honeyBee.centerPivot();

@@ -82,10 +82,8 @@ export class StageManager{
    //---------------- Background Sprite Management ---------------//
     getBackgroundAssets(){
         return [
-            "assets/bSprites/Artboard 1grass-background.png",
-            "assets/bSprites/Artboard 1grass-foreground.png",
-            "assets/bSprites/Artboard 1grass-middleground.png",
-            "assets/bSprites/Artboard 1meadow-foreground.png"
+            "assets/bSprites/merged_background.fw.png",
+            "assets/bSprites/Artboard 1sky-background.png"
         ];
     }
     centerAndScaleSprites(sprites){
@@ -95,24 +93,20 @@ export class StageManager{
         }
     }
     createBSprites(resources){
-        
-        this.bSprites.background1 = new SpriteItem("assets/bSprites/Artboard 1grass-background.png", resources);
-        this.bSprites.background2 = new SpriteItem("assets/bSprites/Artboard 1grass-middleground.png", resources);
-        this.bSprites.background3 = new SpriteItem("assets/bSprites/Artboard 1grass-foreground.png", resources);
-        this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png", resources);
+        this.bSprites.mBackground = new SpriteItem("assets/bSprites/merged_background.fw.png", resources);
+        this.bSprites.skyBackground = new SpriteItem("assets/bSprites/Artboard 1sky-background.png", resources);
         
         let backColour = new PIXI.Graphics()
-            .beginFill(0xE8E8E8)
-            .drawRect(0, 0, this.bSprites.background1.getSprite().width, window.innerHeight)
+            .beginFill(0xFFFFFF)
+            .drawRect(0, 0, this.bSprites.mBackground.getSprite().width, window.innerHeight)
             .endFill();
         this.bSprites.backgroundCol = new ShapeItem(backColour, false);
 
     }
     addToApp(){
         this.app.stage.addChild(this.bSprites.backgroundCol.getSprite());
-        this.app.stage.addChild(this.bSprites.background1.getSprite());
-        this.app.stage.addChild(this.bSprites.background2.getSprite());
-        this.app.stage.addChild(this.bSprites.background3.getSprite());
+        this.app.stage.addChild(this.bSprites.skyBackground.getSprite());
+        this.app.stage.addChild(this.bSprites.mBackground.getSprite());
     }
     //----------------------------------------------------------//
 
