@@ -168,10 +168,10 @@ export class MeadowStage extends Stage{
         this.fSprites.net3.setPivot(1, 1);
 //--------------
         this.fSprites.Elie.setScale(0.5);
-        this.fSprites.Elie.setLocation(900, 350);
+        this.fSprites.Elie.setLocation(900, 353);
 
         this.fSprites.ElieSpeech1.setScale(0.8);
-        this.fSprites.ElieSpeech1.setLocation(350, 150);
+        this.fSprites.ElieSpeech1.setLocation(350, 100);
         this.fSprites.ElieSpeech1.setAlpha(0);
         this.fSprites.ElieSpeech2.setScale(0.8);
         this.fSprites.ElieSpeech2.setLocation(450, 200);
@@ -183,7 +183,7 @@ export class MeadowStage extends Stage{
     eventChainsDef(){
         this.eventChain
             .addFade(this.fSprites.ElieSpeech1, 3, 0, 1)
-            .addClickEvent(this.fSprites.ElieSpeech1)
+            .addClickEvent(this.foreground)
             .next()
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.ElieSpeech1, -3, 0, 1)
@@ -199,7 +199,7 @@ export class MeadowStage extends Stage{
             .addFade(this.fSprites.honeySpeech, 3, 0, 1)
             .next()
             .addIdle(this.fSprites.honeyBee)
-            .addClickEvent(this.fSprites.honeySpeech)
+            .addClickEvent(this.foreground)
             .next()
             .addFade(this.fSprites.honeySpeech, -3, 0, 1)
             .next()
@@ -228,7 +228,7 @@ export class MeadowStage extends Stage{
             .addFade(this.fSprites.buffSpeech, 3, 0, 1)
             .next()
             .addIdle(this.fSprites.buffBee)
-            .addClickEvent(this.fSprites.buffSpeech)
+            .addClickEvent(this.foreground)
             .next()
             .addFade(this.fSprites.buffSpeech, -3, 0, 1)
             .next()
@@ -251,13 +251,13 @@ export class MeadowStage extends Stage{
             .addFade(this.fSprites.redSpeech1, 3, 0, 1)
             .next()
             .addIdle(this.fSprites.redBee)
-            .addClickEvent(this.fSprites.redSpeech1)
+            .addClickEvent(this.foreground)
             .next()
             .addFade(this.fSprites.redSpeech1, -3, 0, 1)
             .addFade(this.fSprites.redSpeech2, 3, 0, 1)
             .addIdle(this.fSprites.redBee)
             .next()
-            .addClickEvent(this.fSprites.redSpeech2)
+            .addClickEvent(this.foreground)
             .addIdle(this.fSprites.redBee)
             .next()
             .addFade(this.fSprites.redSpeech2, -3, 0, 1)
@@ -272,7 +272,7 @@ export class MeadowStage extends Stage{
             .next()
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .addFade(this.fSprites.ElieSpeech2, 3, 0, 1)
-            .addClickEvent(this.fSprites.ElieSpeech2)
+            .addClickEvent(this.foreground)
             .next()
             .addChangeStageEvent(this.fSprites.ElieSpeech2, this, "hub")
             ;
