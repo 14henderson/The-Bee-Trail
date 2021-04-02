@@ -260,6 +260,26 @@ export class EventChain{
         return this;
     }
 
+    addPlayItemEvent(item){
+        this.chain[this.chain.length-1].push({
+            'type':'play-item',
+            'item':item,
+            'completed':false
+        });
+        return this;
+    }
+    waitForMediaEvent(item){
+        this.chain[this.chain.length-1].push({
+            'type':'media-wait',
+            'item':item,
+            'completed':false
+        });
+        return this;
+    }
+    //addPauseItemEvent(item){  >>future?
+
+    //}
+
     addCustomAction(itemFunction){
         this.chain[this.chain.length-1].push({
             'type':'customAction',
@@ -471,6 +491,22 @@ export class EventChain{
                     }
                     break;
 
+                case 'play-item':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].item.play();
+                        this.chain[this.eventNumber][i].completed = true;
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                break;
+
+                case 'media-wait':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        if(this.chain[this.eventNumber][i].item.hasFinished()){
+                            this.chain[this.eventNumber][i].completed = true;
+                        }
+                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    }
+                break;
 
                 case 'customAction':
                     if(!this.chain[this.eventNumber][i].completed){

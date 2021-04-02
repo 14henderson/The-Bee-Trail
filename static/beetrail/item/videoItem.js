@@ -11,14 +11,17 @@ export class VideoItem extends Item{
         
         tex.baseTexture.resource.autoPlay = false;
         tex.baseTexture.resource.source.preload = 'auto';
-        this.sprite._texture.baseTexture.resource.source.pause();
-        
+        this._control = this.sprite._texture.baseTexture.resource.source;
+
+        console.log(this._control.currentTime);
+
         this.sprite.interactive = false;
         this.size = [this.sprite.width, this.sprite.height];
         this._oriWidth = this.sprite.width;
         this._oriHeight = this.sprite.height;
         this._mouseHovered = false;
 
+        this.pause();
 
         this.sprite.on('mousedown', event =>{
             this._clicked = true;
@@ -44,7 +47,23 @@ export class VideoItem extends Item{
         });
     }
 
+    pause(){
+        this._control.pause();
+    }
+
+    play(){
+        this._control.play();
+    }
+
     onMouseHover(){
         return this._mouseHovered;
+    }
+
+    hasFinished(){
+        if(this._control.currentTime == (this._control.duration-1)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
