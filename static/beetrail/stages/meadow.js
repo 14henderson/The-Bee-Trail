@@ -163,7 +163,7 @@ export class MeadowStage extends Stage{
         this.fSprites.redSpeech2.setAlpha(0);
 
         this.fSprites.net3.setScale(.8);
-        this.fSprites.net3.setLocation(820, 480);
+        this.fSprites.net3.setLocation(820, 500);
         this.fSprites.net3.setAlpha(0);
         this.fSprites.net3.setPivot(1, 1);
 //--------------
@@ -271,6 +271,7 @@ export class MeadowStage extends Stage{
             //--------
             .next()
             .addFade(this.fSprites.Elie, 3, 0, 1)
+            .next()
             .addFade(this.fSprites.ElieSpeech2, 3, 0, 1)
             .addClickEvent(this.foreground)
             .next()
