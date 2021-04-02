@@ -207,7 +207,7 @@ export class MeadowStage extends Stage{
             .addMovement(this.fSprites.buffBee, [1150, 400], 3, Movement.quadCurveMvPattern, -25)
             .addFade(this.fSprites.buffBee, 1.5, 0, .5)
             .next()
-            .addBringBehind(this.fSprites.buffBee, this.fSprites.background1)
+            .addBringBefore(this.fSprites.buffBee, this.fSprites.background2)
             .addMovement(this.fSprites.buffBee, [1100, 500], 3, Movement.quadCurveMvPattern, -40)
             .addFade(this.fSprites.buffBee, 1.5, 0, 1)
             .next()

@@ -49,21 +49,17 @@ export class Item {
         this._beingDragged = false;
     }
     enableDrag(){
-        console.log("Dragging enabled!");
         this.dragged = true;
         this._beingDragged = false;
     }
     dissableDrag(){
-        console.log("Dragging dissabled!");
         this.dragged = false;
     }
 
     enableInteractiveState(){
-        console.log("Interactiveness enabled");
         this.sprite.interactive = true;
     }
     dissableInteractiveState(){
-        console.log("Interactiveness dissabled");
         this.sprite.interactive = false;
     }
 
@@ -230,8 +226,6 @@ export class Item {
                 this.sprite.alpha += this._alphaDelta;
             }
         
-
-        
         //this.setLocation(this.location[0], this.location[1]);
         if(this._centered){this.centerX();}
         this.animationTick += 1;
@@ -245,16 +239,6 @@ export class Item {
         this._alphaMax = max;
         this._alphaDelta = delta;
     }
-/*
-    onMouseHover(app){
-        //console.log(app.renderer.plugins.interaction.mouse.global.x-this.sprite.parent.x,
-        //    app.renderer.plugins.interaction.mouse.global.y-this.sprite.parent.y
-         //   );
-        return ((app.renderer.plugins.interaction.mouse.global.x-this.sprite.parent.x) > this.getX()
-            && (app.renderer.plugins.interaction.mouse.global.x-this.sprite.parent.x) < this.getX()+this.size[0]
-            && (app.renderer.plugins.interaction.mouse.global.y-this.sprite.parent.y) > this.getY()
-            && (app.renderer.plugins.interaction.mouse.global.y-this.sprite.parent.y) < this.getY()+this.size[1]);    
-    }*/
 
     getSize(){
         this.size = [this.sprite.width, this.sprite.height];
@@ -263,8 +247,6 @@ export class Item {
 
     centerX(){
         this._centered = true;
-        this.sprite.x = (window.innerWidth/2)-(this.getSize()[0]/2)
-       // console.log(this.size[0]);
-        // = this.location[0];
+        this.sprite.x = (window.innerWidth/2)-(this.getSize()[0]/2);
     }
 }
