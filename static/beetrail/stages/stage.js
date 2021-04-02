@@ -1,10 +1,10 @@
 import {Foreground} from '/beetrail/foregroundContainer.js'
+import {soundManager} from '/beetrail/soundManager.js'
 
 export class Stage{
     assetsTextures;
     app;
     fSprites;
-    //bSprites;
     states;
     state;
     manager;
@@ -12,13 +12,14 @@ export class Stage{
     constructor(app, manager){
         this.assetsTextures = [];
         this.app = app;
-        this.fSprites = {}
-       // this.bSprites = {}
+        this.fSprites = {};
         this.states = [];
         this.state;
 
         this.foreground = new Foreground();
         this.foreground.tick();
+
+        this.soundManager = new soundManager();
 
         this.stageManager = manager;
     }
