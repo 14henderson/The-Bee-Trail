@@ -4,12 +4,25 @@ export class Foreground extends PIXI.Container{
         super();
         this.ID = Math.random().toString(36).substring(7);
         this.sortableChildren = true;
+        this.interactive = true;
 
         this.maskRect = new PIXI.Graphics() //container is only the size of it's contents...
             .lineStyle(4, 0xFF3300, 0)  //...a Graphics object defines the whole play area.
             .drawRect(0, 0, 1280, 960);
         this.addChild(this.maskRect);
         this._zCounter = 0;
+        this._clicked = false;
+
+        this.on('mousedown', event =>{
+            this._clicked = true;
+        });
+    }
+
+    getClickedState(){
+        return this._clicked;
+    }
+    resetClickedState(){
+        this._clicked = false;
     }
 
     addAllSprites(sprites){
@@ -46,9 +59,6 @@ export class Foreground extends PIXI.Container{
     }
     enableDrag(){
         
-    }
-    resetClickedState(){
-        //do nothing
     }
     centerContainer(){
         this.y = 0;
