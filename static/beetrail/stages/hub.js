@@ -156,11 +156,11 @@ export class HubStage extends Stage{
             .next()
             .addChangeStateEvent(this.fSprites.playButton, this, 1);
 
-        this.mainEventChain
-            .addFade(this.fSprites.meadowNav, 1, 0, 0.8);
+        //this.mainEventChain
+            //.addFade(this.fSprites.meadowNav, 1, 0, 0.8);
 
         this.startEventChain.initialise();
-        this.mainEventChain.initialise();
+       // this.mainEventChain.initialise();
     }
 
     loop(delta, context){
@@ -181,7 +181,7 @@ export class HubStage extends Stage{
             context.fSprites.meadowNav.resetClickedState();
         }
         if(context.fSprites.meadowNav.onMouseHover()){
-            context.fSprites.meadowNav.setFadeAnimation(0.2, 1, 0.05);
+            context.fSprites.meadowNav.setFadeAnimation(0.19, 1, 0.05);
         }else{
             context.fSprites.meadowNav.setFadeAnimation(0.2, 1, -0.05);
         }    
@@ -206,7 +206,7 @@ export class HubStage extends Stage{
         context.fSprites.minIONNav.tick();
 
         context.foreground.tick();
-        context.mainEventChain.tick();
+       // context.mainEventChain.tick();
     }
 
     end(delta){

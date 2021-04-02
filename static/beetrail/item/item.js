@@ -223,10 +223,9 @@ export class Item {
         
         if(this.sprite.alpha + this._alphaDelta > this._alphaMin 
             && this.sprite.alpha + this._alphaDelta < this._alphaMax){
-                this.sprite.alpha += this._alphaDelta;
+                this.sprite.alpha += this._alphaDelta;                
             }
         
-        //this.setLocation(this.location[0], this.location[1]);
         if(this._centered){this.centerX();}
         this.animationTick += 1;
     }

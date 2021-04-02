@@ -20,7 +20,7 @@ export class StageManager{
             "meadow":new MeadowStage(app, this),            
             "pollen":new PollenStage(app, this)
         };
-        this.stage = "meadow";
+        this.stage = "hub";
         this.app = app;
 
         this.loader = new PIXI.Loader();
