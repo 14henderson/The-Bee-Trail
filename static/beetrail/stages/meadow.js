@@ -38,6 +38,7 @@ export class MeadowStage extends Stage{
         
             "assets/fSprites/objects/elie-standing.png",
             "assets/fSprites/objects/elie-waving.png",
+            "assets/fSprites/objects/elie-waving-jeans.png",
             "assets/fSprites/objects/net-yellow.png",
 
             "assets/fSprites/speech-bubbles/1-billie-speech-bubble.png",
@@ -90,10 +91,11 @@ export class MeadowStage extends Stage{
         this.fSprites.redSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/1-billie-speech-bubble.png", resources);
         this.fSprites.redSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/2-billie-speech-bubble.png", resources);
 
-        this.fSprites.Elie = new AnimatedItem([
-            "assets/fSprites/objects/elie-standing.png",
-            "assets/fSprites/objects/elie-waving.png"
-        ], resources);
+        this.fSprites.Elie = new SpriteItem("assets/fSprites/objects/elie-waving-jeans.png", resources);
+         //   [
+        //    "assets/fSprites/objects/elie-standing.png",
+        //    "assets/fSprites/objects/elie-waving.png"
+    // ], resources);
         this.fSprites.ElieSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble.png", resources);
         this.fSprites.ElieSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble-2.png", resources);
 
@@ -166,7 +168,7 @@ export class MeadowStage extends Stage{
         this.fSprites.net3.setPivot(1, 1);
 //--------------
         this.fSprites.Elie.setScale(0.5);
-        this.fSprites.Elie.setLocation(900, 500);
+        this.fSprites.Elie.setLocation(900, 350);
 
         this.fSprites.ElieSpeech1.setScale(0.8);
         this.fSprites.ElieSpeech1.setLocation(350, 150);
