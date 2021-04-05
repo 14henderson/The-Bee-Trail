@@ -31,10 +31,6 @@ export class StageManager{
     }
 
 
- 
-
-
-
 
     init(){
         //add textures to resource loader.
@@ -56,6 +52,10 @@ export class StageManager{
         });
 
 
+        this.loader.onProgress.add(() => {
+        //    console.log(this.loader.progress);
+        })
+
         //init first stage...
         this.loader.onComplete.add(() => {
             this.addToApp();    //add background assets to container.
@@ -64,8 +64,6 @@ export class StageManager{
             this.app.ticker.add(this.loop, this);
         });
     }
-
-
 
 
     loop(){

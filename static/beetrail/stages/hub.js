@@ -9,17 +9,21 @@ import {Movement} from '/beetrail/movementMisc.js';
 
 export class HubStage extends Stage{
     startEventChain;
+    entryEventChain;
     mainEventChain;
+    exitEventChain;
     textures;
 
     constructor(app, stageManager){
         super(app, stageManager);
         
-        this.states = [this.start, this.main];
+        this.states = [this.start, this.entry, this.main, this.exit];
         this.state = this.start;
         
         this.startEventChain = new EventChain();
+        this.entryEventChain = new EventChain();
         this.mainEventChain = new EventChain();
+        this.exitEventChain = new EventChain();
     }
 
     getTextures(){
@@ -58,9 +62,14 @@ export class HubStage extends Stage{
 
 
     stop(){
+        this.assetPositioning();
+
         this.mainEventChain.resetChain();
-        this.startEventChain.eventNumber = 0;
-        this.mainEventChain.eventNumber = 0;
+        this.entryEventChain.resetChain();
+        this.exitEventChain.resetChain();
+        this.eventChainsDef();
+
+        this.state = this.states[1];
     }
 
 
@@ -117,27 +126,24 @@ export class HubStage extends Stage{
         this.fSprites.minION.setLocation(750, 750);
 
         this.fSprites.playButton.setScale(0.2);
-        this.fSprites.playButton.centerPivot();
+        this.fSprites.playButton.centerPivot();//?????????????????????
         this.fSprites.playButton.setLocation(1000, 880);
         this.fSprites.playButton.enableInteractiveState();
         this.fSprites.playButton.enableMouseHoverFrame(1);
         this.fSprites.playButton.setAlpha(0);
 
         this.fSprites.meadowNav.enableInteractiveState();
-        this.fSprites.meadowNav.setAlpha(0.2);
-        this.fSprites.meadowNav.centerPivot();
-        this.fSprites.meadowNav.setLocation(640, 300);
+        this.fSprites.meadowNav.setAlpha(0.18);
+        this.fSprites.meadowNav.setLocation(0, 70);
 
         this.fSprites.pollenNav.enableInteractiveState();
         this.fSprites.pollenNav.setAlpha(0.2);
-        this.fSprites.pollenNav.centerPivot();
-        this.fSprites.pollenNav.setLocation(320, 720);
+        this.fSprites.pollenNav.setLocation(0, 500);
         this.fSprites.pollenNav.gotoFrame(1);
 
         this.fSprites.minIONNav.enableInteractiveState();
         this.fSprites.minIONNav.setAlpha(0.2);
-        this.fSprites.minIONNav.centerPivot();
-        this.fSprites.minIONNav.setLocation(975, 720);
+        this.fSprites.minIONNav.setLocation(660, 500);
         this.fSprites.minIONNav.gotoFrame(1);
         
         this.fSprites.newspaper.bringBefore(this.fSprites.minIONNav);
@@ -154,16 +160,23 @@ export class HubStage extends Stage{
             .addFade(this.fSprites.newspaper, -3, 0, 1)
             .addFade(this.fSprites.playButton, -3, 0, 1)
             .next()
-            .addChangeStateEvent(this.fSprites.playButton, this, 1);
-
-        //this.mainEventChain
-            //.addFade(this.fSprites.meadowNav, 1, 0, 0.8);
-
+            .addChangeStateEvent(this.fSprites.playButton, this, 2);
         this.startEventChain.initialise();
-       // this.mainEventChain.initialise();
+
+        this.entryEventChain
+            .addFade(this.foreground, 3, -0.1, 1)
+            .next()
+            .addChangeStateEvent(this.foreground, this, 2);
+        this.entryEventChain.initialise();
+
+        this.exitEventChain
+            .addFade(this.foreground, -3, 0, 1);
+        this.exitEventChain.initialise();
+
     }
 
     loop(delta, context){
+        console.log("Current State: ", this.state);
         context.state(delta, context);
     }
     
@@ -171,22 +184,36 @@ export class HubStage extends Stage{
 
     //STATES
     start(delta, context){
+        console.log("Current State: ", this.state);
         context.foreground.tick();
         context.startEventChain.tick();
     }
 
-    main(delta, context){        
+    entry(delta, context){
+        console.log("Current State: ", this.state);
+        context.foreground.tick();
+        context.entryEventChain.tick();
+    }
+
+    main(delta, context){   
+        console.log("Current State: ", this.state);     
         if(context.fSprites.meadowNav.getClickedState()){
-            context.changeStage("meadow");
+            context.exitEventChain.next().addChangeStageEvent(this.fSprites.playButton, this, "meadow");
+            context.exitEventChain.initialise();
+            context.setState(3);
             context.fSprites.meadowNav.resetClickedState();
         }
         if(context.fSprites.meadowNav.onMouseHover()){
             context.fSprites.meadowNav.setFadeAnimation(0.19, 1, 0.05);
         }else{
             context.fSprites.meadowNav.setFadeAnimation(0.2, 1, -0.05);
-        }    
+        }
+        
+        
         if(context.fSprites.pollenNav.getClickedState()){
-            context.changeStage("pollen");
+            context.exitEventChain.next().addChangeStageEvent(this.fSprites.playButton, this, "pollen");
+            context.exitEventChain.initialise();
+            context.setState(2);
             context.fSprites.pollenNav.resetClickedState();
         }
         if(context.fSprites.pollenNav.onMouseHover()){
@@ -206,10 +233,13 @@ export class HubStage extends Stage{
         context.fSprites.minIONNav.tick();
 
         context.foreground.tick();
-       // context.mainEventChain.tick();
     }
 
-    end(delta){
+    exit(delta, context){
+        console.log("Current State: ", this.state);
+        context.foreground.tick();
+        context.exitEventChain.tick();
+
 
     }
 

@@ -3,6 +3,7 @@ import {Item} from '/beetrail/item/item.js';
 import {SpriteItem} from '/beetrail/item/spriteItem.js';
 import {ShapeItem} from '/beetrail/item/shapeItem.js';
 import { AnimatedItem } from '/beetrail/item/animatedItem.js';
+import { VideoItem } from '/beetrail/item/videoItem.js';
 
 import {EventChain} from '/beetrail/eventChain.js';
 import {Movement} from '/beetrail/movementMisc.js';
@@ -10,17 +11,23 @@ import {Movement} from '/beetrail/movementMisc.js';
 
 
 export class MeadowStage extends Stage{
+    entryEventChain;
     eventChain;
+    exitEventChain;
+
     textures;
 
     constructor(app, stageManager){
         super(app, stageManager);
 
-        this.states = [this.start, this.main];
-        this.state = this.start;
+        this.states = [this.entry, this.main, this.exit];
+        this.state = this.entry;
         
         this.eventChain = new EventChain();
+        this.entryEventChain = new EventChain();
+        this.exitEventChain = new EventChain();
     }
+
 
     getTextures(){
         this.textures = [
@@ -46,7 +53,10 @@ export class MeadowStage extends Stage{
             "assets/fSprites/speech-bubbles/barney-speech-bubble.png",
             "assets/fSprites/speech-bubbles/bella-speech-bubble.png",
             "assets/fSprites/speech-bubbles/elie-speech-bubble.png",
-            "assets/fSprites/speech-bubbles/elie-speech-bubble-2.png"
+            "assets/fSprites/speech-bubbles/elie-speech-bubble-2.png",
+
+            "assets/fSprites/videos/test-video-1.mp4",
+            "assets/fSprites/audio/golden.mp3"
         ];
         return this.textures;
     }
@@ -57,21 +67,24 @@ export class MeadowStage extends Stage{
     }
 
     stop(){
+        this.state = this.states[0];
+        
+        this.assetPositioning();
+        this.entryEventChain.resetChain();
         this.eventChain.resetChain();
-        this.eventChain.eventNumber = 0;
+        this.exitEventChain.resetChain();
+        
+        this.eventChainsDef();
     }
 
 
     //Creating new Item objects used in this stage
     loadSprites(resources){
-        //this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png", this.loader);
         //------------------//
         this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", resources);
         this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", resources);
         this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", resources);
         this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.fw.png", resources);
-
-
 
         this.fSprites.honeyBee = new AnimatedItem([
             "assets/fSprites/bees/Small-honey-bee-profile.png",
@@ -92,10 +105,6 @@ export class MeadowStage extends Stage{
         this.fSprites.redSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/2-billie-speech-bubble.png", resources);
 
         this.fSprites.Elie = new SpriteItem("assets/fSprites/objects/elie-waving-jeans.png", resources);
-         //   [
-        //    "assets/fSprites/objects/elie-standing.png",
-        //    "assets/fSprites/objects/elie-waving.png"
-    // ], resources);
         this.fSprites.ElieSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble.png", resources);
         this.fSprites.ElieSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble-2.png", resources);
 
@@ -107,6 +116,7 @@ export class MeadowStage extends Stage{
 
     //Positioning and scaling of Items
     assetPositioning(){
+        //this.soundManager.play("golden");
         this.fSprites.background3.setSize(1280, 960);
         this.fSprites.background2.setSize(1280, 960);
         this.fSprites.background1.setSize(1280, 960);
@@ -177,6 +187,11 @@ export class MeadowStage extends Stage{
         this.fSprites.ElieSpeech2.setLocation(450, 200);
         this.fSprites.ElieSpeech2.setAlpha(0);
 //---------------
+        //this.fSprites.video.setLocation(300, 300);
+        //this.fSprites.video.setScale(0.4);
+        //this.fSprites.video.setAlpha(0.2);
+
+        this.foreground.setAlpha(0);
     }
 
     //Defining the event chain(s) used in this stage.
@@ -185,6 +200,7 @@ export class MeadowStage extends Stage{
             .addFade(this.fSprites.ElieSpeech1, 3, 0, 1)
             .addClickEvent(this.foreground)
             .next()
+            //.addPlayItemEvent(this.fSprites.video)
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.ElieSpeech1, -3, 0, 1)
             .addMovement(this.fSprites.honeyBee, [500, 200], 3, Movement.quadCurveMvPattern, 50)
@@ -275,10 +291,21 @@ export class MeadowStage extends Stage{
             .addFade(this.fSprites.ElieSpeech2, 3, 0, 1)
             .addClickEvent(this.foreground)
             .next()
-            .addChangeStageEvent(this.fSprites.ElieSpeech2, this, "hub")
-            ;
+            .addChangeStateEvent(this.foreground, this, 2);
 
         this.eventChain.initialise();
+
+        this.entryEventChain
+            .addFade(this.foreground, 3, 0, 1)
+            .next()
+            .addChangeStateEvent(this.foreground, this, 1);
+        this.entryEventChain.initialise();
+
+        this.exitEventChain
+            .addFade(this.foreground, -3, 0, 1.1)
+            .next()
+            .addChangeStageEvent(this.fSprites.ElieSpeech2, this, "hub");
+        this.exitEventChain.initialise();
     }
 
 
@@ -290,15 +317,22 @@ export class MeadowStage extends Stage{
     }
     
 
+    entry(delta, context){
+        context.foreground.tick();
+        context.entryEventChain.tick();
+    }
+
     //STATES
-    start(delta, context){
+    main(delta, context){
         context.foreground.tick();
         context.eventChain.tick();
     }
 
-    main(delta){
-
+    exit(delta, context){
+        context.foreground.tick();
+        context.exitEventChain.tick();
     }
+
 
 
 
