@@ -13,6 +13,10 @@ export class Foreground extends PIXI.Container{
         this._zCounter = 0;
         this._clicked = false;
 
+        this._alphaDelta = 0;
+        this._alphaMin = .2;
+        this._alphaMax = 1;
+
         this.on('mousedown', event =>{
             this._clicked = true;
         });
@@ -39,15 +43,23 @@ export class Foreground extends PIXI.Container{
     tick(){
         this.centerContainer();
         this.fitToWindow();
+
+        if(this.alpha + this._alphaDelta > this._alphaMin 
+            && this.alpha + this._alphaDelta < this._alphaMax){
+            this.alpha += this._alphaDelta;                
+        }
     }
 
     getID(){
         return this.ID;
     }
-    //addChild(sprite){
-    //    this.sprite.addChild(sprite);
-        
-   // }
+    setFadeAnimation(min, max, delta){
+        this._alphaMin = min;
+        this._alphaMax = max;
+        this._alphaDelta = delta;
+    }
+    getAlpha(){return this.alpha;}
+    setAlpha(a){this.alpha = a;}
     dissableInteractiveState(){
         //do nothing
     }
@@ -69,4 +81,6 @@ export class Foreground extends PIXI.Container{
         this.height = window.innerHeight;
         this.width = (4/3)*this.height;   
     }
+
+    
 }
