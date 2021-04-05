@@ -56,22 +56,7 @@ export class PollenStage extends Stage{
         this.loadSprites(resources);            
         this.foreground.addAllSprites(this.fSprites);
     }
-/*
-        this.loader.add(this.textures);
-        this.loader.load((loader, resources) => {
-            this.loadSprites();            
-            this.miscAssetCreation();
-        });
 
-        this.loader.onComplete.add(() => {
-            this.containerAssignment();
-            this.assetPositioning();
-            this.app.stage.addChild(this.foreground.getSprite());
-            this.eventChainsDef();
-            this.app.ticker.add(this.loop, this);
-        });
-    }
-*/
     stop(){
         this.eventChain.resetChain();
         this.eventChain.eventNumber = 0;
@@ -81,6 +66,8 @@ export class PollenStage extends Stage{
         this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", resources);
         this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", resources);
         this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", resources);
+        this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.fw.png", resources);
+
         //---------------------------
         this.fSprites.bench = new SpriteItem("assets/fSprites/objects/bench.png", resources);
         //this.fSprites.laptop = new SpriteItem("assets/fSprites/objects/laptop.png", resources);
@@ -118,32 +105,33 @@ export class PollenStage extends Stage{
         this.fSprites.background3.setSize(1280, 960);
         this.fSprites.background2.setSize(1280, 960);
         this.fSprites.background1.setSize(1280, 960);
-
+        this.fSprites.foregroundPlants.setSize(1280, 960);
+        
         this.fSprites.bench.setScale(1280/2639);
         this.fSprites.bench.setLocation(0, 686);
 
-        this.fSprites.tubeEntranceBox.centerPivot();
         
         this.fSprites.honeyBee.setScale(0.5);
         this.fSprites.honeyBee.setLocation(130, 650);
         this.fSprites.honeyBee.setSpriteDirection('r');
-        this.fSprites.honeyBee.centerPivot();
+        this.fSprites.honeyBee.setSpriteAnchor(0.5, 0.5);
         this.fSprites.honeyBee.setAlpha(0);
 
         this.fSprites.buffBee.setScale(0.5);
         this.fSprites.buffBee.setLocation(100, 650);
         this.fSprites.buffBee.setSpriteDirection('r');
-        this.fSprites.buffBee.centerPivot();
+        this.fSprites.buffBee.setSpriteAnchor(0.5, 0.5);
         this.fSprites.buffBee.setAlpha(0);
 
         this.fSprites.redBee.setScale(0.5);
         this.fSprites.redBee.setLocation(100, 650);
         this.fSprites.redBee.setSpriteDirection('r');
-        this.fSprites.redBee.centerPivot();
+        this.fSprites.redBee.setSpriteAnchor(0.5, 0.5);
         this.fSprites.redBee.setAlpha(0);
 
-        this.fSprites.tube.setLocation(300, 300);
+        
         this.fSprites.tube.setScale(0.7);
+        this.fSprites.tube.setLocation(300, 300);
 
         this.fSprites.tubeEntranceBox.bringBefore(this.fSprites.tube);
         this.fSprites.tubeEntranceBox.setLocation(300, 300);
@@ -163,7 +151,7 @@ export class PollenStage extends Stage{
             .addFade(this.fSprites.honeyBee, 1, 0, 1)
             .next()
             .addFade(this.fSprites.beeSpeechDrag, 3, 0, 1)
-            .addIdle(this.fSprites.honeyBee)
+            //.addIdle(this.fSprites.honeyBee)
             .addCollisionEvent(this.fSprites.honeyBee, this.fSprites.tubeEntranceBox)
             .addDragEvent(this.fSprites.honeyBee)
             .next()
@@ -232,5 +220,9 @@ export class PollenStage extends Stage{
     main(delta, context){
         context.foreground.tick();
         context.eventChain.tick();
+    }
+
+    exit(delta, context){
+        
     }
 }

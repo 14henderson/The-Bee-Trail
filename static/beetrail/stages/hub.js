@@ -228,7 +228,7 @@ export class HubStage extends Stage{
         if(context.fSprites.pollenNav.getClickedState()){
             context.exitEventChain.next().addChangeStageEvent(this.fSprites.playButton, this, "pollen");
             context.exitEventChain.initialise();
-            context.setState(2);
+            context.setState(3);
             context.fSprites.pollenNav.resetClickedState();
         }
         if(context.fSprites.pollenNav.onMouseHover()){

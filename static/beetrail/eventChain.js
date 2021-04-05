@@ -47,9 +47,6 @@ export class EventChain{
         console.log("Second loop! Enables if neceessary");
         for(i=0; i<this.chain[this.eventNumber].length; i++){
             if(this.chain[this.eventNumber][i].type == "movement"){
-                //console.log("Current Position of Item: ", 
-                //    this.chain[this.eventNumber][i].item.getX(),
-                //    this.chain[this.eventNumber][i].item.getY());
                 if(this.chain[this.eventNumber][i].origin[0] < this.chain[this.eventNumber][i].dest[0]){
                     this.chain[this.eventNumber][i].item.setSpriteDirection('r');
                 }else{
