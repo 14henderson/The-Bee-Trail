@@ -12,6 +12,8 @@ export class HubStage extends Stage{
     entryEventChain;
     mainEventChain;
     exitEventChain;
+
+    customState;    //increases on completion of stage.
     textures;
 
     constructor(app, stageManager){
@@ -24,6 +26,8 @@ export class HubStage extends Stage{
         this.entryEventChain = new EventChain();
         this.mainEventChain = new EventChain();
         this.exitEventChain = new EventChain();
+
+        this.customState = 0;
     }
 
     getTextures(){
@@ -139,12 +143,22 @@ export class HubStage extends Stage{
         this.fSprites.pollenNav.enableInteractiveState();
         this.fSprites.pollenNav.setAlpha(0.2);
         this.fSprites.pollenNav.setLocation(0, 500);
-        this.fSprites.pollenNav.gotoFrame(1);
+        if(this.customState >= 1){
+            this.fSprites.pollenNav.gotoFrame(0);
+        }else{
+            this.fSprites.pollenNav.gotoFrame(1);
+        }
+        
 
         this.fSprites.minIONNav.enableInteractiveState();
         this.fSprites.minIONNav.setAlpha(0.2);
         this.fSprites.minIONNav.setLocation(660, 500);
-        this.fSprites.minIONNav.gotoFrame(1);
+        if(this.customState >= 2){
+            this.fSprites.minIONNav.gotoFrame(0);
+        }else{
+            this.fSprites.minIONNav.gotoFrame(1);
+        }
+        
         
         this.fSprites.newspaper.bringBefore(this.fSprites.minIONNav);
         
@@ -198,6 +212,7 @@ export class HubStage extends Stage{
     main(delta, context){   
         console.log("Current State: ", this.state);     
         if(context.fSprites.meadowNav.getClickedState()){
+            if(this.customState == 0){this.customState = 1;}
             context.exitEventChain.next().addChangeStageEvent(this.fSprites.playButton, this, "meadow");
             context.exitEventChain.initialise();
             context.setState(3);

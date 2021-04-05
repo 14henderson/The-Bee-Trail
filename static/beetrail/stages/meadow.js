@@ -53,10 +53,7 @@ export class MeadowStage extends Stage{
             "assets/fSprites/speech-bubbles/barney-speech-bubble.png",
             "assets/fSprites/speech-bubbles/bella-speech-bubble.png",
             "assets/fSprites/speech-bubbles/elie-speech-bubble.png",
-            "assets/fSprites/speech-bubbles/elie-speech-bubble-2.png",
-
-            "assets/fSprites/videos/test-video-1.mp4",
-            "assets/fSprites/audio/golden.mp3"
+            "assets/fSprites/speech-bubbles/elie-speech-bubble-2.png"
         ];
         return this.textures;
     }
