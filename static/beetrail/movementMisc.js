@@ -18,10 +18,10 @@ export class Movement{
     }
 
     static testCollision(item1, item2){
-        if(item1.getX() - item1.getXPivot() < item2.getX()+item2.getWidth()
-        && item1.getX() + item1.getWidth() - item1.getXPivot() > item2.getX()
-        && item1.getY() - item1.getYPivot() < item2.getY() + item2.getHeight()
-        && item1.getY() + item1.getHeight() - item1.getYPivot() > item2.getY()
+        if(item1.getX() - (item1.getWidth()*item1.getAnchor().x) < item2.getX()+item2.getWidth()
+        && item1.getX() + item1.getWidth() - (item1.getWidth()*item1.getAnchor().x) > item2.getX()
+        && item1.getY() - (item1.getHeight()*item1.getAnchor().y) < item2.getY() + item2.getHeight()
+        && item1.getY() + item1.getHeight() - (item1.getHeight()*item1.getAnchor().y) > item2.getY()
         ){
             return true;
         }

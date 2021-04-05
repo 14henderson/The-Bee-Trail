@@ -18,41 +18,26 @@ export class AnimatedItem extends Item{
         this.hoverFrame = 0;
 
 
-        this.sprite.on('mousedown', event =>{
-            this._clicked = true;
-            this._beingDragged = true;
-        });
-
-        this.sprite.on('mouseup', event =>{
-            this._beingDragged = false;
-        });
-
-        this.sprite.on('mousemove', event => {
-            if(this.dragged && this._beingDragged){
-                this.sprite.x = event.data.getLocalPosition(this.sprite.parent).x;// - this.sprite.anchor.x*(this.sprite.width/2);
-                this.sprite.y = event.data.getLocalPosition(this.sprite.parent).y;// - (this.sprite.height/2);                
-            }
-        });
-
         this.sprite.on('mouseover', event => {
             this._mouseHovered = true;
             if(this._hoverEnabled){
                 this.gotoFrame(this.hoverFrame);
             }
-        })
+        });
         this.sprite.on('mouseout', event => {
             this._mouseHovered = false;
             if(this._hoverEnabled){
                 this.gotoFrame(0);
             }
-        })
+        });
+        this.defineEvents();
     }
 
     gotoFrame(num){
         this.sprite.gotoAndStop(num);
         this._oriWidth = this.sprite.textures[this.sprite.currentFrame].width;
         this._oriHeight = this.sprite.textures[this.sprite.currentFrame].height;
-        this.centerPivot();
+        //this.centerPivot();
     }
 
     enableMouseHoverFrame(fNum){

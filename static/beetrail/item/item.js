@@ -29,7 +29,37 @@ export class Item {
         this.dragged = false;
         this._clicked = false;
         this._beingDragged = false;
+        this._mouseHovered = false;
         
+    }
+
+
+    defineEvents(){
+        this.sprite.on('mousedown', event =>{
+            this._clicked = true;
+            this._beingDragged = true;
+        });
+        this.sprite.on('mouseup', event =>{
+            this._beingDragged = false;
+        });
+        this.sprite.on('mousemove', event => {
+            if(this.dragged && this._beingDragged){
+                this.setLocation(
+                    event.data.getLocalPosition(this.sprite.parent).x,// - this.sprite.anchor.x*(this.sprite.width/2);
+                    event.data.getLocalPosition(this.sprite.parent).y// - (this.sprite.height/2);  
+                );                
+            }
+        });
+        this.sprite.on('mouseover', event => {
+            this._mouseHovered = true;
+        });
+        this.sprite.on('mouseout', event => {
+            this._mouseHovered = false;
+        });
+    }
+
+    onMouseHover(){
+        return this._mouseHovered;
     }
 
     getID(){
@@ -67,7 +97,9 @@ export class Item {
         return this.sprite;
     }
 
+    
     setPivot(xf, yf){
+        //sprite.pivot.set is a pixel coordinate, not between 0 and 1.
         this.sprite.pivot.set(
             this._oriWidth*xf,
             this._oriHeight*yf
@@ -109,28 +141,49 @@ export class Item {
     }
 
     setLocation(x, y){
+        if(this.sprite.pivot != null){
+            if(this.sprite.pivot.x != 0 || this.sprite.pivot.y != 0 || this.getRotation() != 0){
+
+                this.sprite.x = x;
+                this.sprite.y = y;
+                return;
+            }
+        }
+
         if(this.sprite.anchor == null){
             this.sprite.x = x;
             this.sprite.y = y;
         }
-        else {
-            if(this._locAbsFlag[0] == false){
-                this.sprite.x = (window.innerWidth/2) - (this.size[0]/2) + x;
-            }else{
-                if(x - (this.sprite.anchor.x*this.sprite.width) >= 0){
-                    this.sprite.x = x;
-                   // console.log("Setting x Locaiton from here");
-                }
+        else{
+            //if x is < 0 (with anchor consideration)
+            if(x-(this.sprite.anchor.x * this.sprite.width) < 0 ){
+                this.sprite.x = 0 + this.sprite.anchor.x * this.sprite.width;
+                console.warn("Item: ", this.getID(), "x position < 0");
             }
-            if(this._locAbsFlag[1] == false){
-                this.sprite.y = window.innerHeight/2 + y;
-            }else{
-                if(y - (this.sprite.anchor.y*this.sprite.height) >= 0){
-                    this.sprite.y = y;
-                    //console.log("Setting y Locaiton from here");
-                }
+            //if x is over screen width (with anchor consideration)
+            else if((x+this.sprite.width) -(this.sprite.anchor.x * this.sprite.width) >= 1280){
+                this.sprite.x = 1280 - (this.sprite.width)+(this.sprite.anchor.x * this.sprite.width);
+                console.warn("Item: ", this.getID(), "x position > 1280");
+                //console.log("newX: ", x, "Width: ", this.sprite.width, "anchor: ", this.sprite.anchor.x);
             }
-        }
+            else{
+                this.sprite.x = x;
+            }
+
+            //if y < 0 (with anchor consideration)
+            if(y - (this.sprite.anchor.y*this.sprite.height) < 0){
+                this.sprite.y = 0 + this.sprite.anchor.y * this.sprite.height;
+                console.warn("Item: ", this.getID(), "y position < 0");
+            }
+            //if y is over screen width (with anchor consideration)
+            else if((y+this.sprite.height) -(this.sprite.anchor.y * this.sprite.height) >= 960){
+                this.sprite.y = 960 - (this.sprite.height)+(this.sprite.anchor.y * this.sprite.height);
+                console.warn("Item: ", this.getID(), "y position > 960");
+            }
+            else{
+                this.sprite.y = y;
+            }   
+        }       
     }
 
     bringForward(){
@@ -167,10 +220,15 @@ export class Item {
         }
     }
 
+    //anchor is between 0 and 1
     setSpriteAnchor(x, y){
         this.sprite.anchor.x = x;
         this.sprite.anchor.y = y;
     }
+    getAnchor(){
+        return this.sprite.anchor;
+    }
+
     setAbsoluteFlag(axis, bool){
         if(axis=='x'){this._locAbsFlag[0] = bool;}
         if(axis=='y'){this._locAbsFlag[1] = bool;}
