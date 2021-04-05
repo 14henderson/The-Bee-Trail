@@ -7,16 +7,20 @@ import {EventChain} from '/beetrail/eventChain.js';
 import {Movement} from '/beetrail/movementMisc.js';
 
 export class PollenStage extends Stage{
+    entryEventChain;
     eventChain;
+    exitEventChain;
     textures;
 
     constructor(app, stageManager){
         super(app, stageManager);
         
-        this.states = [this.main];
-        this.state = this.main;
+        this.states = [this.entry, this.main, this.exit];
+        this.state = this.entry;
         
+        this.entryEventChain = new EventChain();
         this.eventChain = new EventChain();
+        this.exitEventChain = new EventChain();
     }
 
     getTextures(){
@@ -86,17 +90,21 @@ export class PollenStage extends Stage{
             "assets/fSprites/bees/Small-redtail-facing.png"
         ], resources);
 
-        this.fSprites.tube = new SpriteItem("assets/fSprites/objects/outer-tube.png", resources);
+        this.fSprites.tube1 = new SpriteItem("assets/fSprites/objects/outer-tube.png", resources);
+        this.fSprites.tube2 = new SpriteItem("assets/fSprites/objects/outer-tube.png", resources);
+        this.fSprites.tube3 = new SpriteItem("assets/fSprites/objects/outer-tube.png", resources);
         this.fSprites.net = new SpriteItem("assets/fSprites/objects/net-yellow.png", resources);
+
+        //this.fSprites.pollen1 = new SpriteItem("")
 
         this.fSprites.beeSpeechDrag = new SpriteItem("assets/fSprites/speech-bubbles/speech-bubble-tube-top.png", resources);
 
-        this.miscAssetCreation();//??????
+        this.miscAssetCreation();
     }
 
     miscAssetCreation(){
         let tubeEntranceBox = new PIXI.Graphics()
-            .lineStyle(4, 0xFF3300, 1)
+            .lineStyle(4, 0xFF3300, 0)
             .drawRect(0, 0, 150, 160);
         this.fSprites.tubeEntranceBox = new ShapeItem(tubeEntranceBox, false);
     }
@@ -130,10 +138,23 @@ export class PollenStage extends Stage{
         this.fSprites.redBee.setAlpha(0);
 
         
-        this.fSprites.tube.setScale(0.7);
-        this.fSprites.tube.setLocation(300, 300);
+        this.fSprites.tube1.setScale(0.7);
+        this.fSprites.tube1.setPivot(0.5, 0.5);
+        this.fSprites.tube1.setLocation(730, 380);
 
-        this.fSprites.tubeEntranceBox.bringBefore(this.fSprites.tube);
+        this.fSprites.tube2.setScale(0.7);
+        this.fSprites.tube2.setPivot(0.5, 0.5);
+        this.fSprites.tube2.setLocation(730, 380);
+        this.fSprites.tube2.setAlpha(0);
+
+        this.fSprites.tube3.setScale(0.7);
+        this.fSprites.tube3.setPivot(0.5, 0.5);
+        this.fSprites.tube3.setLocation(730, 380);
+        this.fSprites.tube3.setAlpha(0);
+        
+        
+
+        this.fSprites.tubeEntranceBox.bringBefore(this.fSprites.tube1);
         this.fSprites.tubeEntranceBox.setLocation(300, 300);
 
         this.fSprites.net.setRotation(290);
@@ -142,6 +163,8 @@ export class PollenStage extends Stage{
         this.fSprites.beeSpeechDrag.setScale(0.4)
         this.fSprites.beeSpeechDrag.setLocation(0, 300);
         this.fSprites.beeSpeechDrag.setAlpha(0);
+
+        this.foreground.setAlpha(0);
     }
 
     eventChainsDef(){
@@ -151,7 +174,7 @@ export class PollenStage extends Stage{
             .addFade(this.fSprites.honeyBee, 1, 0, 1)
             .next()
             .addFade(this.fSprites.beeSpeechDrag, 3, 0, 1)
-            //.addIdle(this.fSprites.honeyBee)
+            .addIdle(this.fSprites.honeyBee)
             .addCollisionEvent(this.fSprites.honeyBee, this.fSprites.tubeEntranceBox)
             .addDragEvent(this.fSprites.honeyBee)
             .next()
@@ -164,10 +187,15 @@ export class PollenStage extends Stage{
             .next()
             .addMovement(this.fSprites.honeyBee, [100, 100], 4, Movement.quadCurveMvPattern, 70)
             .addFade(this.fSprites.honeyBee, -1, 0, 1)
+            .addRotationEvent(this.fSprites.tube1, 0, 90, 1)
+            .addScaleEvent(this.fSprites.tube1, -0.6, 0.15, 1)
+            .addMovement(this.fSprites.tube1, [900, 700], 4, Movement.quadCurveMvPattern, 50)
+            .next()
 
             //Bee 2
             
         this.eventChain
+            .addFade(this.fSprites.tube2, 3, 0, 1)
             .addMovement(this.fSprites.buffBee, [130, 450], 2, Movement.straightMvPattern)
             .addFade(this.fSprites.buffBee, 1, 0, 1)
             .next()
@@ -184,10 +212,15 @@ export class PollenStage extends Stage{
             .addMovement(this.fSprites.buffBee, [400, 370], 4, Movement.straightMvPattern)
             .next()
             .addMovement(this.fSprites.buffBee, [100, 100], 4, Movement.quadCurveMvPattern, 70)
-            .addFade(this.fSprites.buffBee, -1, 0, 1);
+            .addFade(this.fSprites.buffBee, -1, 0, 1)
+            .addRotationEvent(this.fSprites.tube2, 0, 90, 1)
+            .addScaleEvent(this.fSprites.tube2, -0.6, 0.15, 1)
+            .addMovement(this.fSprites.tube2, [1000, 700], 4, Movement.quadCurveMvPattern, 50)
+            .next();
 
         //Bee 3
         this.eventChain
+            .addFade(this.fSprites.tube3, 3, 0, 1)
             .addMovement(this.fSprites.redBee, [130, 450], 2, Movement.straightMvPattern)
             .addFade(this.fSprites.redBee, 1, 0, 1)
             .next()
@@ -205,16 +238,35 @@ export class PollenStage extends Stage{
             .next()
             .addMovement(this.fSprites.redBee, [100, 100], 4, Movement.quadCurveMvPattern, 70)
             .addFade(this.fSprites.redBee, -1, 0, 1)
-            .next();
+            .addRotationEvent(this.fSprites.tube3, 0, 90, 1)
+            .addScaleEvent(this.fSprites.tube3, -0.6, 0.15, 1)
+            .addMovement(this.fSprites.tube3, [1100, 700], 4, Movement.quadCurveMvPattern, 50)
+            .next()
 
         //end
-        this.eventChain.addChangeStageEvent(this.fSprites.redBee, this, "hub");
-
+        this.eventChain.addChangeStateEvent(this.foreground, this, 2);
         this.eventChain.initialise();
+
+        this.entryEventChain
+            .addFade(this.foreground, 3, 0, 1)
+            .next()
+            .addChangeStateEvent(this.foreground, this, 1);
+        this.entryEventChain.initialise();
+
+        this.exitEventChain
+            .addFade(this.foreground, -3, 0, 1.1)
+            .next()
+            .addChangeStageEvent(this.foreground, this, "hub");
+        this.exitEventChain.initialise();
     }
 
     loop(delta, context){
         context.state(delta);
+    }
+
+    entry(delta, context){
+        context.entryEventChain.tick();
+        context.foreground.tick();
     }
 
     main(delta, context){
@@ -223,6 +275,7 @@ export class PollenStage extends Stage{
     }
 
     exit(delta, context){
-        
+        this.foreground.tick();
+        this.exitEventChain.tick();
     }
 }
