@@ -37,6 +37,9 @@ export class AnimatedItem extends Item{
         this.sprite.gotoAndStop(num);
         this._oriWidth = this.sprite.textures[this.sprite.currentFrame].width;
         this._oriHeight = this.sprite.textures[this.sprite.currentFrame].height;
+        if(this._pivotCentered){
+            this.centerPivot();
+        }
         //this.centerPivot();
     }
 

@@ -12,6 +12,7 @@ export class Item {
         this.speed = 0;
 
         this._centered = false;
+        this._pivotCentered = false;
         this._locAbsFlag = [true, true];
         this._xMovementScaler = 1;
         this._yMovementScaler = 0;
@@ -106,6 +107,7 @@ export class Item {
         );
     }
     centerPivot(){
+        this._pivotCentered = true;
         this.sprite.pivot.set(
             this._oriWidth/2,
             this._oriHeight/2
