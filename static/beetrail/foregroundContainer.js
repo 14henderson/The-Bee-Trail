@@ -17,7 +17,7 @@ export class Foreground extends PIXI.Container{
         this._alphaMin = .2;
         this._alphaMax = 1;
 
-        this.on('mousedown', event =>{
+        this.on('pointerdown', event =>{
             this._clicked = true;
         });
     }

@@ -12,26 +12,26 @@ export class ShapeItem extends Item{
         this._mouseHovered = false;
 
 
-        this.sprite.on('mousedown', event =>{
+        this.sprite.on('pointerdown', event =>{
             this._clicked = true;
             this._beingDragged = true;
         });
 
-        this.sprite.on('mouseup', event =>{
+        this.sprite.on('pointerup', event =>{
             this._beingDragged = false;
         });
 
-        this.sprite.on('mousemove', event => {
+        this.sprite.on('pointermove', event => {
             if(this.dragged && this._beingDragged){
                 this.sprite.x = event.data.getLocalPosition(this.sprite.parent).x;// - this.sprite.anchor.x*(this.sprite.width/2);
                 this.sprite.y = event.data.getLocalPosition(this.sprite.parent).y;// - (this.sprite.height/2);                
             }
         });
 
-        this.sprite.on('mouseover', event => {
+        this.sprite.on('pointerover', event => {
             this._mouseHovered = true;
         });
-        this.sprite.on('mouseout', event => {
+        this.sprite.on('pointerout', event => {
             this._mouseHovered = false;
         });
     }

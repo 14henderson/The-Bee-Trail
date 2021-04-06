@@ -18,13 +18,13 @@ export class AnimatedItem extends Item{
         this.hoverFrame = 0;
 
 
-        this.sprite.on('mouseover', event => {
+        this.sprite.on('pointerover', event => {
             this._mouseHovered = true;
             if(this._hoverEnabled){
                 this.gotoFrame(this.hoverFrame);
             }
         });
-        this.sprite.on('mouseout', event => {
+        this.sprite.on('pointerout', event => {
             this._mouseHovered = false;
             if(this._hoverEnabled){
                 this.gotoFrame(0);
