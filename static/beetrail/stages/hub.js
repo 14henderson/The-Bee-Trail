@@ -190,7 +190,6 @@ export class HubStage extends Stage{
     }
 
     loop(delta, context){
-        console.log("Current State: ", this.state);
         context.state(delta, context);
     }
     
@@ -198,19 +197,16 @@ export class HubStage extends Stage{
 
     //STATES
     start(delta, context){
-        console.log("Current State: ", this.state);
         context.foreground.tick();
         context.startEventChain.tick();
     }
 
     entry(delta, context){
-        console.log("Current State: ", this.state);
         context.foreground.tick();
         context.entryEventChain.tick();
     }
 
     main(delta, context){   
-        console.log("Current State: ", this.state);     
         if(context.fSprites.meadowNav.getClickedState()){
             if(this.customState == 0){this.customState = 1;}
             context.exitEventChain.next().addChangeStageEvent(this.fSprites.playButton, this, "meadow");
@@ -251,7 +247,6 @@ export class HubStage extends Stage{
     }
 
     exit(delta, context){
-        console.log("Current State: ", this.state);
         context.foreground.tick();
         context.exitEventChain.tick();
 

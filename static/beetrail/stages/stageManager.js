@@ -13,6 +13,7 @@ export class StageManager{
     app;
     loader;
     bSprites;
+    errorText;
 
     constructor(app){
         this.stages = {
@@ -22,6 +23,7 @@ export class StageManager{
         };
         this.stage = "hub";
         this.app = app;
+        this.app.stage.sortableChildren = true;
 
         this.loader = new PIXI.Loader();
         this.bSprites = {};
@@ -71,6 +73,7 @@ export class StageManager{
 
         this.centerAndScaleSprites(this.bSprites);
         this.stages[this.stage].state(0, this.stages[this.stage]);
+        this.addPauseScreen();
     }
 
 
@@ -102,11 +105,41 @@ export class StageManager{
             .endFill();
         this.bSprites.backgroundCol = new ShapeItem(backColour, false);
 
+        let pausedColour = new PIXI.Graphics()
+            .beginFill(0x3b3b3b)
+            .drawRect(0, 0, 10, 10)
+            .endFill();
+        this.bSprites.pauseScreen = new ShapeItem(pausedColour, false);
+        this.bSprites.pauseScreen.setAlpha(0);
+        let errorText = new PIXI.Text("Screen Size is too Small.", {fontFamily : 'Arial', fontSize: 30, fill : 0xffffff,  align : 'center'});
+        this.errorText = new ShapeItem(errorText, false);
+        this.errorText.alpha = 0;
+
     }
     addToApp(){
         this.app.stage.addChild(this.bSprites.backgroundCol.getSprite());
         this.app.stage.addChild(this.bSprites.skyBackground.getSprite());
         this.app.stage.addChild(this.bSprites.mBackground.getSprite());
+        this.app.stage.addChild(this.bSprites.pauseScreen.getSprite());
+        this.app.stage.addChild(this.errorText.getSprite());
+    }
+    addPauseScreen(){
+        if(window.innerWidth < (4/3)*window.innerHeight){
+            this.bSprites.pauseScreen.setSize(window.innerWidth, window.innerHeight);
+            this.bSprites.pauseScreen.setAlpha(1);
+            this.errorText.setAlpha(1);
+            this.bSprites.pauseScreen.sprite.zIndex = 100;
+            this.errorText.sprite.zIndex = 101;
+            this.errorText.setLocation(
+                (window.innerWidth/2)-(this.errorText.getSize()[0]/2),
+                (window.innerHeight/2)-100
+            );
+        }else{
+            this.bSprites.pauseScreen.setAlpha(0);
+            this.errorText.setAlpha(0);
+            this.bSprites.pauseScreen.sprite.zIndex = 0;
+            this.errorText.sprite.zIndex = 0;
+        }
     }
     //----------------------------------------------------------//
 
