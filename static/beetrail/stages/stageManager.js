@@ -21,7 +21,7 @@ export class StageManager{
             "meadow":new MeadowStage(app, this),            
             "pollen":new PollenStage(app, this)
         };
-        this.stage = "hub";
+        this.stage = "pollen";
         this.app = app;
         this.app.stage.sortableChildren = true;
 
@@ -62,7 +62,6 @@ export class StageManager{
         this.loader.onComplete.add(() => {
             this.addToApp();    //add background assets to container.
             this.app.stage.addChild(this.stages[this.stage].foreground);
-            
             this.app.ticker.add(this.loop, this);
         });
     }
@@ -101,7 +100,7 @@ export class StageManager{
         
         let backColour = new PIXI.Graphics()
             .beginFill(0xFFFFFF)
-            .drawRect(0, 0, this.bSprites.mBackground.getSprite().width, window.innerHeight)
+            .drawRect(0, 0, this.bSprites.mBackground.getSprite().width, this.bSprites.mBackground.getSprite().height)
             .endFill();
         this.bSprites.backgroundCol = new ShapeItem(backColour, false);
 
