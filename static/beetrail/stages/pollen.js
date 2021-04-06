@@ -36,10 +36,11 @@ export class PollenStage extends Stage{
             "assets/fSprites/bees/Small-red-tail-profile.png",
             "assets/fSprites/bees/Small-redtail-facing.png",
 
-            "assets/fSprites/objects/elie-standing.png",
-            "assets/fSprites/objects/elie-waving.png",
+            "assets/fSprites/objects/elie-standing-NEW.png",
+            "assets/fSprites/objects/elie-waving-NEW.png",
             "assets/fSprites/objects/net-yellow.png",
             "assets/fSprites/objects/Artboard 4net-overlay.png",
+            "assets/fSprites/objects/pollen.png",
         
             "assets/fSprites/objects/bench.png",
             "assets/fSprites/objects/laptop.png",
@@ -102,7 +103,10 @@ export class PollenStage extends Stage{
 
         this.fSprites.netFront = new SpriteItem("assets/fSprites/objects/Artboard 4net-overlay.png", resources);
         this.fSprites.beeSpeechDrag = new SpriteItem("assets/fSprites/speech-bubbles/speech-bubble-tube-top.png", resources);
-        this.fSprites.Elie = new SpriteItem("assets/fSprites/objects/elie-waving-jeans.png", resources);
+        this.fSprites.Elie = new AnimatedItem([
+            "assets/fSprites/objects/elie-standing-NEW.png", 
+            "assets/fSprites/objects/elie-waving-NEW.png",
+        ], resources);
 
 
         this.miscAssetCreation();
@@ -110,7 +114,7 @@ export class PollenStage extends Stage{
 
     miscAssetCreation(){
         let tubeEntranceBox = new PIXI.Graphics()
-            .lineStyle(4, 0xFF3300, 1)
+            .lineStyle(4, 0xFF3300, 0)
             .drawRect(0, 0, 150, 160);
         this.fSprites.tubeEntranceBox = new ShapeItem(tubeEntranceBox, false);
     }
@@ -172,6 +176,7 @@ export class PollenStage extends Stage{
 
         this.fSprites.Elie.setScale(0.5);
         this.fSprites.Elie.setLocation(900, 353);
+        this.fSprites.Elie.gotoFrame(1);
 
 
 
@@ -182,6 +187,9 @@ export class PollenStage extends Stage{
     eventChainsDef(){
         this.eventChain
             //Bee 1
+            .addClickEvent(this.foreground)
+            .next()
+            .addFrameEvent(this.fSprites.Elie, 0)
             .addClickEvent(this.foreground)
             .next()
             .addFade(this.fSprites.Elie, -3, 0, 1)
