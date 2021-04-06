@@ -51,6 +51,9 @@ export class HubStage extends Stage{
             "assets/fSprites/objects/Artboard 1newspaper-front-cover.png",
             "assets/fSprites/buttons/play-button-hover.png",
             "assets/fSprites/buttons/static-play-button-click.png",
+
+            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-static.png",
+            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-hover.png",
         
             "assets/fSprites/buttons/meadowNav.fw.png",
             "assets/fSprites/buttons/meadowNav_L.fw.png",
@@ -108,8 +111,8 @@ export class HubStage extends Stage{
         ], resources);
 
         this.fSprites.playButton = new AnimatedItem([
-            "assets/fSprites/buttons/static-play-button-click.png",
-            "assets/fSprites/buttons/play-button-hover.png"
+            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-static.png",
+            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-hover.png"
         ], resources);
     }
 
@@ -132,9 +135,9 @@ export class HubStage extends Stage{
         this.fSprites.minION.setScale(0.4);
         this.fSprites.minION.setLocation(750, 750);
 
-        this.fSprites.playButton.setScale(0.2);
+        //this.fSprites.playButton.setScale(0.2);
         this.fSprites.playButton.centerPivot();//?????????????????????
-        this.fSprites.playButton.setLocation(1000, 880);
+        this.fSprites.playButton.setLocation(970, 680);
         this.fSprites.playButton.enableInteractiveState();
         this.fSprites.playButton.enableMouseHoverFrame(1);
         this.fSprites.playButton.setAlpha(0);
