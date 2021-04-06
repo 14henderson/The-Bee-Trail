@@ -13,6 +13,8 @@ export class HubStage extends Stage{
     mainEventChain;
     exitEventChain;
 
+    animationTick;
+
     customState;    //increases on completion of stage.
     textures;
 
@@ -28,6 +30,7 @@ export class HubStage extends Stage{
         this.exitEventChain = new EventChain();
 
         this.customState = 0;
+        this.animationTick = 0;
     }
 
     getTextures(){
@@ -189,6 +192,36 @@ export class HubStage extends Stage{
 
     }
 
+    navigateAction(item, customStateNum, stage){
+        if(item.getClickedState()){
+            if(this.customState == customStateNum-1){this.customState = customStateNum;}
+            this.exitEventChain.next().addChangeStageEvent(this.foreground, this, stage);
+            this.exitEventChain.initialise();
+            this.setState(3);
+            item.resetClickedState();
+        }
+    }
+    hoverAnimation(item){
+        if(item.onMouseHover()){
+            item.setFadeAnimation(0.19, 1, 0.05);
+        }else{
+            item.setFadeAnimation(0.2, 1, -0.05);
+        }
+    }
+
+    pulseAnimation(item){
+        if(this.animationTick == 0){
+            item.setFadeAnimation(0, 1, 0.005);
+        }else if(this.animationTick == 150){
+            item.setFadeAnimation(0, 1, -0.005);
+        }
+        this.animationTick++;
+        if(this.animationTick == 300){
+            this.animationTick = 0;
+        }
+    }
+
+
     loop(delta, context){
         context.state(delta, context);
     }
@@ -207,37 +240,18 @@ export class HubStage extends Stage{
     }
 
     main(delta, context){   
-        if(context.fSprites.meadowNav.getClickedState()){
-            if(this.customState == 0){this.customState = 1;}
-            context.exitEventChain.next().addChangeStageEvent(this.fSprites.playButton, this, "meadow");
-            context.exitEventChain.initialise();
-            context.setState(3);
-            context.fSprites.meadowNav.resetClickedState();
-        }
-        if(context.fSprites.meadowNav.onMouseHover()){
-            context.fSprites.meadowNav.setFadeAnimation(0.19, 1, 0.05);
-        }else{
-            context.fSprites.meadowNav.setFadeAnimation(0.2, 1, -0.05);
-        }
-        
-        
-        if(context.fSprites.pollenNav.getClickedState()){
-            context.exitEventChain.next().addChangeStageEvent(this.fSprites.playButton, this, "pollen");
-            context.exitEventChain.initialise();
-            context.setState(3);
-            context.fSprites.pollenNav.resetClickedState();
-        }
-        if(context.fSprites.pollenNav.onMouseHover()){
-            context.fSprites.pollenNav.setFadeAnimation(0.2, 1, 0.05);
-        }else{
-            context.fSprites.pollenNav.setFadeAnimation(0.2, 1, -0.05);
-        }
-        
-        if(context.fSprites.minIONNav.onMouseHover()){
-            context.fSprites.minIONNav.setFadeAnimation(0.2, 1, 0.05);
-        }else{
-            context.fSprites.minIONNav.setFadeAnimation(0.2, 1, -0.05);
-        }
+        context.navigateAction(context.fSprites.meadowNav, 1, "meadow");
+        if(this.customState == 0){context.pulseAnimation(context.fSprites.meadowNav);
+        }else{context.hoverAnimation(context.fSprites.meadowNav);}
+
+        context.navigateAction(context.fSprites.pollenNav, 2, "pollen");
+        if(this.customState == 1){context.pulseAnimation(context.fSprites.pollenNav);
+        }else{context.hoverAnimation(context.fSprites.pollenNav);}
+
+        context.navigateAction(context.fSprites.minIONNav, 3, "minION");
+        if(this.customState == 1){context.pulseAnimation(context.fSprites.minIONNav);
+        }else{context.hoverAnimation(context.fSprites.minIONNav);}
+
 
         context.fSprites.meadowNav.tick();
         context.fSprites.pollenNav.tick();
