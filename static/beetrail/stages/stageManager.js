@@ -67,6 +67,8 @@ export class StageManager{
 
 
     loop(){
+        this.app.renderer.resize(window.innerWidth, window.innerHeight);    //resizing here instead of main.js stops flickering? Unsure about stability.
+
         this.centerAndScaleSprites(this.bSprites);
         this.stages[this.stage].state(0, this.stages[this.stage]);
     }
