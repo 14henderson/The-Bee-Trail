@@ -4,7 +4,7 @@ import {ShapeItem} from '/beetrail/item/shapeItem.js';
 import { AnimatedItem } from '/beetrail/item/animatedItem.js';
 
 import {EventChain} from '/beetrail/eventChain.js';
-import {Movement} from '/beetrail/movementMisc.js';
+import {Movement, Animation} from '/beetrail/movementMisc.js';
 
 
 export class HubStage extends Stage{
@@ -143,26 +143,35 @@ export class HubStage extends Stage{
         this.fSprites.playButton.setAlpha(0);
 
         this.fSprites.meadowNav.enableInteractiveState();
-        this.fSprites.meadowNav.setAlpha(0.18);
         this.fSprites.meadowNav.setLocation(0, 70);
+        this.fSprites.meadowNav.setAnimationFunction(Animation.halfAlphaPulse);
 
         this.fSprites.pollenNav.enableInteractiveState();
-        this.fSprites.pollenNav.setAlpha(0.2);
         this.fSprites.pollenNav.setLocation(0, 500);
+        this.fSprites.pollenNav.setAnimationFunction(Animation.halfAlphaPulse);
         if(this.customState >= 1){
             this.fSprites.pollenNav.gotoFrame(0);
+            this.fSprites.pollenNav.setAnimationFlag(true);
+            this.fSprites.pollenNav.setAlpha(1);
         }else{
             this.fSprites.pollenNav.gotoFrame(1);
+            this.fSprites.pollenNav.setAnimationFlag(false);
+            this.fSprites.pollenNav.setAlpha(0.5);
         }
         
 
         this.fSprites.minIONNav.enableInteractiveState();
-        this.fSprites.minIONNav.setAlpha(0.2);
+        //this.fSprites.minIONNav.setAlpha(0.2);
         this.fSprites.minIONNav.setLocation(660, 500);
+        this.fSprites.minIONNav.setAnimationFunction(Animation.halfAlphaPulse);
         if(this.customState >= 2){
             this.fSprites.minIONNav.gotoFrame(0);
+            this.fSprites.minIONNav.setAnimationFlag(true);
+            this.fSprites.pollenNav.setAlpha(1);
         }else{
             this.fSprites.minIONNav.gotoFrame(1);
+            this.fSprites.minIONNav.setAnimationFlag(false);
+            this.fSprites.minIONNav.setAlpha(0.5);
         }
         
         
@@ -244,16 +253,16 @@ export class HubStage extends Stage{
 
     main(delta, context){   
         context.navigateAction(context.fSprites.meadowNav, 1, "meadow");
-        if(this.customState == 0){context.pulseAnimation(context.fSprites.meadowNav);
-        }else{context.hoverAnimation(context.fSprites.meadowNav);}
+        if(this.customState == 0){context.pulseAnimation(context.fSprites.meadowNav);}
+        //}else{context.hoverAnimation(context.fSprites.meadowNav);}
 
         context.navigateAction(context.fSprites.pollenNav, 2, "pollen");
-        if(this.customState == 1){context.pulseAnimation(context.fSprites.pollenNav);
-        }else{context.hoverAnimation(context.fSprites.pollenNav);}
+        if(this.customState == 1){context.pulseAnimation(context.fSprites.pollenNav);}
+       // }else{context.hoverAnimation(context.fSprites.pollenNav);}
 
         context.navigateAction(context.fSprites.minIONNav, 3, "minION");
-        if(this.customState == 1){context.pulseAnimation(context.fSprites.minIONNav);
-        }else{context.hoverAnimation(context.fSprites.minIONNav);}
+        if(this.customState == 2){context.pulseAnimation(context.fSprites.minIONNav);}
+       // }else{context.hoverAnimation(context.fSprites.minIONNav);}
 
 
         context.fSprites.meadowNav.tick();
