@@ -6,7 +6,7 @@ import { AnimatedItem } from '/beetrail/item/animatedItem.js';
 import { VideoItem } from '/beetrail/item/videoItem.js';
 
 import {EventChain} from '/beetrail/eventChain.js';
-import {Movement} from '/beetrail/movementMisc.js';
+import {Movement, Animation} from '/beetrail/movementMisc.js';
 
 
 
@@ -43,9 +43,8 @@ export class MeadowStage extends Stage{
             "assets/fSprites/backgrounds/background1.fw.png",
             "assets/fSprites/backgrounds/foreground.fw.png",
         
-            "assets/fSprites/objects/elie-standing.png",
-            "assets/fSprites/objects/elie-waving.png",
-            "assets/fSprites/objects/elie-waving-jeans.png",
+            "assets/fSprites/objects/elie-standing-NEW.png", 
+            "assets/fSprites/objects/elie-waving-NEW.png",
             "assets/fSprites/objects/net-yellow.png",
 
             "assets/fSprites/speech-bubbles/1-billie-speech-bubble.png",
@@ -53,7 +52,9 @@ export class MeadowStage extends Stage{
             "assets/fSprites/speech-bubbles/barney-speech-bubble.png",
             "assets/fSprites/speech-bubbles/bella-speech-bubble.png",
             "assets/fSprites/speech-bubbles/elie-speech-bubble.png",
-            "assets/fSprites/speech-bubbles/elie-speech-bubble-2.png"
+            "assets/fSprites/speech-bubbles/elie-speech-bubble-2.png",
+
+            "assets/fSprites/buttons/click-anywhere.png"
         ];
         return this.textures;
     }
@@ -101,13 +102,19 @@ export class MeadowStage extends Stage{
         this.fSprites.redSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/1-billie-speech-bubble.png", resources);
         this.fSprites.redSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/2-billie-speech-bubble.png", resources);
 
-        this.fSprites.Elie = new SpriteItem("assets/fSprites/objects/elie-waving-jeans.png", resources);
+        this.fSprites.Elie = new AnimatedItem([
+            "assets/fSprites/objects/elie-standing-NEW.png", 
+            "assets/fSprites/objects/elie-waving-NEW.png",
+        ], resources);
+
         this.fSprites.ElieSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble.png", resources);
         this.fSprites.ElieSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/elie-speech-bubble-2.png", resources);
 
         this.fSprites.net1 = new SpriteItem("assets/fSprites/objects/net-yellow.png", resources);
         this.fSprites.net2 = new SpriteItem("assets/fSprites/objects/net-yellow.png", resources);
         this.fSprites.net3 = new SpriteItem("assets/fSprites/objects/net-yellow.png", resources);
+
+        this.fSprites.clickNotice = new SpriteItem("assets/fSprites/buttons/click-anywhere.png", resources);
     }
 
 
@@ -176,6 +183,7 @@ export class MeadowStage extends Stage{
 //--------------
         this.fSprites.Elie.setScale(0.5);
         this.fSprites.Elie.setLocation(900, 353);
+        this.fSprites.Elie.gotoFrame(1);
 
         this.fSprites.ElieSpeech1.setScale(0.8);
         this.fSprites.ElieSpeech1.setLocation(350, 100);
@@ -184,9 +192,13 @@ export class MeadowStage extends Stage{
         this.fSprites.ElieSpeech2.setLocation(450, 200);
         this.fSprites.ElieSpeech2.setAlpha(0);
 //---------------
-        //this.fSprites.video.setLocation(300, 300);
-        //this.fSprites.video.setScale(0.4);
-        //this.fSprites.video.setAlpha(0.2);
+        this.fSprites.clickNotice.setScale(0.8);
+        this.fSprites.clickNotice.setLocation(350, 750);
+        this.fSprites.clickNotice.setAlpha(0);
+
+        this.fSprites.clickNotice.setAnimationFunction(Animation.halfAlphaPulse);
+        this.fSprites.clickNotice.setAnimationFlag(false);
+
 
         this.foreground.setAlpha(0);
     }
@@ -195,9 +207,14 @@ export class MeadowStage extends Stage{
     eventChainsDef(){
         this.eventChain
             .addFade(this.fSprites.ElieSpeech1, 3, 0, 1)
+            .next()
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
+            .next()
+            .setAnimationFlag(this.fSprites.clickNotice, true)
             .addClickEvent(this.foreground)
             .next()
-            //.addPlayItemEvent(this.fSprites.video)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
+            .addFrameEvent(this.fSprites.Elie, 0)
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.ElieSpeech1, -3, 0, 1)
             .addMovement(this.fSprites.honeyBee, [500, 200], 3, Movement.quadCurveMvPattern, 50)
@@ -210,16 +227,19 @@ export class MeadowStage extends Stage{
             .addFrameEvent(this.fSprites.honeyBee, 1)
             .addBringBefore(this.fSprites.honeyBee, this.fSprites.background1)
             .addFade(this.fSprites.honeySpeech, 3, 0, 1)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .next()
+            .setAnimationFlag(this.fSprites.clickNotice, true)
             .addIdle(this.fSprites.honeyBee)
             .addClickEvent(this.foreground)
             .next()
             .addFade(this.fSprites.honeySpeech, -3, 0, 1)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .next()
             .addFade(this.fSprites.net1, 5, 0, 1)
             .addRotationEvent(this.fSprites.net1, 0, 100, 5)
             .addFade(this.fSprites.honeyBee, -3, 0, 1)
-            .next()
+
             // Next Bee!
             .next()
             .addFade(this.fSprites.net1, -3, 0, 1)
@@ -239,11 +259,14 @@ export class MeadowStage extends Stage{
             .addFrameEvent(this.fSprites.buffBee, 1)
             .addBringBefore(this.fSprites.buffBee, this.fSprites.background1)
             .addFade(this.fSprites.buffSpeech, 3, 0, 1)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .next()
+            .setAnimationFlag(this.fSprites.clickNotice, true)
             .addIdle(this.fSprites.buffBee)
             .addClickEvent(this.foreground)
             .next()
             .addFade(this.fSprites.buffSpeech, -3, 0, 1)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .next()
             .addFade(this.fSprites.net2, 5, 0, 1)
             .addRotationEvent(this.fSprites.net2, 0, 100, 5)
@@ -262,7 +285,9 @@ export class MeadowStage extends Stage{
             .addFrameEvent(this.fSprites.redBee, 1)
             .addBringBefore(this.fSprites.redBee, this.fSprites.background1)
             .addFade(this.fSprites.redSpeech1, 3, 0, 1)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .next()
+            .setAnimationFlag(this.fSprites.clickNotice, true)
             .addIdle(this.fSprites.redBee)
             .addClickEvent(this.foreground)
             .next()
@@ -321,6 +346,8 @@ export class MeadowStage extends Stage{
 
     //STATES
     main(delta, context){
+        context.fSprites.clickNotice.tick();
+
         context.foreground.tick();
         context.eventChain.tick();
     }
