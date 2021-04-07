@@ -26,6 +26,8 @@ export class Item {
 
         this.spriteDirection = 'l';
         this.animationTick = 0;
+        this.animationFunc = null;
+        this.animationFlag = true;
 
         this.dragged = false;
         this._clicked = false;
@@ -288,6 +290,11 @@ export class Item {
         
         if(this._centered){this.centerX();}
         this.animationTick += 1;
+        if(this.animationTick == 100){this.animationTick = 0;}
+
+        if(this.animationFunc != null && this.animationFlag){
+            this.animationFunc(this, this.animationTick);
+        }
     }
 
     setAlpha(alpha){
@@ -298,6 +305,10 @@ export class Item {
         this._alphaMax = max;
         this._alphaDelta = delta;
     }
+    setAnimationFlag(f){
+        this.animationFlag = f;
+        this.animationTick = 0;
+    }
 
     getSize(){
         this.size = [this.sprite.width, this.sprite.height];
@@ -307,5 +318,9 @@ export class Item {
     centerX(){
         this._centered = true;
         this.sprite.x = (window.innerWidth/2)-(this.getSize()[0]/2);
+    }
+
+    setAnimationFunction(func){
+        this.animationFunc = func;
     }
 }

@@ -28,3 +28,16 @@ export class Movement{
         return false;
     }
 }
+
+export class Animation{
+
+    static halfAlphaPulse(item, x){
+        let a = (Math.cos(x*(Math.PI*2)/100)/8)+7/8;
+        item.setAlpha(a);
+    }
+
+    static fullAlphaPulse(item, x){
+        let a = (Math.cos(x*(Math.PI*2)/100)/2)+0.5;
+        item.setAlpha(a);
+    }
+}

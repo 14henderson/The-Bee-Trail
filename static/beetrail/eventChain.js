@@ -235,6 +235,16 @@ export class EventChain{
         return this;
     }
 
+    setAnimationFlag(item, flag){
+        this.chain[this.chain.length-1].push({
+            'type':'item-animation-flag',
+            'item':item,
+            'flag':flag,
+            'completed':false
+        });
+        return this;
+    }
+
     addChangeStateEvent(item, stage, stateNum){
         this.chain[this.chain.length-1].push({
             'type':'state-change',
@@ -374,6 +384,16 @@ export class EventChain{
                     }
                     break;
 
+                case 'item-animation-flag':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].item.setAnimationFlag(
+                            this.chain[this.eventNumber][i].flag
+                        );
+                        this.chain[this.eventNumber][i].completed = true;
+                        eGroupComp = eGroupComp && true;
+                    }
+                    break;
+
                 case 'movement':
                     if(!this.chain[this.eventNumber][i].completed){
                         let x = this.chain[this.eventNumber][i].progress;
@@ -473,6 +493,7 @@ export class EventChain{
 
                 case 'fade':
                     if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].item.setAnimationFlag(false);
                         this.chain[this.eventNumber][i].item.setAlpha(
                             this.chain[this.eventNumber][i].item.getAlpha()
                             +this.chain[this.eventNumber][i].delta/100);

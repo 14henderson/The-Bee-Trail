@@ -81,6 +81,11 @@ export class Foreground extends PIXI.Container{
         this.height = window.innerHeight;
         this.width = (4/3)*this.height;   
     }
-
+    setAnimationFunction(func){
+        //do nothing
+    }
+    setAnimationFlag(f){
+        //do nothing
+    }
     
 }
