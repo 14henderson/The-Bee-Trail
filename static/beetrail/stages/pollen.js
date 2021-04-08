@@ -61,7 +61,8 @@ export class PollenStage extends Stage{
             "assets/fSprites/objects/poppy-pollen-magnify.png",
 
             "assets/fSprites/speech-bubbles/speech-bubble-tube-top.png",
-            "assets/fSprites/buttons/click-anywhere.png"
+            "assets/fSprites/buttons/click-anywhere.png",
+            "assets/fSprites/buttons/drag-the-bee.png"
         ];
         return this.textures;
     }
@@ -118,6 +119,7 @@ export class PollenStage extends Stage{
         ], resources);
 
         this.fSprites.clickNotice = new SpriteItem("assets/fSprites/buttons/click-anywhere.png", resources);
+        this.fSprites.dragNotice = new SpriteItem("assets/fSprites/buttons/drag-the-bee.png", resources);
 
         this.miscAssetCreation();
     }
@@ -191,9 +193,14 @@ export class PollenStage extends Stage{
         this.fSprites.clickNotice.setScale(0.8);
         this.fSprites.clickNotice.setLocation(350, 750);
         this.fSprites.clickNotice.setAlpha(1);
-
         this.fSprites.clickNotice.setAnimationFunction(Animation.halfAlphaPulse);
         this.fSprites.clickNotice.setAnimationFlag(true);
+
+        this.fSprites.dragNotice.setScale(0.8);
+        this.fSprites.dragNotice.setLocation(400, 750);
+        this.fSprites.dragNotice.setAlpha(0);
+        this.fSprites.dragNotice.setAnimationFunction(Animation.halfAlphaPulse);
+        this.fSprites.dragNotice.setAnimationFlag(false);
 
         this.fSprites.bluebellMag.setScale(0.8);
         this.fSprites.bluebellMag.setLocation(700, 250);
@@ -222,7 +229,9 @@ export class PollenStage extends Stage{
             .addMovement(this.fSprites.honeyBee, [130, 450], 2, Movement.straightMvPattern)
             .addFade(this.fSprites.honeyBee, 1, 0, 1)
             .next()
-            .addFade(this.fSprites.beeSpeechDrag, 3, 0, 1)
+            .addFade(this.fSprites.dragNotice, 3, 0, 1)
+            .next()
+            .setAnimationFlag(this.fSprites.dragNotice, true)
             .addIdle(this.fSprites.honeyBee)
             .addCollisionEvent(this.fSprites.honeyBee, this.fSprites.tubeEntranceBox)
             .addDragEvent(this.fSprites.honeyBee)
@@ -230,6 +239,7 @@ export class PollenStage extends Stage{
             .addForceLocationEvent(this.fSprites.honeyBee, [420, 370])
             .addBringBehind(this.fSprites.honeyBee, this.fSprites.honeyTube)
             .next()
+            .addFade(this.fSprites.dragNotice, -3, 0, 1)
             .addFade(this.fSprites.beeSpeechDrag, -3, 0, 1)
             .addMovement(this.fSprites.honeyBee, [900, 370], 1, Movement.sinMvPattern)
             .next()
@@ -342,7 +352,7 @@ export class PollenStage extends Stage{
 
     main(delta, context){
         context.fSprites.clickNotice.tick();
-
+        context.fSprites.dragNotice.tick();
         context.foreground.tick();
         context.eventChain.tick();
     }
