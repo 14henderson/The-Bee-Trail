@@ -55,12 +55,12 @@ export class HubStage extends Stage{
             "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-static.png",
             "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-hover.png",
         
-            "assets/fSprites/buttons/meadowNav.fw.png",
-            "assets/fSprites/buttons/meadowNav_L.fw.png",
-            "assets/fSprites/buttons/minIONNav.fw.png",
-            "assets/fSprites/buttons/minIONNav_L.fw.png",
-            "assets/fSprites/buttons/pollenNav.fw.png",
-            "assets/fSprites/buttons/pollenNav_L.fw.png",
+            "assets/fSprites/buttons/meadowNav.png",
+            "assets/fSprites/buttons/meadowNav_L.png",
+            "assets/fSprites/buttons/minIONNav.png",
+            "assets/fSprites/buttons/minIONNav_L.png",
+            "assets/fSprites/buttons/pollenNav.png",
+            "assets/fSprites/buttons/pollenNav_L.png",
         ];
         return this.textures;
     }
@@ -98,16 +98,16 @@ export class HubStage extends Stage{
         //---------------------------
         
         this.fSprites.meadowNav = new AnimatedItem([
-            "assets/fSprites/buttons/meadowNav.fw.png",
-            "assets/fSprites/buttons/meadowNav_L.fw.png"
+            "assets/fSprites/buttons/meadowNav.png",
+            "assets/fSprites/buttons/meadowNav_L.png"
         ], resources);
         this.fSprites.pollenNav = new AnimatedItem([
-            "assets/fSprites/buttons/pollenNav.fw.png",
-            "assets/fSprites/buttons/pollenNav_L.fw.png"
+            "assets/fSprites/buttons/pollenNav.png",
+            "assets/fSprites/buttons/pollenNav_L.png"
         ], resources);
         this.fSprites.minIONNav = new AnimatedItem([
-            "assets/fSprites/buttons/minIONNav.fw.png",
-            "assets/fSprites/buttons/minIONNav_L.fw.png"
+            "assets/fSprites/buttons/minIONNav.png",
+            "assets/fSprites/buttons/minIONNav_L.png"
         ], resources);
 
         this.fSprites.playButton = new AnimatedItem([
