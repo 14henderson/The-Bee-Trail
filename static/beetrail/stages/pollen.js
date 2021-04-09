@@ -9,6 +9,7 @@ import {Movement, Animation} from '/beetrail/movementMisc.js';
 export class PollenStage extends Stage{
     entryEventChain;
     eventChain;
+    speechEventChain;
     exitEventChain;
     textures;
 
@@ -20,6 +21,7 @@ export class PollenStage extends Stage{
         
         this.entryEventChain = new EventChain();
         this.eventChain = new EventChain();
+        this.speechEventChain = new EventChain();
         this.exitEventChain = new EventChain();
     }
 
@@ -46,9 +48,15 @@ export class PollenStage extends Stage{
             "assets/fSprites/objects/laptop.png",
             "assets/fSprites/objects/minion-cable.png",
             "assets/fSprites/objects/outer-tube.png",
+
             "assets/fSprites/objects/redtail-tube.png",
+            "assets/fSprites/objects/redtail-pollen-tube.png",
             "assets/fSprites/objects/honeybee-tube.png",
+            "assets/fSprites/objects/honeybee-pollen-tube.png",
             "assets/fSprites/objects/bufftail-tube.png",
+            "assets/fSprites/objects/bufftail-pollen-tube.png",
+
+
         
             "assets/fSprites/buttons/meadowNav.fw.png",
             "assets/fSprites/buttons/meadowNav_L.fw.png",
@@ -61,6 +69,22 @@ export class PollenStage extends Stage{
             "assets/fSprites/objects/poppy-pollen-magnify.png",
 
             "assets/fSprites/speech-bubbles/speech-bubble-tube-top.png",
+            "assets/fSprites/speech-bubbles/pollen/1-barney-tube-speech.png",
+            "assets/fSprites/speech-bubbles/pollen/2-barney-tube-speech.png",
+
+            
+            "assets/fSprites/speech-bubbles/pollen/1-billie-speech-bubble-pollen.png",
+            "assets/fSprites/speech-bubbles/pollen/2-billie-speech-bubble-pollen.png",
+            "assets/fSprites/speech-bubbles/pollen/1-bella-speech-bubble-pollen.png",
+            "assets/fSprites/speech-bubbles/pollen/2-bella-speech-bubble-pollen.png",
+
+            "assets/fSprites/speech-bubbles/pollen/1-elie-speech-bubble-pollen.png",
+            "assets/fSprites/speech-bubbles/pollen/2-elie-speech-bubble-pollen.png",
+            "assets/fSprites/speech-bubbles/pollen/3-elie-speech-bubble-pollen.png",
+            "assets/fSprites/speech-bubbles/pollen/1-elie-speech-bubble-pollen-barney.png",
+            "assets/fSprites/speech-bubbles/pollen/2-elie-speech-bubble-pollen-bella.png",
+            "assets/fSprites/speech-bubbles/pollen/3-elie-speech-bubble-pollen-billie.png",
+
             "assets/fSprites/buttons/click-anywhere.png",
             "assets/fSprites/buttons/drag-the-bee.png"
         ];
@@ -82,16 +106,22 @@ export class PollenStage extends Stage{
         this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", resources);
         this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.fw.png", resources);
 
-        //---------------------------
         this.fSprites.bench = new SpriteItem("assets/fSprites/objects/bench.png", resources);
-        //this.fSprites.laptop = new SpriteItem("assets/fSprites/objects/laptop.png", resources);
-        //this.fSprites.minION = new SpriteItem("assets/fSprites/objects/minion-cable.png", resources);
-        //---------------------------
-        this.fSprites.pollen = new SpriteItem("assets/fSprites/objects/pollen.png", resources);
+        this.fSprites.pollen1 = new SpriteItem("assets/fSprites/objects/pollen.png", resources);
+        this.fSprites.pollen2 = new SpriteItem("assets/fSprites/objects/pollen.png", resources);
 
-        this.fSprites.honeyTube = new SpriteItem("assets/fSprites/objects/honeybee-tube.png", resources);
-        this.fSprites.buffTube = new SpriteItem("assets/fSprites/objects/bufftail-tube.png", resources);
-        this.fSprites.redTube = new SpriteItem("assets/fSprites/objects/redtail-tube.png", resources);
+        this.fSprites.honeyTube = new AnimatedItem([
+            "assets/fSprites/objects/honeybee-tube.png",
+            "assets/fSprites/objects/honeybee-pollen-tube.png"
+        ],resources);
+        this.fSprites.buffTube = new AnimatedItem([
+            "assets/fSprites/objects/bufftail-tube.png",
+            "assets/fSprites/objects/bufftail-pollen-tube.png"
+        ], resources);
+        this.fSprites.redTube = new AnimatedItem([
+            "assets/fSprites/objects/redtail-tube.png",
+            "assets/fSprites/objects/redtail-pollen-tube.png"
+        ], resources);
         
         this.fSprites.bluebellMag = new SpriteItem("assets/fSprites/objects/bluebell-pollen-magnify.png", resources);
         this.fSprites.poppyMag = new SpriteItem("assets/fSprites/objects/poppy-pollen-magnify.png", resources);
@@ -111,8 +141,23 @@ export class PollenStage extends Stage{
             "assets/fSprites/bees/Small-redtail-facing.png"
         ], resources);
 
+        this.fSprites.ElieSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/1-elie-speech-bubble-pollen.png", resources);
+        this.fSprites.ElieSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/2-elie-speech-bubble-pollen.png", resources);
+        this.fSprites.ElieSpeech3 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/3-elie-speech-bubble-pollen.png", resources);
+        this.fSprites.ElieSpeech4 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/1-elie-speech-bubble-pollen-barney.png", resources);
+        this.fSprites.ElieSpeech5 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/2-elie-speech-bubble-pollen-bella.png", resources);
+        this.fSprites.ElieSpeech6 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/3-elie-speech-bubble-pollen-billie.png", resources);
+
+
+        this.fSprites.honeySpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/1-barney-tube-speech.png", resources);
+        this.fSprites.honeySpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/2-barney-tube-speech.png", resources);
+        this.fSprites.redSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/1-billie-speech-bubble-pollen.png", resources);
+        this.fSprites.redSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/2-billie-speech-bubble-pollen.png", resources);
+        this.fSprites.buffSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/1-bella-speech-bubble-pollen.png", resources);
+        this.fSprites.buffSpeech2 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/2-bella-speech-bubble-pollen.png", resources);
+
+
         this.fSprites.netFront = new SpriteItem("assets/fSprites/objects/Artboard 4net-overlay.png", resources);
-        this.fSprites.beeSpeechDrag = new SpriteItem("assets/fSprites/speech-bubbles/speech-bubble-tube-top.png", resources);
         this.fSprites.Elie = new AnimatedItem([
             "assets/fSprites/objects/elie-standing-NEW.png", 
             "assets/fSprites/objects/elie-waving-NEW.png",
@@ -163,6 +208,7 @@ export class PollenStage extends Stage{
         this.fSprites.honeyTube.setScale(0.4);
         this.fSprites.honeyTube.setPivot(0.5, 0.5);
         this.fSprites.honeyTube.setLocation(730, 380);
+        this.fSprites.honeyTube.setAlpha(0);
 
         this.fSprites.buffTube.setScale(0.4);
         this.fSprites.buffTube.setPivot(0.5, 0.5);
@@ -182,9 +228,48 @@ export class PollenStage extends Stage{
         this.fSprites.netFront.setRotation(290);
         this.fSprites.netFront.setLocation(0, 800);
 
-        this.fSprites.beeSpeechDrag.setScale(0.4)
-        this.fSprites.beeSpeechDrag.setLocation(0, 300);
-        this.fSprites.beeSpeechDrag.setAlpha(0);
+        this.fSprites.honeySpeech1.setScale(0.8);
+        this.fSprites.honeySpeech1.setLocation(500, 110);
+        this.fSprites.honeySpeech1.setAlpha(0);
+        this.fSprites.honeySpeech2.setScale(0.8);
+        this.fSprites.honeySpeech2.setAlpha(0);
+        this.fSprites.honeySpeech2.setLocation(500, 450);
+
+        this.fSprites.buffSpeech1.setScale(0.8);
+        this.fSprites.buffSpeech1.setLocation(500, 110);
+        this.fSprites.buffSpeech1.setAlpha(0);
+        this.fSprites.buffSpeech2.setScale(0.8);
+        this.fSprites.buffSpeech2.setLocation(500, 450);
+        this.fSprites.buffSpeech2.setAlpha(0);
+
+        this.fSprites.redSpeech1.setScale(0.8);
+        this.fSprites.redSpeech1.setAlpha(0);
+        this.fSprites.redSpeech1.setLocation(500, 110)
+        this.fSprites.redSpeech2.setScale(0.8);
+        this.fSprites.redSpeech2.setAlpha(0);
+        this.fSprites.redSpeech2.setLocation(500, 450);
+
+        this.fSprites.ElieSpeech1.setScale(0.8);
+        this.fSprites.ElieSpeech1.setLocation(400, 50);
+        this.fSprites.ElieSpeech1.setAlpha(1);
+        this.fSprites.ElieSpeech2.setScale(0.8);
+        this.fSprites.ElieSpeech2.setLocation(400, 60);
+        this.fSprites.ElieSpeech2.setAlpha(0);
+        this.fSprites.ElieSpeech3.setScale(0.8);
+        this.fSprites.ElieSpeech3.setLocation(470, 50);
+        this.fSprites.ElieSpeech3.setAlpha(0);
+
+        this.fSprites.ElieSpeech4.setScale(0.8);
+        this.fSprites.ElieSpeech4.setLocation(50, 100);
+        this.fSprites.ElieSpeech4.setAlpha(0);
+        this.fSprites.ElieSpeech5.setScale(0.8);
+        this.fSprites.ElieSpeech5.setLocation(50, 100);
+        this.fSprites.ElieSpeech5.setAlpha(0);
+        this.fSprites.ElieSpeech6.setScale(0.8);
+        this.fSprites.ElieSpeech6.setLocation(50, 100);
+        this.fSprites.ElieSpeech6.setAlpha(0);
+
+
 
         this.fSprites.Elie.setScale(0.5);
         this.fSprites.Elie.setLocation(900, 353);
@@ -206,89 +291,204 @@ export class PollenStage extends Stage{
         this.fSprites.bluebellMag.setLocation(700, 250);
         this.fSprites.bluebellMag.setAlpha(0);
         this.fSprites.poppyMag.setScale(0.8);
-        this.fSprites.poppyMag.setLocation(550, 250);
+        this.fSprites.poppyMag.setLocation(700, 250);
         this.fSprites.poppyMag.setAlpha(0);
 
-        this.fSprites.pollen.setLocation(750, 330);
-        this.fSprites.pollen.setAlpha(0);
+        this.fSprites.pollen1.setLocation(500, 330);
+        this.fSprites.pollen1.setAlpha(0);
+
+        this.fSprites.pollen2.setLocation(750, 330);
+        this.fSprites.pollen2.setAlpha(0);
 
         this.foreground.setAlpha(0);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     eventChainsDef(){
         this.eventChain
-            //Bee 1
+            //Elie!
             .addClickEvent(this.foreground)
             .next()
             .addFrameEvent(this.fSprites.Elie, 0)
             .addClickEvent(this.foreground)
+            .addFade(this.fSprites.ElieSpeech1, -3, 0, 1)
+            .addFade(this.fSprites.ElieSpeech2, 3, 0, 1)
             .next()
+            .addFade(this.fSprites.ElieSpeech2, -3, 0, 1)
+            .addFade(this.fSprites.ElieSpeech3, 3, 0, 1)
+            .addClickEvent(this.foreground)            
+            .next()
+            .addFade(this.fSprites.ElieSpeech3, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.Elie, -3, 0, 1)
+            .addFade(this.fSprites.honeyTube, 3, 0, 1)
             .next()
+
+            //Bee 1
             .addMovement(this.fSprites.honeyBee, [130, 450], 2, Movement.straightMvPattern)
             .addFade(this.fSprites.honeyBee, 1, 0, 1)
             .next()
+
+            .addIdle(this.fSprites.honeyBee)
             .addFade(this.fSprites.dragNotice, 3, 0, 1)
             .next()
-            .setAnimationFlag(this.fSprites.dragNotice, true)
+
             .addIdle(this.fSprites.honeyBee)
             .addCollisionEvent(this.fSprites.honeyBee, this.fSprites.tubeEntranceBox)
             .addDragEvent(this.fSprites.honeyBee)
             .next()
+
             .addForceLocationEvent(this.fSprites.honeyBee, [420, 370])
             .addBringBehind(this.fSprites.honeyBee, this.fSprites.honeyTube)
             .next()
+
             .addFade(this.fSprites.dragNotice, -3, 0, 1)
-            .addFade(this.fSprites.beeSpeechDrag, -3, 0, 1)
             .addMovement(this.fSprites.honeyBee, [900, 370], 1, Movement.sinMvPattern)
             .next()
-            .addFade(this.fSprites.pollen, 3, 0, 1)
+
+            .addClickEvent(this.foreground)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
+            .addIdle(this.fSprites.honeyBee)
+            .addFrameEvent(this.fSprites.honeyBee, 1)
+            .next()
+
+            .addFrameEvent(this.fSprites.honeyBee, 0)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
+            .addFade(this.fSprites.honeySpeech1, -3, 0, 1)
+            .addFade(this.fSprites.honeySpeech2, -3, 0, 1)
             .addMovement(this.fSprites.honeyBee, [400, 370], 4, Movement.straightMvPattern)
             .next()
+
             .addMovement(this.fSprites.honeyBee, [100, 100], 4, Movement.quadCurveMvPattern, 70)
             .addFade(this.fSprites.honeyBee, -1, 0, 1)
             .next()
+
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .addFade(this.fSprites.bluebellMag, 3, 0, 1)
             .addForceLocationEvent(this.fSprites.Elie, [100, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .next()
-            .addFade(this.fSprites.clickNotice, 3, 0, 1)
-            .next()
-            .setAnimationFlag(this.fSprites.clickNotice, true)
+
+            .addFade(this.fSprites.ElieSpeech4, 3, 0, 1)
             .addClickEvent(this.foreground)
             .next()
-            .addClickEvent(this.foreground)
+
+            .addFade(this.fSprites.ElieSpeech4, -3, 0, 1)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
+            .addFade(this.fSprites.bluebellMag, -3, 0, 1)
+            .addFade(this.fSprites.Elie, -3, 0, 1)
+            .next()
+
+            .addFade(this.fSprites.pollen1, -10, 0, 1)
+            .addFade(this.fSprites.pollen2, -10, 0, 1)
+            .addFrameEvent(this.fSprites.honeyTube, 1)
             .addRotationEvent(this.fSprites.honeyTube, 180, 270, 1)
             .addScaleEvent(this.fSprites.honeyTube, -0.6, 0.15, 1)
             .addMovement(this.fSprites.honeyTube, [900, 700], 4, Movement.quadCurveMvPattern, 50)
             .next()
 
+        this.speechEventChain
+            .addEventChainWait(this.foreground, this.eventChain, 8)
+            .next()
+            .addSleep(this.foreground, 70)
+            .next()
+            .addFade(this.fSprites.honeySpeech1, 3, 0, 1)
+            .addFade(this.fSprites.pollen1, 1, 0, 1)
+            .addSleep(this.foreground, 400)
+            .next()
+            .addFade(this.fSprites.pollen2, 1, 0, 1)
+            .addFade(this.fSprites.honeySpeech2, 3, 0, 1)
+            .next();
+
+
             //Bee 2
-            
         this.eventChain
             .addFade(this.fSprites.buffTube, 3, 0, 1)
             .addMovement(this.fSprites.buffBee, [130, 450], 2, Movement.straightMvPattern)
             .addFade(this.fSprites.buffBee, 1, 0, 1)
             .next()
-            .addFade(this.fSprites.beeSpeechDrag, 3, -1, 1)
+
+            .addIdle(this.fSprites.buffBee)
+            .addFade(this.fSprites.dragNotice, 3, 0, 1)
+            .next()
+
             .addIdle(this.fSprites.buffBee)
             .addCollisionEvent(this.fSprites.buffBee, this.fSprites.tubeEntranceBox)
             .addDragEvent(this.fSprites.buffBee)
             .next()
+
             .addForceLocationEvent(this.fSprites.buffBee, [360, 370])
             .addBringBehind(this.fSprites.buffBee, this.fSprites.buffTube)
             .next()
-            .addFade(this.fSprites.beeSpeechDrag, -3, 0, 1)
+
+            .addFade(this.fSprites.dragNotice, -3, 0, 1)
             .addMovement(this.fSprites.buffBee, [900, 370], 1, Movement.sinMvPattern)
             .next()
+
+            .addClickEvent(this.foreground)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
+            .addIdle(this.fSprites.buffBee)
+            .addFrameEvent(this.fSprites.buffBee, 1)
+            .next()
+
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
+            .addFade(this.fSprites.buffSpeech1, -3, 0, 1)
+            .addFade(this.fSprites.buffSpeech2, -3, 0, 1)
+            .addFrameEvent(this.fSprites.buffBee, 0)
             .addMovement(this.fSprites.buffBee, [400, 370], 4, Movement.straightMvPattern)
             .next()
+
             .addMovement(this.fSprites.buffBee, [100, 100], 4, Movement.quadCurveMvPattern, 70)
             .addFade(this.fSprites.buffBee, -1, 0, 1)
-            .addRotationEvent(this.fSprites.buffTube, 180, 270, 1)
-            .addScaleEvent(this.fSprites.buffTube, -0.6, 0.15, 1)
+            .next()
+
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
+            .addFade(this.fSprites.poppyMag, 3, 0, 1)
+            .addForceLocationEvent(this.fSprites.Elie, [100, 353])
+            .addFade(this.fSprites.Elie, 3, 0, 1)
+            .next()
+
+            .addFade(this.fSprites.ElieSpeech5, 3, 0, 1)
+            .addClickEvent(this.foreground)
+            .next()
+
+            .addFade(this.fSprites.ElieSpeech5, -3, 0, 1)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
+            .addFade(this.fSprites.poppyMag, -3, 0, 1)
+            .addFade(this.fSprites.Elie, -3, 0, 1)
+            .next()
+
+            .addFade(this.fSprites.pollen1, -10, 0, 1)
+            .addFade(this.fSprites.pollen2, -10, 0, 1)
+            .addFrameEvent(this.fSprites.buffTube, 1)
+            .addRotationEvent(this.fSprites.buffTube, 180, 270, 0.85)
+            .addScaleEvent(this.fSprites.buffTube, -0.5, 0.15, 1)
             .addMovement(this.fSprites.buffTube, [1000, 700], 4, Movement.quadCurveMvPattern, 50)
+            .next();
+
+        this.speechEventChain
+            .addEventChainWait(this.foreground, this.eventChain, 19)
+            .next()
+            .addSleep(this.foreground, 90)
+            .next()
+            .addFade(this.fSprites.buffSpeech1, 3, -1, 1)
+            .addFade(this.fSprites.pollen1, 1, -1, 1)
+            .addSleep(this.foreground, 400)
+            .next()
+            .addFade(this.fSprites.pollen2, 1, -1, 1)
+            .addFade(this.fSprites.buffSpeech2, 3, 0, 1)
             .next();
 
         //Bee 3
@@ -297,27 +497,80 @@ export class PollenStage extends Stage{
             .addMovement(this.fSprites.redBee, [130, 450], 2, Movement.straightMvPattern)
             .addFade(this.fSprites.redBee, 1, 0, 1)
             .next()
-            .addFade(this.fSprites.beeSpeechDrag, 3, -1, 1)
+
+            .addIdle(this.fSprites.redBee)
+            .addFade(this.fSprites.dragNotice, 3, 0, 1)
+            .next()
+
             .addIdle(this.fSprites.redBee)
             .addCollisionEvent(this.fSprites.redBee, this.fSprites.tubeEntranceBox)
             .addDragEvent(this.fSprites.redBee)
             .next()
+
             .addForceLocationEvent(this.fSprites.redBee, [360, 370])
             .addBringBehind(this.fSprites.redBee, this.fSprites.redTube)
             .next()
-            .addFade(this.fSprites.beeSpeechDrag, -3, 0, 1)
+
+            .addFade(this.fSprites.dragNotice, -3, 0, 1)
             .addMovement(this.fSprites.redBee, [900, 370], 1, Movement.sinMvPattern)
             .next()
-            .addMovement(this.fSprites.redBee, [400, 370], 4, Movement.straightMvPattern)
-            .next()
-            .addMovement(this.fSprites.redBee, [100, 100], 4, Movement.quadCurveMvPattern, 70)
-            .addFade(this.fSprites.redBee, -1, 0, 1)
-            .addRotationEvent(this.fSprites.redTube, 180, 270, 1)
-            .addScaleEvent(this.fSprites.redTube, -0.6, 0.15, 1)
-            .addMovement(this.fSprites.redTube, [1100, 700], 4, Movement.quadCurveMvPattern, 50)
+
+            .addClickEvent(this.foreground)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
+            .addIdle(this.fSprites.redBee)
+            .addFrameEvent(this.fSprites.redBee, 1)
             .next()
 
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
+            .addFrameEvent(this.fSprites.redBee, 0)
+            .addFade(this.fSprites.redSpeech1, -3, 0, 1)
+            .addFade(this.fSprites.redSpeech2, -3, 0, 1)
+            .addMovement(this.fSprites.redBee, [400, 370], 4, Movement.straightMvPattern)
+            .next()
+
+            .addMovement(this.fSprites.redBee, [100, 100], 4, Movement.quadCurveMvPattern, 70)
+            .addFade(this.fSprites.redBee, -1, 0, 1)
+            .next()
+
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
+            //.addFade(this.fSprites.bluebellMag, 3, 0, 1)
+            .addForceLocationEvent(this.fSprites.Elie, [100, 353])
+            .addFade(this.fSprites.Elie, 3, 0, 1)
+            .next()
+
+            .addFade(this.fSprites.ElieSpeech6, 3, 0, 1)
+            .addFade(this.fSprites.pollen1, -10, 0, 1)
+            .addFade(this.fSprites.pollen2, -10, 0, 1)
+            .addFrameEvent(this.fSprites.redTube, 1)
+            .addRotationEvent(this.fSprites.redTube, 180, 270, 0.75)
+            .addScaleEvent(this.fSprites.redTube, -0.3, 0.15, 1)
+            .addMovement(this.fSprites.redTube, [1100, 700], 4, Movement.quadCurveMvPattern, 50)
+            .addClickEvent(this.foreground)
+            .next()
+
+            .addFade(this.fSprites.ElieSpeech6, -3, 0, 1)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
+            //.addFade(this.fSprites.bluebellMag, -3, 0, 1)
+            .addFade(this.fSprites.Elie, -3, 0, 1)
+            .next()
+            .addChangeStateEvent(this.foreground, this, 2);
+
+
+        this.speechEventChain
+            .addEventChainWait(this.foreground, this.eventChain, 31)
+            .next()
+            .addSleep(this.foreground, 80)
+            .next()
+            .addFade(this.fSprites.redSpeech1, 3, -1, 1)
+            .addFade(this.fSprites.pollen1, 1, -1, 1)
+            .addSleep(this.foreground, 400)
+            .next()
+            .addFade(this.fSprites.pollen2, 1, -1, 1)
+            .addFade(this.fSprites.redSpeech2, 3, 0, 1)
+            .next();
+
         //end
+        /*
         this.eventChain
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
@@ -325,7 +578,7 @@ export class PollenStage extends Stage{
             .setAnimationFlag(this.fSprites.clickNotice, true)
             .addClickEvent(this.foreground)
             .next()
-            .addChangeStateEvent(this.foreground, this, 2);
+            .addChangeStateEvent(this.foreground, this, 2);*/
         this.eventChain.initialise();
 
         this.entryEventChain
@@ -339,6 +592,8 @@ export class PollenStage extends Stage{
             .next()
             .addChangeStageEvent(this.foreground, this, "hub");
         this.exitEventChain.initialise();
+
+        this.speechEventChain.initialise();
     }
 
     loop(delta, context){
@@ -355,6 +610,7 @@ export class PollenStage extends Stage{
         context.fSprites.dragNotice.tick();
         context.foreground.tick();
         context.eventChain.tick();
+        context.speechEventChain.tick();
     }
 
     exit(delta, context){

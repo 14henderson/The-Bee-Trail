@@ -350,6 +350,7 @@ export class EventChain{
                         this._locProgress += 1;
                         if(this._locProgress == this.chain[this.eventNumber][i].length){
                             this.chain[this.eventNumber][i].completed = true;
+                            this._locProgress = 0;
                         }
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
@@ -357,6 +358,8 @@ export class EventChain{
 
                 case 'chain-wait':
                     if(!this.chain[this.eventNumber][i].completed){
+                        console.log("Current: ", this.chain[this.eventNumber][i].chain.getCurrentEventNumber(),
+                        "target: ", this.chain[this.eventNumber][i].eventNumber);
                         if(this.chain[this.eventNumber][i].chain.getCurrentEventNumber()
                         >= this.chain[this.eventNumber][i].eventNumber){
                             this.chain[this.eventNumber][i].completed = true;
@@ -500,6 +503,9 @@ export class EventChain{
                         if(this.chain[this.eventNumber][i].item.getAlpha() < this.chain[this.eventNumber][i].min
                         || this.chain[this.eventNumber][i].item.getAlpha() > this.chain[this.eventNumber][i].max){
                             this.chain[this.eventNumber][i].completed = true;
+                            if(this.chain[this.eventNumber][i].item.getAlpha() > 0){
+                                this.chain[this.eventNumber][i].item.setAnimationFlag(true);
+                            }
                         }
                         eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
