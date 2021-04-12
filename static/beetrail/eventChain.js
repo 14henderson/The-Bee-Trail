@@ -362,8 +362,6 @@ export class EventChain{
 
                 case 'chain-wait':
                     if(!this.chain[this.eventNumber][i].completed){
-                        console.log("Current: ", this.chain[this.eventNumber][i].chain.getCurrentEventNumber(),
-                        "target: ", this.chain[this.eventNumber][i].eventNumber);
                         if(this.chain[this.eventNumber][i].chain.getCurrentEventNumber()
                         >= this.chain[this.eventNumber][i].eventNumber){
                             this.chain[this.eventNumber][i].completed = true;
@@ -505,13 +503,21 @@ export class EventChain{
                         this.chain[this.eventNumber][i].item.setAlpha(
                             this.chain[this.eventNumber][i].item.getAlpha()
                             +this.chain[this.eventNumber][i].delta/100);
-                        if(this.chain[this.eventNumber][i].item.getAlpha() < this.chain[this.eventNumber][i].min
-                        || this.chain[this.eventNumber][i].item.getAlpha() > this.chain[this.eventNumber][i].max){
+                        if(this.chain[this.eventNumber][i].item.getAlpha() < this.chain[this.eventNumber][i].min){
+                            this.chain[this.eventNumber][i].item.setAlpha(this.chain[this.eventNumber][i].min);
+                            this.chain[this.eventNumber][i].completed = true;
+                            if(this.chain[this.eventNumber][i].item.getAlpha() > 0){
+                                this.chain[this.eventNumber][i].item.setAnimationFlag(true);
+                            }
+                        }else if(this.chain[this.eventNumber][i].item.getAlpha() > this.chain[this.eventNumber][i].max){
+                            this.chain[this.eventNumber][i].item.setAlpha(this.chain[this.eventNumber][i].max);
                             this.chain[this.eventNumber][i].completed = true;
                             if(this.chain[this.eventNumber][i].item.getAlpha() > 0){
                                 this.chain[this.eventNumber][i].item.setAnimationFlag(true);
                             }
                         }
+                        
+                        
                     }
                     eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
