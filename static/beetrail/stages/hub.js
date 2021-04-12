@@ -21,8 +21,8 @@ export class HubStage extends Stage{
     constructor(app, stageManager){
         super(app, stageManager);
         
-        this.states = [this.entry, this.start, this.main, this.exit];
-        this.state = this.entry;
+        this.states = [this.start, this.entry, this.main, this.exit];
+        this.state = this.start;
         
         this.startEventChain = new EventChain();
         this.entryEventChain = new EventChain();
@@ -174,22 +174,19 @@ export class HubStage extends Stage{
         }
         
         
-        this.fSprites.newspaper.bringBefore(this.fSprites.minIONNav);
-        this.foreground.setAlpha(0);
-        
+        this.fSprites.newspaper.bringBefore(this.fSprites.minIONNav);        
     }
 
     eventChainsDef(){
         this.entryEventChain
             .addFade(this.foreground, 3, -0.1, 1)
             .next()
-            .addChangeStateEvent(this.foreground, this, 1);
+            .addChangeStateEvent(this.foreground, this, 2);
         this.entryEventChain.initialise();
 
 
         this.startEventChain
             .addFade(this.fSprites.newspaper, 3, 0, 1)
-            .next()
             .addFade(this.fSprites.playButton, 3, 0, 1)
             .next()
             .addClickEvent(this.fSprites.playButton)
