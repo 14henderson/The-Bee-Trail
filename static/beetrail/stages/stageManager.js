@@ -62,6 +62,8 @@ export class StageManager{
         this.loader.onComplete.add(() => {
             this.addToApp();    //add background assets to container.
             this.app.stage.addChild(this.stages[this.stage].foreground);
+            this.app.ticker.maxFPS = 60;
+            this.app.ticker.minFPS = 60;
             this.app.ticker.add(this.loop, this);
         });
     }
