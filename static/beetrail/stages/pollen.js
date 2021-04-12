@@ -56,15 +56,6 @@ export class PollenStage extends Stage{
             "assets/fSprites/objects/bufftail-tube.png",
             "assets/fSprites/objects/bufftail-pollen-tube.png",
 
-
-        
-            "assets/fSprites/buttons/meadowNav.fw.png",
-            "assets/fSprites/buttons/meadowNav_L.fw.png",
-            "assets/fSprites/buttons/minIONNav.fw.png",
-            "assets/fSprites/buttons/minIONNav_L.fw.png",
-            "assets/fSprites/buttons/pollenNav.fw.png",
-            "assets/fSprites/buttons/pollenNav_L.fw.png",
-
             "assets/fSprites/objects/bluebell-pollen-magnify.png",
             "assets/fSprites/objects/poppy-pollen-magnify.png",
 
@@ -569,16 +560,6 @@ export class PollenStage extends Stage{
             .addFade(this.fSprites.redSpeech2, 3, 0, 1)
             .next();
 
-        //end
-        /*
-        this.eventChain
-            .addFade(this.fSprites.Elie, 3, 0, 1)
-            .addFade(this.fSprites.clickNotice, 3, 0, 1)
-            .next()
-            .setAnimationFlag(this.fSprites.clickNotice, true)
-            .addClickEvent(this.foreground)
-            .next()
-            .addChangeStateEvent(this.foreground, this, 2);*/
         this.eventChain.initialise();
 
         this.entryEventChain
