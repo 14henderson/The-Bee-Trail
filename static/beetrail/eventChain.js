@@ -47,7 +47,7 @@ export class EventChain{
         console.log("Second loop! Enables if neceessary");
         for(i=0; i<this.chain[this.eventNumber].length; i++){
             if(this.chain[this.eventNumber][i].type == "movement"){
-                if(this.chain[this.eventNumber][i].origin[0] < this.chain[this.eventNumber][i].dest[0]){
+                if(this.chain[this.eventNumber][i].origin[0] < this.chain[this.eventNumber][i].dest[0] && this.chain[this.eventNumber][i].faceWith){
                     this.chain[this.eventNumber][i].item.setSpriteDirection('r');
                 }else{
                     this.chain[this.eventNumber][i].item.setSpriteDirection('l');
@@ -113,7 +113,7 @@ export class EventChain{
         return this;
     }
 
-    addMovement(item, dest, speed, mvtFunction, amplification=10){
+    addMovement(item, dest, speed, mvtFunction, amplification=10, faceWith=true){
         let origin = this._getLastEventDest(item);
         
         let xDelta = (dest[0]-origin[0]);
@@ -147,6 +147,7 @@ export class EventChain{
             'xDelta':xDelta,
             'yDelta':yDelta,
             'points':sinPoints,
+            'faceWith':faceWith,
             'progress':0,
             'completed':false
         });
@@ -343,6 +344,9 @@ export class EventChain{
         var eGroupComp = true;
         var i;
         for(i=0; i<this.chain[this.eventNumber].length; i++){
+            if(this.eventNumber == 15){
+                console.log("test for debugger");
+            }
 
             switch(this.chain[this.eventNumber][i].type){
                 case 'sleep':
@@ -352,8 +356,8 @@ export class EventChain{
                             this.chain[this.eventNumber][i].completed = true;
                             this._locProgress = 0;
                         }
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
 
                 case 'chain-wait':
@@ -364,9 +368,8 @@ export class EventChain{
                         >= this.chain[this.eventNumber][i].eventNumber){
                             this.chain[this.eventNumber][i].completed = true;
                         }
-
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
 
                 case 'state-change':
@@ -374,8 +377,8 @@ export class EventChain{
                         this.chain[this.eventNumber][i].stage.setState(
                             this.chain[this.eventNumber][i].stateNum
                         );
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
 
                 case 'stage-change':
@@ -383,8 +386,8 @@ export class EventChain{
                         this.chain[this.eventNumber][i].currStage.changeStage(
                             this.chain[this.eventNumber][i].newStageCode
                         );
-                        eGroupComp = eGroupComp && true;
                     }
+                    eGroupComp = eGroupComp && true;
                     break;
 
                 case 'item-animation-flag':
@@ -393,12 +396,13 @@ export class EventChain{
                             this.chain[this.eventNumber][i].flag
                         );
                         this.chain[this.eventNumber][i].completed = true;
-                        eGroupComp = eGroupComp && true;
                     }
+                    eGroupComp = eGroupComp && true;
                     break;
 
                 case 'movement':
                     if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].item.animationFlag = false;
                         let x = this.chain[this.eventNumber][i].progress;
                         this.chain[this.eventNumber][i].item.setLocation(
                             this.chain[this.eventNumber][i].points[x][0],
@@ -407,9 +411,10 @@ export class EventChain{
                         this.chain[this.eventNumber][i].progress += 1;
                         if(this.chain[this.eventNumber][i].progress >= this.chain[this.eventNumber][i].splice){
                             this.chain[this.eventNumber][i].completed = true;
+                            this.chain[this.eventNumber][i].item.animationFlag = true;
                         }
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
 
                 case 'click':
@@ -419,8 +424,8 @@ export class EventChain{
                             this.chain[this.eventNumber][i].item.dissableInteractiveState();
                             this.chain[this.eventNumber][i].completed = true;
                         }
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
 
                 case 'frame':
@@ -430,8 +435,8 @@ export class EventChain{
                         );
                         console.log("MOVED TO FRAME: ", this.chain[this.eventNumber][i].frameNum);
                         this.chain[this.eventNumber][i].completed = true;
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
                 
                 case 'collision':
@@ -442,8 +447,8 @@ export class EventChain{
                         )){
                             this.chain[this.eventNumber][i].completed = true;
                         }
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
 
                 case 'drag':
@@ -459,8 +464,8 @@ export class EventChain{
                         );
                         console.log("Location Set!");
                         this.chain[this.eventNumber][i].completed = true;
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
 
                 case 'rotation':
@@ -473,8 +478,8 @@ export class EventChain{
                         if(this.chain[this.eventNumber][i].item.getRotation() >= this.chain[this.eventNumber][i].stop){
                             this.chain[this.eventNumber][i].completed = true;
                         }
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
 
 
@@ -507,8 +512,8 @@ export class EventChain{
                                 this.chain[this.eventNumber][i].item.setAnimationFlag(true);
                             }
                         }
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
                 
                 case 'scale':
@@ -522,26 +527,26 @@ export class EventChain{
                         || this.chain[this.eventNumber][i].item.getScale() > this.chain[this.eventNumber][i].max){
                             this.chain[this.eventNumber][i].completed = true;
                         }
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
 
                 case 'play-video':
                     if(!this.chain[this.eventNumber][i].completed){
                         this.chain[this.eventNumber][i].item.play();
                         this.chain[this.eventNumber][i].completed = true;
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
-                break;
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    break;
 
                 case 'video-wait':
                     if(!this.chain[this.eventNumber][i].completed){
                         if(this.chain[this.eventNumber][i].item.hasFinished()){
                             this.chain[this.eventNumber][i].completed = true;
                         }
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
-                break;
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    break;
 
                 case 'play-sound':
                     if(!this.chain[this.eventNumber][i].completed){
@@ -549,15 +554,16 @@ export class EventChain{
                             this.chain[this.eventNumber][i].code
                         );
                         this.chain[this.eventNumber][i].completed = true;
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    break;
 
                 case 'customAction':
                     if(!this.chain[this.eventNumber][i].completed){
                         this.chain[this.eventNumber][i].funcPointer();
                         this.chain[this.eventNumber][i].completed = true;
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
 
                 case 'bringBefore':
@@ -565,8 +571,8 @@ export class EventChain{
                         this.chain[this.eventNumber][i].item.bringBefore(
                             this.chain[this.eventNumber][i].bItem);
                         this.chain[this.eventNumber][i].completed = true;
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
 
                 case 'bringBehind':
@@ -574,8 +580,8 @@ export class EventChain{
                         this.chain[this.eventNumber][i].item.bringBehind(
                             this.chain[this.eventNumber][i].bItem);
                         this.chain[this.eventNumber][i].completed = true;
-                        eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
             }
         }

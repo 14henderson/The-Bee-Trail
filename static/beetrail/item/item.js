@@ -41,9 +41,12 @@ export class Item {
         this.sprite.on('pointerdown', event =>{
             this._clicked = true;
             this._beingDragged = true;
+            this.animationFlag = false;
         });
         this.sprite.on('pointerup', event =>{
             this._beingDragged = false;
+            this.animationFlag = true;
+            this.animationTick = 0;
         });
         this.sprite.on('pointermove', event => {
             if(this.dragged && this._beingDragged){
@@ -162,12 +165,12 @@ export class Item {
             //if x is < 0 (with anchor consideration)
             if(x-(this.sprite.anchor.x * this.sprite.width) < 0 ){
                 this.sprite.x = 0 + this.sprite.anchor.x * this.sprite.width;
-                console.warn("Item: ", this.getID(), "x position < 0");
+                //console.warn("Item: ", this.getID(), "x position < 0");
             }
             //if x is over screen width (with anchor consideration)
             else if((x+this.sprite.width) -(this.sprite.anchor.x * this.sprite.width) >= 1280){
                 this.sprite.x = 1280 - (this.sprite.width)+(this.sprite.anchor.x * this.sprite.width);
-                console.warn("Item: ", this.getID(), "x position > 1280");
+                //console.warn("Item: ", this.getID(), "x position > 1280");
                 //console.log("newX: ", x, "Width: ", this.sprite.width, "anchor: ", this.sprite.anchor.x);
             }
             else{
@@ -177,12 +180,12 @@ export class Item {
             //if y < 0 (with anchor consideration)
             if(y - (this.sprite.anchor.y*this.sprite.height) < 0){
                 this.sprite.y = 0 + this.sprite.anchor.y * this.sprite.height;
-                console.warn("Item: ", this.getID(), "y position < 0");
+                //console.warn("Item: ", this.getID(), "y position < 0");
             }
             //if y is over screen width (with anchor consideration)
             else if((y+this.sprite.height) -(this.sprite.anchor.y * this.sprite.height) >= 960){
                 this.sprite.y = 960 - (this.sprite.height)+(this.sprite.anchor.y * this.sprite.height);
-                console.warn("Item: ", this.getID(), "y position > 960");
+                //console.warn("Item: ", this.getID(), "y position > 960");
             }
             else{
                 this.sprite.y = y;
