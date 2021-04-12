@@ -344,9 +344,6 @@ export class EventChain{
         var eGroupComp = true;
         var i;
         for(i=0; i<this.chain[this.eventNumber].length; i++){
-            if(this.eventNumber == 15){
-                console.log("test for debugger");
-            }
 
             switch(this.chain[this.eventNumber][i].type){
                 case 'sleep':

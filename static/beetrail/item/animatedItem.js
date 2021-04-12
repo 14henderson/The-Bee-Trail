@@ -2,8 +2,9 @@ import {Item} from '/beetrail/item/item.js';
 
 
 export class AnimatedItem extends Item{
-    constructor(textureURIArray, resources){
+    constructor(textureURIArray, resources, name=null){
         super();
+        if(name != null){this.ID = name;}
         this.textureArray = [];
         for(let i=0; i<textureURIArray.length; i++){
             this.textureArray.push(resources[textureURIArray[i]].texture);

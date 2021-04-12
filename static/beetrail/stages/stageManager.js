@@ -21,7 +21,7 @@ export class StageManager{
             "meadow":new MeadowStage(app, this),            
             "pollen":new PollenStage(app, this)
         };
-        this.stage = "pollen";
+        this.stage = "hub";
         this.app = app;
         this.app.stage.sortableChildren = true;
 

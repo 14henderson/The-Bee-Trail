@@ -21,8 +21,8 @@ export class HubStage extends Stage{
     constructor(app, stageManager){
         super(app, stageManager);
         
-        this.states = [this.start, this.entry, this.main, this.exit];
-        this.state = this.start;
+        this.states = [this.entry, this.start, this.main, this.exit];
+        this.state = this.entry;
         
         this.startEventChain = new EventChain();
         this.entryEventChain = new EventChain();
@@ -108,7 +108,7 @@ export class HubStage extends Stage{
         this.fSprites.minIONNav = new AnimatedItem([
             "assets/fSprites/buttons/minIONNav.png",
             "assets/fSprites/buttons/minIONNav_L.png"
-        ], resources);
+        ], resources, "minION_Nav");
 
         this.fSprites.playButton = new AnimatedItem([
             "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-static.png",
@@ -161,13 +161,12 @@ export class HubStage extends Stage{
         
 
         this.fSprites.minIONNav.enableInteractiveState();
-        //this.fSprites.minIONNav.setAlpha(0.2);
         this.fSprites.minIONNav.setLocation(660, 500);
         this.fSprites.minIONNav.setAnimationFunction(Animation.halfAlphaPulse);
         if(this.customState >= 2){
             this.fSprites.minIONNav.gotoFrame(0);
             this.fSprites.minIONNav.setAnimationFlag(true);
-            this.fSprites.pollenNav.setAlpha(1);
+            this.fSprites.minIONNav.setAlpha(1);
         }else{
             this.fSprites.minIONNav.gotoFrame(1);
             this.fSprites.minIONNav.setAnimationFlag(false);
@@ -176,27 +175,31 @@ export class HubStage extends Stage{
         
         
         this.fSprites.newspaper.bringBefore(this.fSprites.minIONNav);
+        this.foreground.setAlpha(0);
         
     }
 
     eventChainsDef(){
+        this.entryEventChain
+            .addFade(this.foreground, 3, -0.1, 1)
+            .next()
+            .addChangeStateEvent(this.foreground, this, 1);
+        this.entryEventChain.initialise();
+
+
         this.startEventChain
             .addFade(this.fSprites.newspaper, 3, 0, 1)
+            .next()
             .addFade(this.fSprites.playButton, 3, 0, 1)
             .next()
             .addClickEvent(this.fSprites.playButton)
             .next()
             .addFade(this.fSprites.newspaper, -3, 0, 1)
             .addFade(this.fSprites.playButton, -3, 0, 1)
-            .next()
-            .addChangeStateEvent(this.fSprites.playButton, this, 2);
-        this.startEventChain.initialise();
-
-        this.entryEventChain
-            .addFade(this.foreground, 3, -0.1, 1)
+            .setAnimationFlag(this.fSprites.minIONNav, false)
             .next()
             .addChangeStateEvent(this.foreground, this, 2);
-        this.entryEventChain.initialise();
+        this.startEventChain.initialise();
 
         this.exitEventChain
             .addFade(this.foreground, -3, 0, 1);
@@ -240,28 +243,29 @@ export class HubStage extends Stage{
     
 
 
-    //STATES
-    start(delta, context){
-        context.foreground.tick();
-        context.startEventChain.tick();
-    }
-
+    //STATES    
     entry(delta, context){
         context.foreground.tick();
         context.entryEventChain.tick();
     }
 
+    start(delta, context){
+        context.foreground.tick();
+        context.startEventChain.tick();
+    }
+
+
     main(delta, context){   
         context.navigateAction(context.fSprites.meadowNav, 1, "meadow");
-        if(this.customState == 0){context.pulseAnimation(context.fSprites.meadowNav);}
+        //if(this.customState == 0){context.pulseAnimation(context.fSprites.meadowNav);}
         //}else{context.hoverAnimation(context.fSprites.meadowNav);}
 
         context.navigateAction(context.fSprites.pollenNav, 2, "pollen");
-        if(this.customState == 1){context.pulseAnimation(context.fSprites.pollenNav);}
+       // if(this.customState == 1){context.pulseAnimation(context.fSprites.pollenNav);}
        // }else{context.hoverAnimation(context.fSprites.pollenNav);}
 
         context.navigateAction(context.fSprites.minIONNav, 3, "minION");
-        if(this.customState == 2){context.pulseAnimation(context.fSprites.minIONNav);}
+        //if(this.customState == 2){context.pulseAnimation(context.fSprites.minIONNav);}
        // }else{context.hoverAnimation(context.fSprites.minIONNav);}
 
 

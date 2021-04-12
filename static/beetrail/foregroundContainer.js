@@ -2,7 +2,7 @@
 export class Foreground extends PIXI.Container{
     constructor(){
         super();
-        this.ID = Math.random().toString(36).substring(7);
+        this.ID = "Foreground";
         this.sortableChildren = true;
         this.interactive = true;
 
