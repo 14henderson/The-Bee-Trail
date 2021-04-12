@@ -87,8 +87,17 @@ export class PollenStage extends Stage{
     }
 
     stop(){
+        this.state = this.states[0];
+        
+        this.assetPositioning();
+        this.miscAssetCreation();
+
+        this.entryEventChain.resetChain();
         this.eventChain.resetChain();
-        this.eventChain.eventNumber = 0;
+        this.speechEventChain.resetChain();
+        this.exitEventChain.resetChain();
+        
+        this.eventChainsDef();
     }
 
     loadSprites(resources){
@@ -178,38 +187,53 @@ export class PollenStage extends Stage{
 
         
         this.fSprites.honeyBee.setScale(0.5);
+        this.fSprites.honeyBee.spriteDirection = 'l';
         this.fSprites.honeyBee.setLocation(130, 650);
         this.fSprites.honeyBee.setSpriteDirection('r');
         this.fSprites.honeyBee.setSpriteAnchor(0.5, 0.5);
         this.fSprites.honeyBee.setAlpha(0);
+        this.fSprites.honeyBee.setAnimationFunction(Animation.idle);
+        this.fSprites.honeyBee.setAnimationFlag(false);
 
         this.fSprites.buffBee.setScale(0.5);
+        this.fSprites.buffBee.spriteDirection = 'l';
         this.fSprites.buffBee.setLocation(100, 650);
         this.fSprites.buffBee.setSpriteDirection('r');
         this.fSprites.buffBee.setSpriteAnchor(0.5, 0.5);
         this.fSprites.buffBee.setAlpha(0);
+        this.fSprites.buffBee.setAnimationFunction(Animation.idle);
+        this.fSprites.buffBee.setAnimationFlag(false);
 
         this.fSprites.redBee.setScale(0.5);
+        this.fSprites.redBee.spriteDirection = 'l';
         this.fSprites.redBee.setLocation(100, 650);
         this.fSprites.redBee.setSpriteDirection('r');
         this.fSprites.redBee.setSpriteAnchor(0.5, 0.5);
         this.fSprites.redBee.setAlpha(0);
+        this.fSprites.redBee.setAnimationFunction(Animation.idle);
+        this.fSprites.redBee.setAnimationFlag(false);
 
         
         this.fSprites.honeyTube.setScale(0.4);
         this.fSprites.honeyTube.setPivot(0.5, 0.5);
         this.fSprites.honeyTube.setLocation(730, 380);
         this.fSprites.honeyTube.setAlpha(0);
-
+        this.fSprites.honeyTube.setRotation(0);
+        this.fSprites.honeyTube.gotoFrame(0);
+        this.fSprites.honeyTube.setRotation(0);
         this.fSprites.buffTube.setScale(0.4);
         this.fSprites.buffTube.setPivot(0.5, 0.5);
         this.fSprites.buffTube.setLocation(730, 380);
         this.fSprites.buffTube.setAlpha(0);
+        this.fSprites.buffTube.gotoFrame(0);
+        this.fSprites.buffTube.setRotation(0);
 
         this.fSprites.redTube.setScale(0.4);
         this.fSprites.redTube.setPivot(0.5, 0.5);
         this.fSprites.redTube.setLocation(730, 380);
-        this.fSprites.redTube.setAlpha(0);        
+        this.fSprites.redTube.setAlpha(0);       
+        this.fSprites.redTube.gotoFrame(0);
+        this.fSprites.redTube.setRotation(0); 
 
         this.fSprites.tubeEntranceBox.bringBefore(this.fSprites.honeyTube);
         this.fSprites.tubeEntranceBox.setLocation(450, 300);
@@ -265,12 +289,13 @@ export class PollenStage extends Stage{
         this.fSprites.Elie.setScale(0.5);
         this.fSprites.Elie.setLocation(900, 353);
         this.fSprites.Elie.gotoFrame(1);
+        this.fSprites.Elie.setAlpha(1);
 
         this.fSprites.clickNotice.setScale(0.8);
         this.fSprites.clickNotice.setLocation(350, 750);
         this.fSprites.clickNotice.setAlpha(1);
         this.fSprites.clickNotice.setAnimationFunction(Animation.halfAlphaPulse);
-        this.fSprites.clickNotice.setAnimationFlag(true);
+        this.fSprites.clickNotice.setAnimationFlag(false);
 
         this.fSprites.dragNotice.setScale(0.8);
         this.fSprites.dragNotice.setLocation(400, 750);
@@ -328,15 +353,14 @@ export class PollenStage extends Stage{
             .next()
 
             //Bee 1
-            .addMovement(this.fSprites.honeyBee, [130, 450], 2, Movement.straightMvPattern)
-            .addFade(this.fSprites.honeyBee, 1, 0, 1)
+            .addMovement(this.fSprites.honeyBee, [131, 450], 2, Movement.straightMvPattern)
+            .addFade(this.fSprites.honeyBee, 3, 0, 1)
             .next()
 
-            .addIdle(this.fSprites.honeyBee)
+            .setAnimationFlag(this.fSprites.honeyBee, true)
             .addFade(this.fSprites.dragNotice, 3, 0, 1)
             .next()
 
-            .addIdle(this.fSprites.honeyBee)
             .addCollisionEvent(this.fSprites.honeyBee, this.fSprites.tubeEntranceBox)
             .addDragEvent(this.fSprites.honeyBee)
             .next()
@@ -351,8 +375,8 @@ export class PollenStage extends Stage{
 
             .addClickEvent(this.foreground)
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
-            .addIdle(this.fSprites.honeyBee)
             .addFrameEvent(this.fSprites.honeyBee, 1)
+            .setAnimationFlag(this.fSprites.honeyBee, true)
             .next()
 
             .addFrameEvent(this.fSprites.honeyBee, 0)
@@ -385,9 +409,9 @@ export class PollenStage extends Stage{
             .addFade(this.fSprites.pollen1, -10, 0, 1)
             .addFade(this.fSprites.pollen2, -10, 0, 1)
             .addFrameEvent(this.fSprites.honeyTube, 1)
-            .addRotationEvent(this.fSprites.honeyTube, 180, 270, 1)
+            .addRotationEvent(this.fSprites.honeyTube, 0, 90, 1)
             .addScaleEvent(this.fSprites.honeyTube, -0.6, 0.15, 1)
-            .addMovement(this.fSprites.honeyTube, [900, 700], 4, Movement.quadCurveMvPattern, 50)
+            .addMovement(this.fSprites.honeyTube, [900, 700], 4, Movement.straightMvPattern, 50, false)
             .next()
 
         this.speechEventChain
@@ -407,15 +431,15 @@ export class PollenStage extends Stage{
             //Bee 2
         this.eventChain
             .addFade(this.fSprites.buffTube, 3, 0, 1)
-            .addMovement(this.fSprites.buffBee, [130, 450], 2, Movement.straightMvPattern)
-            .addFade(this.fSprites.buffBee, 1, 0, 1)
+            .addMovement(this.fSprites.buffBee, [131, 450], 2, Movement.straightMvPattern)
+            .addFade(this.fSprites.buffBee, 3, 0, 1)
             .next()
 
-            .addIdle(this.fSprites.buffBee)
+            .setAnimationFlag(this.fSprites.buffBee, true)
             .addFade(this.fSprites.dragNotice, 3, 0, 1)
             .next()
 
-            .addIdle(this.fSprites.buffBee)
+            //.addIdle(this.fSprites.buffBee)
             .addCollisionEvent(this.fSprites.buffBee, this.fSprites.tubeEntranceBox)
             .addDragEvent(this.fSprites.buffBee)
             .next()
@@ -430,7 +454,7 @@ export class PollenStage extends Stage{
 
             .addClickEvent(this.foreground)
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
-            .addIdle(this.fSprites.buffBee)
+            .setAnimationFlag(this.fSprites.buffBee, true)
             .addFrameEvent(this.fSprites.buffBee, 1)
             .next()
 
@@ -464,9 +488,9 @@ export class PollenStage extends Stage{
             .addFade(this.fSprites.pollen1, -10, 0, 1)
             .addFade(this.fSprites.pollen2, -10, 0, 1)
             .addFrameEvent(this.fSprites.buffTube, 1)
-            .addRotationEvent(this.fSprites.buffTube, 180, 270, 0.85)
+            .addRotationEvent(this.fSprites.buffTube, 0, 90, 0.85)
             .addScaleEvent(this.fSprites.buffTube, -0.5, 0.15, 1)
-            .addMovement(this.fSprites.buffTube, [1000, 700], 4, Movement.quadCurveMvPattern, 50)
+            .addMovement(this.fSprites.buffTube, [1000, 700], 4, Movement.quadCurveMvPattern, 50, false)
             .next();
 
         this.speechEventChain
@@ -485,15 +509,15 @@ export class PollenStage extends Stage{
         //Bee 3
         this.eventChain
             .addFade(this.fSprites.redTube, 3, 0, 1)
-            .addMovement(this.fSprites.redBee, [130, 450], 2, Movement.straightMvPattern)
-            .addFade(this.fSprites.redBee, 1, 0, 1)
+            .addMovement(this.fSprites.redBee, [131, 450], 2, Movement.straightMvPattern)
+            .addFade(this.fSprites.redBee, 3, 0, 1)
             .next()
 
-            .addIdle(this.fSprites.redBee)
+            .setAnimationFlag(this.fSprites.redBee, true)
             .addFade(this.fSprites.dragNotice, 3, 0, 1)
             .next()
 
-            .addIdle(this.fSprites.redBee)
+            //.addIdle(this.fSprites.redBee)
             .addCollisionEvent(this.fSprites.redBee, this.fSprites.tubeEntranceBox)
             .addDragEvent(this.fSprites.redBee)
             .next()
@@ -508,7 +532,7 @@ export class PollenStage extends Stage{
 
             .addClickEvent(this.foreground)
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
-            .addIdle(this.fSprites.redBee)
+            .setAnimationFlag(this.fSprites.redBee, true)
             .addFrameEvent(this.fSprites.redBee, 1)
             .next()
 
@@ -524,7 +548,6 @@ export class PollenStage extends Stage{
             .next()
 
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
-            //.addFade(this.fSprites.bluebellMag, 3, 0, 1)
             .addForceLocationEvent(this.fSprites.Elie, [100, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .next()
@@ -533,15 +556,14 @@ export class PollenStage extends Stage{
             .addFade(this.fSprites.pollen1, -10, 0, 1)
             .addFade(this.fSprites.pollen2, -10, 0, 1)
             .addFrameEvent(this.fSprites.redTube, 1)
-            .addRotationEvent(this.fSprites.redTube, 180, 270, 0.75)
+            .addRotationEvent(this.fSprites.redTube, 0, 90, 0.75)
             .addScaleEvent(this.fSprites.redTube, -0.3, 0.15, 1)
-            .addMovement(this.fSprites.redTube, [1100, 700], 4, Movement.quadCurveMvPattern, 50)
+            .addMovement(this.fSprites.redTube, [1100, 700], 4, Movement.quadCurveMvPattern, 50, false)
             .addClickEvent(this.foreground)
             .next()
 
             .addFade(this.fSprites.ElieSpeech6, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
-            //.addFade(this.fSprites.bluebellMag, -3, 0, 1)
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .next()
             .addChangeStateEvent(this.foreground, this, 2);
@@ -592,6 +614,10 @@ export class PollenStage extends Stage{
         context.foreground.tick();
         context.eventChain.tick();
         context.speechEventChain.tick();
+
+        context.fSprites.honeyBee.tick();
+        context.fSprites.buffBee.tick();
+        context.fSprites.redBee.tick();
     }
 
     exit(delta, context){
