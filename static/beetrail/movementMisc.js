@@ -40,4 +40,35 @@ export class Animation{
         let a = (Math.cos(x*(Math.PI*2)/100)/2)+0.5;
         item.setAlpha(a);
     }
+
+    static idle(item, x){
+        item.setLocation(
+            item.getX(),
+            item.getY()+Movement.sinMvPattern(
+                x,
+                0,
+                1
+            ));
+        if(item.animationTick == 63){
+            item.animationTick = 0;
+        }
+        
+            
+        
+        /*
+        this.chain[this.eventNumber][i].item.setLocation(
+            this.chain[this.eventNumber][i].item.getX(),
+            this.chain[this.eventNumber][i].item.getY()+
+            this.chain[this.eventNumber][i].pattern(
+                this.chain[this.eventNumber][i].x,
+                0,
+                this.chain[this.eventNumber][i].amplification
+            )
+        );
+        this.chain[this.eventNumber][i].x += 1;
+        if(this.chain[this.eventNumber][i].x > 60){
+            this.chain[this.eventNumber][i].x = 0;
+        }
+        break;*/
+    }
 }
