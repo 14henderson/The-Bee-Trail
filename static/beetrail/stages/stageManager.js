@@ -21,7 +21,7 @@ export class StageManager{
             "meadow":new MeadowStage(app, this),            
             "pollen":new PollenStage(app, this)
         };
-        this.stage = "hub";
+        this.stage = "pollen";
         this.app = app;
         this.app.stage.sortableChildren = true;
 
@@ -169,6 +169,7 @@ export class StageManager{
         this.app.stage.removeChild(this.stages[this.stage].foreground);
         
         this.stage = newStage;
+        this.stages[this.stage].stop();
         this.stages[this.stage].assetPositioning();
         this.stages[this.stage].eventChainsDef();
         this.app.stage.addChild(this.stages[this.stage].foreground);

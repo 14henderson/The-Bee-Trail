@@ -89,7 +89,7 @@ export class PollenStage extends Stage{
     stop(){
         this.state = this.states[0];
         
-        this.assetPositioning();
+        //this.assetPositioning();
         this.miscAssetCreation();
 
         this.entryEventChain.resetChain();
@@ -97,7 +97,7 @@ export class PollenStage extends Stage{
         this.speechEventChain.resetChain();
         this.exitEventChain.resetChain();
         
-        this.eventChainsDef();
+        //this.eventChainsDef();
     }
 
     loadSprites(resources){
@@ -583,20 +583,24 @@ export class PollenStage extends Stage{
             .next();
 
         this.eventChain.initialise();
+        this.eventChain.name = "main event chain";
 
         this.entryEventChain
             .addFade(this.foreground, 3, 0, 1)
             .next()
             .addChangeStateEvent(this.foreground, this, 1);
         this.entryEventChain.initialise();
+        this.entryEventChain.name = "entry event chain";
 
         this.exitEventChain
             .addFade(this.foreground, -3, 0, 1.1)
             .next()
             .addChangeStageEvent(this.foreground, this, "hub");
         this.exitEventChain.initialise();
+        this.exitEventChain.name = "exit event chain";
 
         this.speechEventChain.initialise();
+        this.speechEventChain.name = "speech event chain";
     }
 
     loop(delta, context){
