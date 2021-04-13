@@ -41,11 +41,11 @@ export class Item {
         this.sprite.on('pointerdown', event =>{
             this._clicked = true;
             this._beingDragged = true;
-            this.animationFlag = false;
+            //this.animationFlag = false;
         });
         this.sprite.on('pointerup', event =>{
             this._beingDragged = false;
-            this.animationFlag = true;
+            //this.animationFlag = true;
             this.animationTick = 0;
         });
         this.sprite.on('pointermove', event => {
@@ -94,9 +94,11 @@ export class Item {
 
     enableInteractiveState(){
         this.sprite.interactive = true;
+        this._clicked = false;
     }
     dissableInteractiveState(){
         this.sprite.interactive = false;
+        this._clicked = false;
     }
 
     getSprite(){
