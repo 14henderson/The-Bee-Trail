@@ -42,7 +42,9 @@ export class PollenStage extends Stage{
             "assets/fSprites/objects/elie-waving-NEW.png",
             "assets/fSprites/objects/net-yellow.png",
             "assets/fSprites/objects/Artboard 4net-overlay.png",
-            "assets/fSprites/objects/pollen.png",
+            "assets/fSprites/objects/pollen-tube-blackberry.png",
+            "assets/fSprites/objects/pollen-tube-bluebell.png",
+            "assets/fSprites/objects/pollen-tube-poppy.png",
         
             "assets/fSprites/objects/bench.png",
             "assets/fSprites/objects/laptop.png",
@@ -58,6 +60,7 @@ export class PollenStage extends Stage{
 
             "assets/fSprites/objects/bluebell-pollen-magnify.png",
             "assets/fSprites/objects/poppy-pollen-magnify.png",
+            "assets/fSprites/objects/blackberry-pollen-magnify.png",
 
             "assets/fSprites/speech-bubbles/speech-bubble-tube-top.png",
             "assets/fSprites/speech-bubbles/pollen/1-barney-tube-speech.png",
@@ -107,8 +110,13 @@ export class PollenStage extends Stage{
         this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.fw.png", resources);
 
         this.fSprites.bench = new SpriteItem("assets/fSprites/objects/bench.png", resources);
-        this.fSprites.pollen1 = new SpriteItem("assets/fSprites/objects/pollen.png", resources);
-        this.fSprites.pollen2 = new SpriteItem("assets/fSprites/objects/pollen.png", resources);
+        this.fSprites.pollenA1 = new SpriteItem("assets/fSprites/objects/pollen-tube-poppy.png", resources);
+        this.fSprites.pollenA2 = new SpriteItem("assets/fSprites/objects/pollen-tube-poppy.png", resources);
+        this.fSprites.pollenB1 = new SpriteItem("assets/fSprites/objects/pollen-tube-blackberry.png", resources);
+        this.fSprites.pollenB2 = new SpriteItem("assets/fSprites/objects/pollen-tube-blackberry.png", resources);
+        this.fSprites.pollenC1 = new SpriteItem("assets/fSprites/objects/pollen-tube-bluebell.png", resources);
+        this.fSprites.pollenC2 = new SpriteItem("assets/fSprites/objects/pollen-tube-bluebell.png", resources);
+        
 
         this.fSprites.honeyTube = new AnimatedItem([
             "assets/fSprites/objects/honeybee-tube.png",
@@ -125,6 +133,7 @@ export class PollenStage extends Stage{
         
         this.fSprites.bluebellMag = new SpriteItem("assets/fSprites/objects/bluebell-pollen-magnify.png", resources);
         this.fSprites.poppyMag = new SpriteItem("assets/fSprites/objects/poppy-pollen-magnify.png", resources);
+        this.fSprites.blackberryMag = new SpriteItem("assets/fSprites/objects/blackberry-pollen-magnify.png", resources);
 
         this.fSprites.net = new SpriteItem("assets/fSprites/objects/net-yellow.png", resources);
 
@@ -309,12 +318,28 @@ export class PollenStage extends Stage{
         this.fSprites.poppyMag.setScale(0.8);
         this.fSprites.poppyMag.setLocation(700, 250);
         this.fSprites.poppyMag.setAlpha(0);
+        this.fSprites.blackberryMag.setScale(0.8);
+        this.fSprites.blackberryMag.setLocation(700, 250);
+        this.fSprites.blackberryMag.setAlpha(0);
 
-        this.fSprites.pollen1.setLocation(500, 330);
-        this.fSprites.pollen1.setAlpha(0);
-
-        this.fSprites.pollen2.setLocation(750, 330);
-        this.fSprites.pollen2.setAlpha(0);
+        this.fSprites.pollenA1.setLocation(510, 360);
+        this.fSprites.pollenA1.setAlpha(0);
+        this.fSprites.pollenA1.setScale(0.5);
+        this.fSprites.pollenA2.setLocation(720, 360);
+        this.fSprites.pollenA2.setAlpha(0);
+        this.fSprites.pollenA2.setScale(0.5);
+        this.fSprites.pollenB1.setLocation(510, 360);
+        this.fSprites.pollenB1.setAlpha(0);
+        this.fSprites.pollenB1.setScale(0.5);
+        this.fSprites.pollenB2.setLocation(720, 360);
+        this.fSprites.pollenB2.setAlpha(0);
+        this.fSprites.pollenB2.setScale(0.5);
+        this.fSprites.pollenC1.setLocation(510, 360);
+        this.fSprites.pollenC1.setAlpha(0);
+        this.fSprites.pollenC1.setScale(0.5);
+        this.fSprites.pollenC2.setLocation(720, 360);
+        this.fSprites.pollenC2.setAlpha(0);
+        this.fSprites.pollenC2.setScale(0.5);
 
         this.foreground.setAlpha(0);
     }
@@ -391,7 +416,7 @@ export class PollenStage extends Stage{
             .next()
 
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
-            .addFade(this.fSprites.bluebellMag, 3, 0, 1)
+            .addFade(this.fSprites.poppyMag, 3, 0, 1)
             .addForceLocationEvent(this.fSprites.Elie, [100, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .next()
@@ -402,12 +427,12 @@ export class PollenStage extends Stage{
 
             .addFade(this.fSprites.ElieSpeech4, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
-            .addFade(this.fSprites.bluebellMag, -3, 0, 1)
+            .addFade(this.fSprites.poppyMag, -3, 0, 1)
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .next()
 
-            .addFade(this.fSprites.pollen1, -10, 0, 1)
-            .addFade(this.fSprites.pollen2, -10, 0, 1)
+            .addFade(this.fSprites.pollenA1, -10, 0, 1)
+            .addFade(this.fSprites.pollenA2, -10, 0, 1)
             .addFrameEvent(this.fSprites.honeyTube, 1)
             .addRotationEvent(this.fSprites.honeyTube, 0, 90, 1)
             .addScaleEvent(this.fSprites.honeyTube, -0.6, 0.15, 1)
@@ -420,10 +445,12 @@ export class PollenStage extends Stage{
             .addSleep(this.foreground, 70)
             .next()
             .addFade(this.fSprites.honeySpeech1, 3, 0, 1)
-            .addFade(this.fSprites.pollen1, 1, 0, 1)
-            .addSleep(this.foreground, 400)
+            .addFade(this.fSprites.pollenA1, .5, 0, 1)
+            .addSleep(this.foreground, 200)
             .next()
-            .addFade(this.fSprites.pollen2, 1, 0, 1)
+            .addFade(this.fSprites.pollenA2, .5, 0, 1)
+            .addSleep(this.foreground, 200)
+            .next()
             .addFade(this.fSprites.honeySpeech2, 3, 0, 1)
             .next();
 
@@ -470,7 +497,7 @@ export class PollenStage extends Stage{
             .next()
 
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
-            .addFade(this.fSprites.poppyMag, 3, 0, 1)
+            .addFade(this.fSprites.blackberryMag, 3, 0, 1)
             .addForceLocationEvent(this.fSprites.Elie, [100, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .next()
@@ -481,12 +508,12 @@ export class PollenStage extends Stage{
 
             .addFade(this.fSprites.ElieSpeech5, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
-            .addFade(this.fSprites.poppyMag, -3, 0, 1)
+            .addFade(this.fSprites.blackberryMag, -3, 0, 1)
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .next()
 
-            .addFade(this.fSprites.pollen1, -10, 0, 1)
-            .addFade(this.fSprites.pollen2, -10, 0, 1)
+            .addFade(this.fSprites.pollenB1, -10, 0, 1)
+            .addFade(this.fSprites.pollenB2, -10, 0, 1)
             .addFrameEvent(this.fSprites.buffTube, 1)
             .addRotationEvent(this.fSprites.buffTube, 0, 90, 0.85)
             .addScaleEvent(this.fSprites.buffTube, -0.5, 0.15, 1)
@@ -499,10 +526,12 @@ export class PollenStage extends Stage{
             .addSleep(this.foreground, 90)
             .next()
             .addFade(this.fSprites.buffSpeech1, 3, -1, 1)
-            .addFade(this.fSprites.pollen1, 1, -1, 1)
-            .addSleep(this.foreground, 400)
+            .addFade(this.fSprites.pollenB1, .5, -1, 1)
+            .addSleep(this.foreground, 200)
             .next()
-            .addFade(this.fSprites.pollen2, 1, -1, 1)
+            .addFade(this.fSprites.pollenB2, .5, -1, 1)
+            .addSleep(this.foreground, 200)
+            .next()
             .addFade(this.fSprites.buffSpeech2, 3, 0, 1)
             .next();
 
@@ -553,8 +582,8 @@ export class PollenStage extends Stage{
             .next()
 
             .addFade(this.fSprites.ElieSpeech6, 3, 0, 1)
-            .addFade(this.fSprites.pollen1, -10, 0, 1)
-            .addFade(this.fSprites.pollen2, -10, 0, 1)
+            .addFade(this.fSprites.pollenC1, -10, 0, 1)
+            .addFade(this.fSprites.pollenC2, -10, 0, 1)
             .addFrameEvent(this.fSprites.redTube, 1)
             .addRotationEvent(this.fSprites.redTube, 0, 90, 0.75)
             .addScaleEvent(this.fSprites.redTube, -0.3, 0.15, 1)
@@ -575,10 +604,12 @@ export class PollenStage extends Stage{
             .addSleep(this.foreground, 80)
             .next()
             .addFade(this.fSprites.redSpeech1, 3, -1, 1)
-            .addFade(this.fSprites.pollen1, 1, -1, 1)
-            .addSleep(this.foreground, 400)
+            .addFade(this.fSprites.pollenC1, .5, -1, 1)
+            .addSleep(this.foreground, 200)
             .next()
-            .addFade(this.fSprites.pollen2, 1, -1, 1)
+            .addFade(this.fSprites.pollenC2, .5, -1, 1)
+            .addSleep(this.foreground, 200)
+            .next()
             .addFade(this.fSprites.redSpeech2, 3, 0, 1)
             .next();
 
