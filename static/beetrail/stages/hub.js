@@ -193,7 +193,9 @@ export class HubStage extends Stage{
             .next()
             .addFade(this.fSprites.newspaper, -3, 0, 1)
             .addFade(this.fSprites.playButton, -3, 0, 1)
-            .setAnimationFlag(this.fSprites.minIONNav, false)
+            .addCustomAction(this.fSprites.meadowNav, "enableInteractiveState")
+            .addCustomAction(this.fSprites.pollenNav, "enableInteractiveState")
+            .addCustomAction(this.fSprites.minIONNav, "enableInteractiveState")
             .next()
             .addChangeStateEvent(this.foreground, this, 2);
         this.startEventChain.initialise();
