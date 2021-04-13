@@ -246,6 +246,7 @@ export class EventChain{
         return this;
     }
 
+
     addChangeStateEvent(item, stage, stateNum){
         this.chain[this.chain.length-1].push({
             'type':'state-change',
@@ -295,13 +296,12 @@ export class EventChain{
         });
         return this;
     }
-    //addPauseItemEvent(item){  >>future?
 
-    //}
 
-    addCustomAction(itemFunction){
+    addCustomAction(item, itemFunction){
         this.chain[this.chain.length-1].push({
             'type':'customAction',
+            'item':item,
             'funcPointer':itemFunction,
             'completed':false
         });
@@ -563,7 +563,9 @@ export class EventChain{
 
                 case 'customAction':
                     if(!this.chain[this.eventNumber][i].completed){
-                        this.chain[this.eventNumber][i].funcPointer();
+                        let func = this.chain[this.eventNumber][i].funcPointer;
+                        console.log(func);
+                        this.chain[this.eventNumber][i].item[func]();
                         this.chain[this.eventNumber][i].completed = true;
                     }
                     eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
