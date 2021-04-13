@@ -1,4 +1,5 @@
 import {HubStage} from '/beetrail/stages/hub.js';
+import {MinIONStage} from '/beetrail/stages/minION.js';
 import {MeadowStage} from '/beetrail/stages/meadow.js';
 import {PollenStage} from '/beetrail/stages/pollen.js';
 import {SpriteItem} from '/beetrail/item/spriteItem.js';
@@ -19,7 +20,8 @@ export class StageManager{
         this.stages = {
             "hub":new HubStage(app, this),
             "meadow":new MeadowStage(app, this),            
-            "pollen":new PollenStage(app, this)
+            "pollen":new PollenStage(app, this),
+            "minION":new MinIONStage(app, this)
         };
         this.stage = "hub";
         this.app = app;

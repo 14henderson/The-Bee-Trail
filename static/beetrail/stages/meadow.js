@@ -125,7 +125,6 @@ export class MeadowStage extends Stage{
         this.fSprites.background2.setSize(1280, 960);
         this.fSprites.background1.setSize(1280, 960);
         this.fSprites.foregroundPlants.setSize(1280, 960);
-
 //------------
         this.fSprites.honeyBee.centerPivot();
         this.fSprites.honeyBee.setScale(0.4);
@@ -143,7 +142,6 @@ export class MeadowStage extends Stage{
         this.fSprites.net1.setLocation(270, 350);
         this.fSprites.net1.setAlpha(0);
         this.fSprites.net1.setPivot(1, 1);
-
 //-------------
         this.fSprites.buffBee.setScale(0.5);
         this.fSprites.buffBee.bringBehind(this.fSprites.background2);
