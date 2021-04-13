@@ -1,128 +1,282 @@
 import {Stage} from '/beetrail/stages/stage.js';
-import {Item} from '/beetrail/item.js';
-import {Foreground} from '/beetrail/foregroundContainer.js'
+import {SpriteItem} from '/beetrail/item/spriteItem.js';
+import {ShapeItem} from '/beetrail/item/shapeItem.js';
+import { AnimatedItem } from '/beetrail/item/animatedItem.js';
+
+import {EventChain} from '/beetrail/eventChain.js';
+import {Movement, Animation} from '/beetrail/movementMisc.js';
 
 
-export class Hub{
-    constructor(app){
-        this.assetsTextures = [];
-        this.assets = {}
-        this.sprites = {}
-        this.setup(app);
-        this.states = [this.start, this.main, this.end];
+export class HubStage extends Stage{
+    startEventChain;
+    entryEventChain;
+    mainEventChain;
+    exitEventChain;
+
+    animationTick;
+
+    customState;    //increases on completion of stage.
+    textures;
+
+    constructor(app, stageManager){
+        super(app, stageManager);
+        
+        this.states = [this.start, this.entry, this.main, this.exit];
         this.state = this.start;
-        this.app = app;
+        
+        this.startEventChain = new EventChain();
+        this.entryEventChain = new EventChain();
+        this.mainEventChain = new EventChain();
+        this.exitEventChain = new EventChain();
+
+        this.customState = 0;
+        this.animationTick = 0;
     }
 
-    setup(){
-        this.assetsTextures = ["assets/bee_test.png",
-                                "assets/backgrounds/hub.png"];
-        PIXI.loader.add(this.assetsTextures).load((loader, resources) => {
-            this.sprites.background = new Item("assets/backgrounds/hub.png", true);
-            this.sprites.background.setAbsoluteFlag('y', true);
-            this.app.stage.addChild(this.sprites.background.getSprite());
-            
-            this.foreground = new Foreground();
-            this.app.stage.addChild(this.foreground.getSprite());
+    getTextures(){
+        this.textures = [       
+            "assets/fSprites/backgrounds/background3.fw.png",
+            "assets/fSprites/backgrounds/background2.fw.png",
+            "assets/fSprites/backgrounds/background1.fw.png",
+            "assets/fSprites/backgrounds/foreground.fw.png",
+        
+            "assets/fSprites/objects/elie-standing.png",
+            "assets/fSprites/objects/elie-waving.png",
+            "assets/fSprites/objects/net-yellow.png",
+        
+            "assets/fSprites/objects/bench.png",
+            "assets/fSprites/objects/laptop.png",
+            "assets/fSprites/objects/minion-cable.png",
+        
+            "assets/fSprites/objects/Artboard 1newspaper-front-cover.png",
+            "assets/fSprites/buttons/play-button-hover.png",
+            "assets/fSprites/buttons/static-play-button-click.png",
 
-            this.assetCreation();
-            this.assetPositioning();
-            this.app.ticker.add(delta => this.loop(delta));
-        });        
+            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-static.png",
+            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-hover.png",
+        
+            "assets/fSprites/buttons/meadowNav.png",
+            "assets/fSprites/buttons/meadowNav_L.png",
+            "assets/fSprites/buttons/minIONNav.png",
+            "assets/fSprites/buttons/minIONNav_L.png",
+            "assets/fSprites/buttons/pollenNav.png",
+            "assets/fSprites/buttons/pollenNav_L.png",
+        ];
+        return this.textures;
     }
 
-    assetCreation(){
-        let hoverBox1 = new PIXI.Graphics()
-            .lineStyle(2, 0xBABABA, 1)
-            .beginFill(0xE8E8E8)
-            .drawRoundedRect(0, 0, 900, (window.innerHeight/2)-40, 10)
-            .endFill();
-        this.sprites.meadowNav = new Item(hoverBox1, false);
-
-        let hoverBox2 = new PIXI.Graphics()
-            .lineStyle(2, 0xBABABA, 1)
-            .beginFill(0xE8E8E8)
-            .drawRoundedRect(0, 0, (window.innerWidth/2)-30, (window.innerHeight/2)-40, 10)
-            .endFill();
-        this.sprites.PollenNav = new Item(hoverBox2, false);
-
-        let hoverBox3 = new PIXI.Graphics()
-            .lineStyle(2, 0xBABABA, 1)
-            .beginFill(0xE8E8E8)
-            .drawRoundedRect(0, 0, (window.innerWidth/2)-30, (window.innerHeight/2)-40, 10)
-            .endFill();
-        this.sprites.meadowNav.setAbsoluteFlag('y', true);
-        this.sprites.minIONNav = new Item(hoverBox3, false);
-
-
-        this.sprites.bee = new Item("assets/bee_test.png", true);
-        this.foreground.addChild(this.sprites.meadowNav.getSprite());
-        this.foreground.addChild(this.sprites.PollenNav.getSprite());
-        this.foreground.addChild(this.sprites.minIONNav.getSprite());
+    createAssets(resources){
+        this.loadSprites(resources);            
+        this.foreground.addAllSprites(this.fSprites);
     }
+
+
+    stop(){
+        this.assetPositioning();
+
+        this.mainEventChain.resetChain();
+        this.entryEventChain.resetChain();
+        this.exitEventChain.resetChain();
+        this.eventChainsDef();
+
+        this.state = this.states[1];
+    }
+
+
+    loadSprites(resources){
+        //this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png", loader);
+        //---------------------------
+        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", resources);
+        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", resources);
+        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", resources);
+        this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.fw.png", resources);
+        //---------------------------
+        this.fSprites.bench = new SpriteItem("assets/fSprites/objects/bench.png", resources);
+        this.fSprites.laptop = new SpriteItem("assets/fSprites/objects/laptop.png", resources);
+        this.fSprites.minION = new SpriteItem("assets/fSprites/objects/minion-cable.png", resources);
+        this.fSprites.newspaper = new SpriteItem("assets/fSprites/objects/Artboard 1newspaper-front-cover.png", resources);
+        //---------------------------
+        
+        this.fSprites.meadowNav = new AnimatedItem([
+            "assets/fSprites/buttons/meadowNav.png",
+            "assets/fSprites/buttons/meadowNav_L.png"
+        ], resources);
+        this.fSprites.pollenNav = new AnimatedItem([
+            "assets/fSprites/buttons/pollenNav.png",
+            "assets/fSprites/buttons/pollenNav_L.png"
+        ], resources);
+        this.fSprites.minIONNav = new AnimatedItem([
+            "assets/fSprites/buttons/minIONNav.png",
+            "assets/fSprites/buttons/minIONNav_L.png"
+        ], resources, "minION_Nav");
+
+        this.fSprites.playButton = new AnimatedItem([
+            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-static.png",
+            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-hover.png"
+        ], resources);
+    }
+
+
+
     assetPositioning(){
-        this.sprites.background.scaleByHeight(window.innerHeight);
-        this.sprites.meadowNav.getSprite().position.set(20, 20);
-        this.sprites.meadowNav.getSprite().alpha = 0.2;
-        this.sprites.PollenNav.getSprite().position.set(20, (window.innerHeight/2));
-        this.sprites.PollenNav.getSprite().alpha = 0.2;
-        this.sprites.minIONNav.getSprite().position.set((window.innerWidth/2)+10, (window.innerHeight/2));
-        this.sprites.minIONNav.getSprite().alpha = 0.2;
-        this.sprites.bee.setLocation(0, 0); 
+        this.fSprites.background3.setSize(1280, 960);
+        this.fSprites.background2.setSize(1280, 960);
+        this.fSprites.background1.setSize(1280, 960);
+        this.fSprites.foregroundPlants.setSize(1280, 960);
+        
+        this.fSprites.newspaper.setSize(1280, 960);
+        this.fSprites.newspaper.setAlpha(0);
+
+        this.fSprites.bench.setScale(1280/2639);
+        this.fSprites.bench.setLocation(0, 686);
+
+        this.fSprites.laptop.setScale(0.5);
+        this.fSprites.laptop.setLocation(700, 550);
+        this.fSprites.minION.setScale(0.4);
+        this.fSprites.minION.setLocation(750, 750);
+
+        //this.fSprites.playButton.setScale(0.2);
+        this.fSprites.playButton.centerPivot();//?????????????????????
+        this.fSprites.playButton.setLocation(970, 680);
+        this.fSprites.playButton.enableInteractiveState();
+        this.fSprites.playButton.enableMouseHoverFrame(1);
+        this.fSprites.playButton.setAlpha(0);
+
+        this.fSprites.meadowNav.enableInteractiveState();
+        this.fSprites.meadowNav.setLocation(0, 70);
+        this.fSprites.meadowNav.setAnimationFunction(Animation.halfAlphaPulse);
+
+        this.fSprites.pollenNav.enableInteractiveState();
+        this.fSprites.pollenNav.setLocation(0, 500);
+        this.fSprites.pollenNav.setAnimationFunction(Animation.halfAlphaPulse);
+        if(this.customState >= 1){
+            this.fSprites.pollenNav.gotoFrame(0);
+            this.fSprites.pollenNav.setAnimationFlag(true);
+            this.fSprites.pollenNav.setAlpha(1);
+        }else{
+            this.fSprites.pollenNav.gotoFrame(1);
+            this.fSprites.pollenNav.setAnimationFlag(false);
+            this.fSprites.pollenNav.setAlpha(0.5);
+        }
+        
+
+        this.fSprites.minIONNav.enableInteractiveState();
+        this.fSprites.minIONNav.setLocation(660, 500);
+        this.fSprites.minIONNav.setAnimationFunction(Animation.halfAlphaPulse);
+        if(this.customState >= 2){
+            this.fSprites.minIONNav.gotoFrame(0);
+            this.fSprites.minIONNav.setAnimationFlag(true);
+            this.fSprites.minIONNav.setAlpha(1);
+        }else{
+            this.fSprites.minIONNav.gotoFrame(1);
+            this.fSprites.minIONNav.setAnimationFlag(false);
+            this.fSprites.minIONNav.setAlpha(0.5);
+        }
+        
+        
+        this.fSprites.newspaper.bringBefore(this.fSprites.minIONNav);        
+    }
+
+    eventChainsDef(){
+        this.entryEventChain
+            .addFade(this.foreground, 3, -0.1, 1)
+            .next()
+            .addChangeStateEvent(this.foreground, this, 2);
+        this.entryEventChain.initialise();
+
+
+        this.startEventChain
+            .addFade(this.fSprites.newspaper, 3, 0, 1)
+            .addFade(this.fSprites.playButton, 3, 0, 1)
+            .next()
+            .addClickEvent(this.fSprites.playButton)
+            .next()
+            .addFade(this.fSprites.newspaper, -3, 0, 1)
+            .addFade(this.fSprites.playButton, -3, 0, 1)
+            .setAnimationFlag(this.fSprites.minIONNav, false)
+            .next()
+            .addChangeStateEvent(this.foreground, this, 2);
+        this.startEventChain.initialise();
+
+        this.exitEventChain
+            .addFade(this.foreground, -3, 0, 1);
+        this.exitEventChain.initialise();
+
+    }
+
+    navigateAction(item, customStateNum, stage){
+        if(item.getClickedState()){
+            if(this.customState == customStateNum-1){this.customState = customStateNum;}
+            this.exitEventChain.next().addChangeStageEvent(this.foreground, this, stage);
+            this.exitEventChain.initialise();
+            this.setState(3);
+            item.resetClickedState();
+        }
+    }
+    hoverAnimation(item){
+        if(item.onMouseHover()){
+            item.setFadeAnimation(0.19, 1, 0.05);
+        }else{
+            item.setFadeAnimation(0.2, 1, -0.05);
+        }
+    }
+
+    pulseAnimation(item){
+        if(this.animationTick == 0){
+            item.setFadeAnimation(0, 1, 0.005);
+        }else if(this.animationTick == 150){
+            item.setFadeAnimation(0, 1, -0.005);
+        }
+        this.animationTick++;
+        if(this.animationTick == 300){
+            this.animationTick = 0;
+        }
     }
 
 
-
-    loop(delta){
-        this.state(delta);
+    loop(delta, context){
+        context.state(delta, context);
     }
     
 
 
-    //STATES
-    start(delta){
-        if(!document.hasFocus()){
-            this.app.ticker.stop();
-            console.log("Lot focus");
-        }
-
-
-
-        if(this.sprites.meadowNav.onMouseHover(this.app)){
-            this.sprites.meadowNav.setFadeAnimation(0.2, 0.8, -0.05);
-        }else{
-            this.sprites.meadowNav.setFadeAnimation(0.2, 0.8, 0.05);
-        }
-
-        if(this.sprites.PollenNav.onMouseHover(this.app)){
-            this.sprites.PollenNav.setFadeAnimation(0.2, 0.8, -0.05);
-        }else{
-            this.sprites.PollenNav.setFadeAnimation(0.2, 0.8, 0.05);
-        }
-
-        if(this.sprites.minIONNav.onMouseHover(this.app)){
-            this.sprites.minIONNav.setFadeAnimation(0.2, 0.8, -0.05);
-        }else{
-            this.sprites.minIONNav.setFadeAnimation(0.2, 0.8, 0.05);
-        }
-
-
-        this.sprites.meadowNav.tick();
-        this.sprites.PollenNav.tick();
-        this.sprites.minIONNav.tick();
-        this.sprites.bee.tick();
-        this.sprites.background.centerX();
-        this.sprites.background.scaleByHeight(window.innerHeight);
-        this.sprites.background.tick();
-        this.foreground.tick();
-        //console.log(this.sprites.bee.getX(), this.sprites.bee.getY());
+    //STATES    
+    entry(delta, context){
+        context.foreground.tick();
+        context.entryEventChain.tick();
     }
 
-    main(delta){
-
+    start(delta, context){
+        context.foreground.tick();
+        context.startEventChain.tick();
     }
 
-    end(delta){
+
+    main(delta, context){   
+        context.navigateAction(context.fSprites.meadowNav, 1, "meadow");
+        //if(this.customState == 0){context.pulseAnimation(context.fSprites.meadowNav);}
+        //}else{context.hoverAnimation(context.fSprites.meadowNav);}
+
+        context.navigateAction(context.fSprites.pollenNav, 2, "pollen");
+       // if(this.customState == 1){context.pulseAnimation(context.fSprites.pollenNav);}
+       // }else{context.hoverAnimation(context.fSprites.pollenNav);}
+
+        context.navigateAction(context.fSprites.minIONNav, 3, "minION");
+        //if(this.customState == 2){context.pulseAnimation(context.fSprites.minIONNav);}
+       // }else{context.hoverAnimation(context.fSprites.minIONNav);}
+
+
+        context.fSprites.meadowNav.tick();
+        context.fSprites.pollenNav.tick();
+        context.fSprites.minIONNav.tick();
+
+        context.foreground.tick();
+    }
+
+    exit(delta, context){
+        context.foreground.tick();
+        context.exitEventChain.tick();
+
 
     }
 

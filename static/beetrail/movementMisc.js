@@ -18,13 +18,57 @@ export class Movement{
     }
 
     static testCollision(item1, item2){
-        if(item1.getX() - item1.getXPivot() < item2.getX()+item2.getWidth()
-        && item1.getX() + item1.getWidth() - item1.getXPivot() > item2.getX()
-        && item1.getY() - item1.getYPivot() < item2.getY() + item2.getHeight()
-        && item1.getY() + item1.getHeight() - item1.getYPivot() > item2.getY()
+        if(item1.getX() - (item1.getWidth()*item1.getAnchor().x) < item2.getX()+item2.getWidth()
+        && item1.getX() + item1.getWidth() - (item1.getWidth()*item1.getAnchor().x) > item2.getX()
+        && item1.getY() - (item1.getHeight()*item1.getAnchor().y) < item2.getY() + item2.getHeight()
+        && item1.getY() + item1.getHeight() - (item1.getHeight()*item1.getAnchor().y) > item2.getY()
         ){
             return true;
         }
         return false;
+    }
+}
+
+export class Animation{
+
+    static halfAlphaPulse(item, x){
+        let a = (Math.cos(x*(Math.PI*2)/100)/8)+7/8;
+        item.setAlpha(a);
+    }
+
+    static fullAlphaPulse(item, x){
+        let a = (Math.cos(x*(Math.PI*2)/100)/2)+0.5;
+        item.setAlpha(a);
+    }
+
+    static idle(item, x){
+        item.setLocation(
+            item.getX(),
+            item.getY()+Movement.sinMvPattern(
+                x,
+                0,
+                1
+            ));
+        if(item.animationTick == 63){
+            item.animationTick = 0;
+        }
+        
+            
+        
+        /*
+        this.chain[this.eventNumber][i].item.setLocation(
+            this.chain[this.eventNumber][i].item.getX(),
+            this.chain[this.eventNumber][i].item.getY()+
+            this.chain[this.eventNumber][i].pattern(
+                this.chain[this.eventNumber][i].x,
+                0,
+                this.chain[this.eventNumber][i].amplification
+            )
+        );
+        this.chain[this.eventNumber][i].x += 1;
+        if(this.chain[this.eventNumber][i].x > 60){
+            this.chain[this.eventNumber][i].x = 0;
+        }
+        break;*/
     }
 }
