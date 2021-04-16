@@ -15,6 +15,9 @@ export class StageManager{
     loader;
     bSprites;
     errorText;
+    fpsErrorText;
+    FPSTooLowTicker;
+    fpsErrorFlag;
 
     constructor(app){
         this.stages = {
@@ -31,6 +34,8 @@ export class StageManager{
         this.bSprites = {};
         this.test;
         this.testContainer;
+        this.FPSTooLowTicker = 0;
+        this.fpsErrorFlag = false;
         this.init();
     }
 
@@ -65,7 +70,7 @@ export class StageManager{
             this.addToApp();    //add background assets to container.
             this.app.stage.addChild(this.stages[this.stage].foreground);
             this.app.ticker.maxFPS = 60;
-            this.app.ticker.minFPS = 60;
+            //this.app.ticker.minFPS = 60;
             this.app.ticker.add(this.loop, this);
         });
     }
@@ -73,10 +78,18 @@ export class StageManager{
 
     loop(){
         this.app.renderer.resize(window.innerWidth, window.innerHeight);    //resizing here instead of main.js stops flickering? Unsure about stability.
-
         this.centerAndScaleSprites(this.bSprites);
-        this.stages[this.stage].state(0, this.stages[this.stage]);
-        this.addPauseScreen();
+
+        if(!this.fpsErrorFlag){
+            
+            this.stages[this.stage].state(0, this.stages[this.stage]);
+            this.addPauseScreen();
+            this.FPSCheck(this.app.ticker.FPS);
+        }else{
+            this.addFPSErrorScreen();
+        }
+        
+        
     }
 
 
@@ -118,6 +131,9 @@ export class StageManager{
         this.errorText = new ShapeItem(errorText, false);
         this.errorText.alpha = 0;
 
+        let fpsErrorText = new PIXI.Text("Minimum browser requirements not met. \nConsider enabling hardware acceleration or \nswitching to a different browser.", {fontFamily : 'Arial', fontSize: 30, fill : 0xffffff,  align : 'center'});
+        this.fpsErrorText = new ShapeItem(fpsErrorText, false);
+        this.fpsErrorText.setAlpha(0);
     }
     addToApp(){
         this.app.stage.addChild(this.bSprites.backgroundCol.getSprite());
@@ -125,6 +141,7 @@ export class StageManager{
         this.app.stage.addChild(this.bSprites.mBackground.getSprite());
         this.app.stage.addChild(this.bSprites.pauseScreen.getSprite());
         this.app.stage.addChild(this.errorText.getSprite());
+        this.app.stage.addChild(this.fpsErrorText.getSprite());
     }
     addPauseScreen(){
         if(window.innerWidth < (4/3)*window.innerHeight){
@@ -144,11 +161,33 @@ export class StageManager{
             this.errorText.sprite.zIndex = 0;
         }
     }
+    addFPSErrorScreen(){
+        if(this.fpsErrorFlag){
+            this.bSprites.pauseScreen.setSize(window.innerWidth, window.innerHeight);
+            this.bSprites.pauseScreen.setAlpha(1);
+            this.fpsErrorText.setAlpha(1);
+            this.bSprites.pauseScreen.sprite.zIndex = 100;
+            this.fpsErrorText.sprite.zIndex = 101;
+            this.fpsErrorText.setLocation(
+                (window.innerWidth/2)-(this.fpsErrorText.getSize()[0]/2),
+                (window.innerHeight/2)-100
+            );
+        }
+    }
     //----------------------------------------------------------//
 
 
 
-
+    FPSCheck(currFPS){
+        if(currFPS < 30){
+            this.FPSTooLowTicker++;
+        }else{
+            this.FPSTooLowTicker = 0;
+        }
+        if(this.FPSTooLowTicker > 20){
+            this.fpsErrorFlag = true;
+        }
+    }
 
     _collateTextures(){
         let textures = new Set();

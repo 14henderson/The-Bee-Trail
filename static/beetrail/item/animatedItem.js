@@ -18,8 +18,9 @@ export class AnimatedItem extends Item{
         this._mouseHovered = false;
         this.hoverFrame = 0;
 
-
+        this.defineEvents();
         this.sprite.on('pointerover', event => {
+            console.log("pointer over item!");
             this._mouseHovered = true;
             if(this._hoverEnabled){
                 this.gotoFrame(this.hoverFrame);
@@ -31,7 +32,7 @@ export class AnimatedItem extends Item{
                 this.gotoFrame(0);
             }
         });
-        this.defineEvents();
+        
     }
 
     gotoFrame(num){

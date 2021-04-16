@@ -308,6 +308,16 @@ export class EventChain{
         return this;
     }
 
+    addCustomWait(item, func){
+        this.chain[this.chain.length-1].push({
+            'type':'customWait',
+            'item':item,
+            'funcPointer':func,
+            'completed':false
+        });
+        return this;
+    }
+
     addClickEvent(item){
         this.chain[this.chain.length-1].push({
             'type':'click',
@@ -567,6 +577,16 @@ export class EventChain{
                         console.log(func);
                         this.chain[this.eventNumber][i].item[func]();
                         this.chain[this.eventNumber][i].completed = true;
+                    }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    break;
+
+                case 'customWait':
+                    let func = this.chain[this.eventNumber][i].funcPointer;
+                    if(this.chain[this.eventNumber][i].item[func]()){
+                        this.chain[this.eventNumber][i].completed = true;                        
+                    }else{
+                        this.chain[this.eventNumber][i].completed = false;
                     }
                     eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;

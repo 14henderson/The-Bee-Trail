@@ -69,6 +69,15 @@ export class Stage{
     eventChainsDef(){
         throw new Error("You need to override method: eventChainsDef");
     }
+    dissableInteractiveState(){
+        //do nothing
+    }
+    dissableDrag(){
+        //do nothing
+    }
+    getID(){
+        return "stage";
+    }
 
     
 }

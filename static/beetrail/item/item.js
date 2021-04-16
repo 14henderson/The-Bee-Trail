@@ -56,12 +56,12 @@ export class Item {
                 );                
             }
         });
-        this.sprite.on('pointerover', event => {
-            this._mouseHovered = true;
-        });
-        this.sprite.on('pointerout', event => {
-            this._mouseHovered = false;
-        });
+        //this.sprite.on('pointerover', event => {
+        //    this._mouseHovered = true;
+        //});
+        //this.sprite.on('pointerout', event => {
+        //    this._mouseHovered = false;
+        //});
     }
 
     onMouseHover(){
@@ -103,6 +103,11 @@ export class Item {
 
     getSprite(){
         return this.sprite;
+    }
+    getClickedStateAndReset(){
+        let c = this._clicked;
+        this._clicked = false;
+        return c;
     }
 
     
@@ -278,6 +283,10 @@ export class Item {
         }else if(axis=='y'){
             this.sprite.scale.y *= -1;
         }
+    }
+
+    flipX(){
+        this.sprite.scale.x *= -1;
     }
 
     setAcceleration(a){
