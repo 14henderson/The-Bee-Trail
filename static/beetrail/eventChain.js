@@ -8,9 +8,11 @@ export class EventChain{
         this._locProgress = 0;
         this._creationMode = false;
         this._creationEvent
+        this.name;
     }
     resetChain(){
         this.chain = [[]];
+        this.eventNumber = 0;
     }
     getCurrentEventNumber(){
         return this.eventNumber;
@@ -28,9 +30,9 @@ export class EventChain{
         return this;
     }
     nextEvent(){
-        console.log("---------- Next Event Function ----------");
-        console.log("Event ", this.eventNumber, " of ", this.chain.length);
+        console.log("---------- Next Event Function for ", this.name, "----------");
         this.eventNumber += 1;
+        console.log("Event ", this.eventNumber, " of ", this.chain.length);
         if(this.eventNumber >= this.chain.length){
             console.log("End of Event Chain!");
             return;
