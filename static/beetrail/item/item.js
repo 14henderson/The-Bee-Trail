@@ -106,6 +106,9 @@ export class Item {
     }
     getClickedStateAndReset(){
         let c = this._clicked;
+        if(c == true){
+            console.log(0);
+        }
         this._clicked = false;
         return c;
     }

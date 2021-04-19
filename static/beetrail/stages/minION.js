@@ -97,6 +97,7 @@ export class MinIONStage extends Stage{
             "assets/fSprites/buttons/match-pink.png",
             "assets/fSprites/buttons/pull-lever-green.png",
             "assets/fSprites/buttons/pull-lever-pink.png",
+            "assets/fSprites/buttons/1drag-pollen.png",
 
             "assets/fSprites/speech-bubbles/minion/1-elie-speech-minion.png",
             "assets/fSprites/speech-bubbles/minion/2-elie-speech-minion.png",
@@ -236,6 +237,8 @@ export class MinIONStage extends Stage{
         this.fSprites.eSpeech6 = new SpriteItem("assets/fSprites/speech-bubbles/minion/6-elie-speech-minion.png", resources);
         this.fSprites.eSpeech7 = new SpriteItem("assets/fSprites/speech-bubbles/minion/7-elie-speech-minion.png", resources);
         this.fSprites.eSpeech8 = new SpriteItem("assets/fSprites/speech-bubbles/minion/8-elie-speech-minion.png", resources);
+
+        this.fSprites.dragInfoBox = new SpriteItem("assets/fSprites/buttons/1drag-pollen.png", resources);
 
         this.matches.push([this.fSprites.DNABlackberryMatch, this.fSprites.blackberry, this.fSprites.labelBlackberry]);
         this.matches.push([this.fSprites.DNABluebellMatch, this.fSprites.bluebell, this.fSprites.labelBluebell]);
@@ -447,6 +450,7 @@ export class MinIONStage extends Stage{
         this.fSprites.eSpeech7.setLocation(300, 100);
         this.fSprites.eSpeech8.setScale(0.8);
         this.fSprites.eSpeech8.setAlpha(0);
+        this.fSprites.eSpeech8.setLocation(50, 50);
         
 
         //grabbers and buttons
@@ -462,12 +466,9 @@ export class MinIONStage extends Stage{
 
         this.fSprites.matchButton.setScale(0.7);
         this.fSprites.matchButton.setLocation(200, 710);
-        //this.fSprites.matchButton.enableInteractiveState();
         this.fSprites.matchButton.enableMouseHoverFrame(1);
-
         this.fSprites.pullButton.setScale(1);
         this.fSprites.pullButton.setLocation(70, 750);
-        //this.fSprites.pullButton.enableInteractiveState();
         this.fSprites.pullButton.enableMouseHoverFrame(1);
 
         this.fSprites.arrowHighlight.setScale(0.8);
@@ -491,6 +492,13 @@ export class MinIONStage extends Stage{
         this.fSprites.Elie.setSpriteAnchor(0.5, 0);
         this.fSprites.Elie.setLocation(1000, 353);
 
+        this.fSprites.dragInfoBox.setScale(0.8);
+        this.fSprites.dragInfoBox.setAnimationFunction(Animation.halfAlphaPulse);
+        this.fSprites.dragInfoBox.setAnimationFlag(false);
+        this.fSprites.dragInfoBox.setSpriteAnchor(0.5, 0.5);
+        this.fSprites.dragInfoBox.setLocation(640, 830);
+        this.fSprites.dragInfoBox.setAlpha(0);
+
         this.fSprites.pollenDropBox.setLocation(630, 230);
         this.foreground.setAlpha(0);
     }
@@ -510,19 +518,26 @@ export class MinIONStage extends Stage{
         this.eventChain
             .addClickEvent(this.foreground)
             .next()
+
             .addFrameEvent(this.fSprites.Elie, 0)
             .addFade(this.fSprites.eSpeech1, -3, 0, 1)
             .addFade(this.fSprites.eSpeech2, 3, 0, 1)
             .addClickEvent(this.foreground)
             .next()
 
-            //Blackberry Pollen Events
+            //-------------------------FIRST BEE MATCHING-------------------------//
             .addFade(this.fSprites.eSpeech2, -3, 0, 1)
             .addFade(this.fSprites.Elie, -3, 0, 1)
+            .addFade(this.fSprites.dragInfoBox, 3, 0, 1)
+            .next()
+            
+            .setAnimationFlag(this.fSprites.dragInfoBox, true)
             .addDragEvent(this.fSprites.pollenPoppy)
             .addCollisionEvent(this.fSprites.pollenPoppy, this.fSprites.pollenDropBox)
             .next()
 
+            .addFade(this.fSprites.dragInfoBox, -3, 0, 1)
+            .setAnimationFlag(this.fSprites.dragInfoBox, false)
             .addForceLocationEvent(this.fSprites.Elie, [500, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .addFade(this.fSprites.eSpeech3, 3, 0, 1)
@@ -602,11 +617,13 @@ export class MinIONStage extends Stage{
 
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.eSpeech6, -3, 0, 1)
+            .addFade(this.fSprites.dragInfoBox, 3, 0, 1)
             .next()
 
 
-            //Bluebell Pollen Events
+            //-------------------------SECOND BEE MATCHING-------------------------//
             .setAnimationFlag(this.fSprites.pollenBlackberry, true)
+            .setAnimationFlag(this.fSprites.dragInfoBox, true)
             .addDragEvent(this.fSprites.pollenBlackberry)
             .addCollisionEvent(this.fSprites.pollenBlackberry, this.fSprites.pollenDropBox)
             .next()
@@ -617,6 +634,8 @@ export class MinIONStage extends Stage{
             .next()
 
             .setAnimationFlag(this.fSprites.pollenBlackberry, false)
+            .addFade(this.fSprites.dragInfoBox, -3, 0, 1)
+            .setAnimationFlag(this.fSprites.dragInfoBox, false)
             .next()
 
             .addCustomAction(this.fSprites.matchButton, 'enableInteractiveState')
@@ -649,23 +668,31 @@ export class MinIONStage extends Stage{
 
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.eSpeech7, -3, 0, 1)
+            .addFade(this.fSprites.dragInfoBox, 3, 0, 1)
             .next()
 
-            //Poppy Pollen Events
+            //--------------------THIRD BEE MATCHING-------------------------//
             .setAnimationFlag(this.fSprites.pollenBluebell, true)
+            .setAnimationFlag(this.fSprites.dragInfoBox, true)
             .addDragEvent(this.fSprites.pollenBluebell)
             .addCollisionEvent(this.fSprites.pollenBluebell, this.fSprites.pollenDropBox)
             .next()
+
             .addForceLocationEvent(this.fSprites.pollenBluebell, [660, 280])
             .addFade(this.fSprites.pollenBluebell, 3, 0, 1)
             .addFade(this.fSprites.DNABluebell, 100, 0, 1)
             .next()
+
             .setAnimationFlag(this.fSprites.pollenBluebell, false)
+            .addFade(this.fSprites.dragInfoBox, -3, 0, 1)
+            .setAnimationFlag(this.fSprites.dragInfoBox, false)
             .next()
+
             .addCustomAction(this.fSprites.matchButton, 'enableInteractiveState')
             .addCustomWait(this, 'testForBluebell')
             .addCustomWait(this.fSprites.matchButton, 'getClickedStateAndReset')
             .next()
+
             .setAnimationFlag(this.fSprites.LEDs1, true)
             .addFrameEvent(this.fSprites.LEDs1, 1)
             .setAnimationFlag(this.fSprites.LEDs2, true)
@@ -677,14 +704,27 @@ export class MinIONStage extends Stage{
             .addMovement(this.fSprites.bluebell2, [784, 782], 3, Movement.straightMvPattern, 30, false)
             .addScaleEvent(this.fSprites.bluebell2, -0.3, 0.15, 1)
             .next()
+
+            .addFrameEvent(this.fSprites.Elie, 0)
+            .addForceLocationEvent(this.fSprites.Elie, [500, 353])
+            .addFade(this.fSprites.Elie, 3, 0, 1)
+            .addFade(this.fSprites.eSpeech8, 3, 0, 1)
+            .addClickEvent(this.foreground)
             .setAnimationFlag(this.fSprites.LEDs1, false)
             .addFrameEvent(this.fSprites.LEDs1, 0)
             .setAnimationFlag(this.fSprites.LEDs2, false)
             .addFrameEvent(this.fSprites.LEDs2, 0)
             .next()
-            ;
+
+            .addChangeStateEvent(this.foreground, this, 2);
         
         this.eventChain.initialise();
+
+        this.exitEventChain
+            .addFade(this.foreground, -3, 0, 1.1)
+            .next()
+            .addChangeStageEvent(this.foreground, this, "hub");
+        this.exitEventChain.initialise();
     }
 
 
@@ -703,21 +743,22 @@ export class MinIONStage extends Stage{
         this.fSprites.pollenBluebell.tick();
         this.fSprites.pollenPoppy.tick();
         this.fSprites.arrowHighlight.tick();
+        this.fSprites.dragInfoBox.tick();
         this.fSprites.LEDs1.tick();
         this.fSprites.LEDs2.tick();
 
-        if(this.fSprites.matchButton._beingDragged 
-            && this.eventChain.eventNumber != 4
-            && this.eventChain.eventNumber != 10
-            && this.eventChain.eventNumber != 16){
-            this.fSprites.LEDs1.gotoFrame(2);
-            this.fSprites.LEDs2.gotoFrame(2);
-        }else if(!this.fSprites.matchButton._beingDragged 
-            && this.eventChain.eventNumber != 4
-            && this.eventChain.eventNumber != 10
-            && this.eventChain.eventNumber != 16){
-            this.fSprites.LEDs1.gotoFrame(0);
-            this.fSprites.LEDs2.gotoFrame(0);
+        if(!(
+                ((this.eventChain.eventNumber == 10 || this.eventChain.eventNumber == 11) && this.testForPoppy())
+            ||  ((this.eventChain.eventNumber == 17 || this.eventChain.eventNumber == 18) && this.testForBlackberry())
+            ||  ((this.eventChain.eventNumber == 24 || this.eventChain.eventNumber == 25) && this.testForBluebell())
+        )){
+            if(this.fSprites.matchButton._beingDragged){
+                this.fSprites.LEDs1.gotoFrame(2);
+                this.fSprites.LEDs2.gotoFrame(2);
+            }else{
+                this.fSprites.LEDs1.gotoFrame(0);
+                this.fSprites.LEDs2.gotoFrame(0);
+            }
         }
 
         if(this.fSprites.pullButton._beingDragged){
@@ -733,8 +774,6 @@ export class MinIONStage extends Stage{
                 this.matches[this.matchCurrent][1].setAlpha(1);
                 this.matches[this.matchCurrent][2].setAlpha(1);
             }
-            
-
         }else{
             this.flipTick = 0;
             this.fSprites.lever.gotoFrame(0);
@@ -743,6 +782,7 @@ export class MinIONStage extends Stage{
 
     exit(delta, context){
         context.foreground.tick();
+        this.exitEventChain.tick();
     }
 
 }
