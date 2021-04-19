@@ -111,8 +111,9 @@ export class HubStage extends Stage{
         ], resources, "minION_Nav");
 
         this.fSprites.playButton = new AnimatedItem([
-            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-static.png",
-            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-hover.png"
+            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-hover.png",
+            "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-static.png"
+            
         ], resources);
     }
 
@@ -145,35 +146,43 @@ export class HubStage extends Stage{
         this.fSprites.meadowNav.enableInteractiveState();
         this.fSprites.meadowNav.setLocation(0, 70);
         this.fSprites.meadowNav.setAnimationFunction(Animation.halfAlphaPulse);
+        this.fSprites.meadowNav.gotoFrame(1);
+        this.fSprites.meadowNav.setAnimationFlag(false);
+        this.fSprites.meadowNav.setAlpha(0.5);
 
         this.fSprites.pollenNav.enableInteractiveState();
         this.fSprites.pollenNav.setLocation(0, 500);
         this.fSprites.pollenNav.setAnimationFunction(Animation.halfAlphaPulse);
-        if(this.customState >= 1){
-            this.fSprites.pollenNav.gotoFrame(0);
-            this.fSprites.pollenNav.setAnimationFlag(true);
-            this.fSprites.pollenNav.setAlpha(1);
-        }else{
-            this.fSprites.pollenNav.gotoFrame(1);
-            this.fSprites.pollenNav.setAnimationFlag(false);
-            this.fSprites.pollenNav.setAlpha(0.5);
-        }
+        this.fSprites.pollenNav.gotoFrame(1);
+        this.fSprites.pollenNav.setAnimationFlag(false);
+        this.fSprites.pollenNav.setAlpha(0.5);
         
 
         this.fSprites.minIONNav.enableInteractiveState();
         this.fSprites.minIONNav.setLocation(660, 500);
         this.fSprites.minIONNav.setAnimationFunction(Animation.halfAlphaPulse);
-        if(this.customState >= 2){
+        this.fSprites.minIONNav.gotoFrame(1);
+        this.fSprites.minIONNav.setAnimationFlag(false);
+        this.fSprites.minIONNav.setAlpha(0.5);
+
+        if(this.customState == 0){
+            this.fSprites.meadowNav.gotoFrame(0);
+            this.fSprites.meadowNav.setAnimationFlag(true);
+            this.fSprites.meadowNav.setAlpha(1);
+        }else if(this.customState == 1){
+            this.fSprites.meadowNav.gotoFrame(0);
+            this.fSprites.pollenNav.gotoFrame(0);
+            this.fSprites.pollenNav.setAnimationFlag(true);
+            this.fSprites.pollenNav.setAlpha(1);
+        }else if(this.customState == 2){
+            this.fSprites.meadowNav.gotoFrame(0);
+            this.fSprites.pollenNav.gotoFrame(0);
             this.fSprites.minIONNav.gotoFrame(0);
             this.fSprites.minIONNav.setAnimationFlag(true);
             this.fSprites.minIONNav.setAlpha(1);
-        }else{
-            this.fSprites.minIONNav.gotoFrame(1);
-            this.fSprites.minIONNav.setAnimationFlag(false);
-            this.fSprites.minIONNav.setAlpha(0.5);
         }
         
-        
+    
         this.fSprites.newspaper.bringBefore(this.fSprites.minIONNav);        
     }
 

@@ -26,7 +26,7 @@ export class StageManager{
             "pollen":new PollenStage(app, this),
             "minION":new MinIONStage(app, this)
         };
-        this.stage = "minION";
+        this.stage = "hub";
         this.app = app;
         this.app.stage.sortableChildren = true;
 
