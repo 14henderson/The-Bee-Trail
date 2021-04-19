@@ -78,6 +78,7 @@ export class MinIONStage extends Stage{
             "assets/flowers/lavender.png",
             "assets/flowers/poppy.png",
             "assets/flowers/scarlet.png",
+            "assets/flowers/daisy.png",
             
             "assets/flowers/label-poppy.fw.png",
             "assets/flowers/label-blackberry.fw.png",
@@ -208,7 +209,7 @@ export class MinIONStage extends Stage{
         this.fSprites.lavender = new SpriteItem("assets/flowers/lavender.png", resources);
         this.fSprites.foxglove= new SpriteItem("assets/flowers/foxglove.png", resources);
         this.fSprites.buttercup = new SpriteItem("assets/flowers/buttercup.png", resources);
-        //this.fSprites.daisy = new SpriteItem("assets/flowers/daisy.png", resources);
+        this.fSprites.daisy = new SpriteItem("assets/flowers/daisy.png", resources);
         this.fSprites.forget = new SpriteItem("assets/flowers/forget.png", resources);
         this.fSprites.scarlet = new SpriteItem("assets/flowers/scarlet.png", resources);
 
@@ -246,7 +247,7 @@ export class MinIONStage extends Stage{
         this.matches.push([this.fSprites.DNALavenderMatch, this.fSprites.lavender, this.fSprites.labelLavender]);
         this.matches.push([this.fSprites.DNAFoxgloveMatch, this.fSprites.foxglove, this.fSprites.labelFoxglove]);
         this.matches.push([this.fSprites.DNAButtercupMatch, this.fSprites.buttercup, this.fSprites.labelButtercup]);
-        //this.matches.push([this.fSprites.DNADaisyMatch, this.fSprites.daisy, this.fSprites.labelDaisy]);
+        this.matches.push([this.fSprites.DNADaisyMatch, this.fSprites.daisy, this.fSprites.labelDaisy]);
         this.matches.push([this.fSprites.DNAForgetMatch, this.fSprites.forget, this.fSprites.labelForget]);
         this.matches.push([this.fSprites.DNAScarletMatch, this.fSprites.scarlet, this.fSprites.labelScarlet]);
         
@@ -385,9 +386,9 @@ export class MinIONStage extends Stage{
         this.fSprites.buttercup.setScale(0.4);
         this.fSprites.buttercup.setLocation(960, 580);
         this.fSprites.buttercup.setAlpha(0);
-        //this.fSprites.daisy.setScale(0.4);
-        //this.fSprites.daisy.setLocation(1000, 600);
-        //this.fSprites.daisy.setAlpha(0);
+        this.fSprites.daisy.setScale(0.4);
+        this.fSprites.daisy.setLocation(955, 570);
+        this.fSprites.daisy.setAlpha(0);
         this.fSprites.forget.setScale(0.4);
         this.fSprites.forget.setLocation(960, 575);
         this.fSprites.forget.setAlpha(0);
