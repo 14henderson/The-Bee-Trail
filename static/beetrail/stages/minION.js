@@ -90,9 +90,10 @@ export class MinIONStage extends Stage{
             "assets/flowers/label-lavender.fw.png",
             "assets/flowers/label-scarlet.fw.png",
 
-            "assets/fSprites/objects/elie-standing-NEW.png",
-            "assets/fSprites/objects/elie-waving-NEW.png",
-            "assets/fSprites/objects/elie-pointing-up-minion.png",
+            "assets/fSprites/objects/Elie/elie.fw.png",
+            "assets/fSprites/objects/Elie/elie-waving.fw.png",
+            "assets/fSprites/objects/Elie/elie-left.fw.png",
+            "assets/fSprites/objects/Elie/elie-right.fw.png",
 
             "assets/fSprites/buttons/match.png",
             "assets/fSprites/buttons/match-pink.png",
@@ -225,9 +226,10 @@ export class MinIONStage extends Stage{
         this.fSprites.pollenPoppy = new SpriteItem("assets/fSprites/objects/poppy-pollen.png", resources);
 
         this.fSprites.Elie = new AnimatedItem([
-            "assets/fSprites/objects/elie-standing-NEW.png",
-            "assets/fSprites/objects/elie-waving-NEW.png",
-            "assets/fSprites/objects/elie-pointing-up-minion.png"
+            "assets/fSprites/objects/Elie/elie.fw.png",
+            "assets/fSprites/objects/Elie/elie-waving.fw.png",
+            "assets/fSprites/objects/Elie/elie-left.fw.png",
+            "assets/fSprites/objects/Elie/elie-right.fw.png",
         ], resources);
         
         this.fSprites.eSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/minion/1-elie-speech-minion.png", resources);
@@ -429,17 +431,17 @@ export class MinIONStage extends Stage{
 
         //speech bubbles
         this.fSprites.eSpeech1.setScale(0.8);
-        this.fSprites.eSpeech1.setLocation(650, 110);
+        this.fSprites.eSpeech1.setLocation(550, 110);
         this.fSprites.eSpeech1.setAlpha(1);
         this.fSprites.eSpeech2.setScale(0.8);
         this.fSprites.eSpeech2.setAlpha(0);
-        this.fSprites.eSpeech2.setLocation(550, 50);
+        this.fSprites.eSpeech2.setLocation(450, 50);
         this.fSprites.eSpeech3.setScale(0.8);
         this.fSprites.eSpeech3.setAlpha(0);
-        this.fSprites.eSpeech3.setLocation(100, 100);
+        this.fSprites.eSpeech3.setLocation(100, 150);
         this.fSprites.eSpeech4.setScale(0.8);
         this.fSprites.eSpeech4.setAlpha(0);
-        this.fSprites.eSpeech4.setLocation(0, 50);
+        this.fSprites.eSpeech4.setLocation(30, 50);
         this.fSprites.eSpeech5.setScale(0.8);
         this.fSprites.eSpeech5.setAlpha(0);
         this.fSprites.eSpeech5.setLocation(230, 50);
@@ -451,7 +453,7 @@ export class MinIONStage extends Stage{
         this.fSprites.eSpeech7.setLocation(300, 100);
         this.fSprites.eSpeech8.setScale(0.8);
         this.fSprites.eSpeech8.setAlpha(0);
-        this.fSprites.eSpeech8.setLocation(50, 50);
+        this.fSprites.eSpeech8.setLocation(50, 100);
         
 
         //grabbers and buttons
@@ -542,8 +544,8 @@ export class MinIONStage extends Stage{
             .addForceLocationEvent(this.fSprites.Elie, [500, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .addFade(this.fSprites.eSpeech3, 3, 0, 1)
-            .addFrameEvent(this.fSprites.Elie, 2)
-            .addCustomAction(this.fSprites.Elie, 'flipX')
+            .addFrameEvent(this.fSprites.Elie, 3)
+            //.addCustomAction(this.fSprites.Elie, 'flipX')
             .addForceLocationEvent(this.fSprites.pollenPoppy, [660, 280])
             .addFade(this.fSprites.pollenPoppy, 3, 0, 1)
             .addFade(this.fSprites.DNAPoppy, 100, 0, 1)
