@@ -80,7 +80,12 @@ export class PollenStage extends Stage{
             "assets/fSprites/speech-bubbles/pollen/3-elie-speech-bubble-pollen-billie.png",
 
             "assets/fSprites/buttons/click-anywhere.png",
-            "assets/fSprites/buttons/drag-the-bee.png"
+            "assets/fSprites/buttons/drag-the-bee.png",
+
+            "assets/sound/meadow.m4a",
+            "assets/sound/048863013-menu-click-casual-mobile-game.m4a",
+            "assets/sound/043738205-ting-game-sound.m4a",
+            "assets/sound/077024761-bees.m4a"
         ];
         return this.textures;
     }
@@ -168,12 +173,28 @@ export class PollenStage extends Stage{
 
         this.fSprites.netFront = new SpriteItem("assets/fSprites/objects/Artboard 4net-overlay.png", resources);
         this.fSprites.Elie = new AnimatedItem([
-            "assets/fSprites/objects/elie-standing-NEW.png", 
-            "assets/fSprites/objects/elie-waving-NEW.png",
+            "assets/fSprites/objects/Elie/elie.fw.png",
+            "assets/fSprites/objects/Elie/elie-waving.fw.png",
+            "assets/fSprites/objects/Elie/elie-left.fw.png",
+            "assets/fSprites/objects/Elie/elie-right.fw.png",
         ], resources);
 
         this.fSprites.clickNotice = new SpriteItem("assets/fSprites/buttons/click-anywhere.png", resources);
         this.fSprites.dragNotice = new SpriteItem("assets/fSprites/buttons/drag-the-bee.png", resources);
+
+        this.soundManager.add("meadow", "assets/sound/meadow.m4a", resources);
+        this.soundManager.setVolume("meadow", 0.5);
+        this.soundManager.setLoop("meadow", true);
+
+        this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
+        this.soundManager.setVolume("speech-click", 0.5);
+
+        this.soundManager.add("celeb-ding", "assets/sound/043738205-ting-game-sound.m4a", resources);
+        this.soundManager.setVolume("celeb-ding", 0.5);
+
+        this.soundManager.add("bee-hum", "assets/sound/077024761-bees.m4a", resources);
+        this.soundManager.setVolume("bee-hum", 0);
+        this.soundManager.setLoop("bee-hum", true);
 
         this.miscAssetCreation();
     }
@@ -277,10 +298,10 @@ export class PollenStage extends Stage{
         this.fSprites.ElieSpeech1.setLocation(400, 50);
         this.fSprites.ElieSpeech1.setAlpha(1);
         this.fSprites.ElieSpeech2.setScale(0.8);
-        this.fSprites.ElieSpeech2.setLocation(400, 60);
+        this.fSprites.ElieSpeech2.setLocation(400, 50);
         this.fSprites.ElieSpeech2.setAlpha(0);
         this.fSprites.ElieSpeech3.setScale(0.8);
-        this.fSprites.ElieSpeech3.setLocation(470, 50);
+        this.fSprites.ElieSpeech3.setLocation(400, 50);
         this.fSprites.ElieSpeech3.setAlpha(0);
 
         this.fSprites.ElieSpeech4.setScale(0.8);
@@ -360,17 +381,21 @@ export class PollenStage extends Stage{
     eventChainsDef(){
         this.eventChain
             //Elie!
+            .addPlaySoundEvent(this.foreground, this.soundManager, "meadow")
             .addClickEvent(this.foreground)
             .next()
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFrameEvent(this.fSprites.Elie, 0)
             .addClickEvent(this.foreground)
             .addFade(this.fSprites.ElieSpeech1, -3, 0, 1)
             .addFade(this.fSprites.ElieSpeech2, 3, 0, 1)
             .next()
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.ElieSpeech2, -3, 0, 1)
             .addFade(this.fSprites.ElieSpeech3, 3, 0, 1)
             .addClickEvent(this.foreground)            
             .next()
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.ElieSpeech3, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.Elie, -3, 0, 1)
@@ -378,6 +403,8 @@ export class PollenStage extends Stage{
             .next()
 
             //Bee 1
+            .addPlaySoundEvent(this.foreground, this.soundManager, "bee-hum")
+            .addSoundFade(this.foreground, this.soundManager, "bee-hum", 0.001, 0, 0.075)
             .addMovement(this.fSprites.honeyBee, [131, 450], 2, Movement.straightMvPattern)
             .addFade(this.fSprites.honeyBee, 3, 0, 1)
             .next()
@@ -392,6 +419,7 @@ export class PollenStage extends Stage{
 
             .addForceLocationEvent(this.fSprites.honeyBee, [420, 370])
             .addBringBehind(this.fSprites.honeyBee, this.fSprites.honeyTube)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "celeb-ding")
             .next()
 
             .addFade(this.fSprites.dragNotice, -3, 0, 1)
@@ -404,6 +432,7 @@ export class PollenStage extends Stage{
             .setAnimationFlag(this.fSprites.honeyBee, true)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFrameEvent(this.fSprites.honeyBee, 0)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.honeySpeech1, -3, 0, 1)
@@ -412,11 +441,13 @@ export class PollenStage extends Stage{
             .next()
 
             .addMovement(this.fSprites.honeyBee, [100, 100], 4, Movement.quadCurveMvPattern, 70)
+            .addSoundFade(this.foreground, this.soundManager, "bee-hum", -0.001, 0, 1)
             .addFade(this.fSprites.honeyBee, -1, 0, 1)
             .next()
 
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .addFade(this.fSprites.poppyMag, 3, 0, 1)
+            .addFrameEvent(this.fSprites.Elie, 3)
             .addForceLocationEvent(this.fSprites.Elie, [100, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .next()
@@ -425,6 +456,7 @@ export class PollenStage extends Stage{
             .addClickEvent(this.foreground)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.ElieSpeech4, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.poppyMag, -3, 0, 1)
@@ -460,17 +492,19 @@ export class PollenStage extends Stage{
             .addFade(this.fSprites.buffTube, 3, 0, 1)
             .addMovement(this.fSprites.buffBee, [131, 450], 2, Movement.straightMvPattern)
             .addFade(this.fSprites.buffBee, 3, 0, 1)
+            .addSoundFade(this.foreground, this.soundManager, "bee-hum", 0.001, 0, 0.075)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "bee-hum")
             .next()
 
             .setAnimationFlag(this.fSprites.buffBee, true)
             .addFade(this.fSprites.dragNotice, 3, 0, 1)
             .next()
 
-            //.addIdle(this.fSprites.buffBee)
             .addCollisionEvent(this.fSprites.buffBee, this.fSprites.tubeEntranceBox)
             .addDragEvent(this.fSprites.buffBee)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "celeb-ding")
             .addForceLocationEvent(this.fSprites.buffBee, [360, 370])
             .addBringBehind(this.fSprites.buffBee, this.fSprites.buffTube)
             .next()
@@ -485,6 +519,7 @@ export class PollenStage extends Stage{
             .addFrameEvent(this.fSprites.buffBee, 1)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.buffSpeech1, -3, 0, 1)
             .addFade(this.fSprites.buffSpeech2, -3, 0, 1)
@@ -493,6 +528,7 @@ export class PollenStage extends Stage{
             .next()
 
             .addMovement(this.fSprites.buffBee, [100, 100], 4, Movement.quadCurveMvPattern, 70)
+            .addSoundFade(this.foreground, this.soundManager, "bee-hum", -0.001, 0, 1)
             .addFade(this.fSprites.buffBee, -1, 0, 1)
             .next()
 
@@ -506,6 +542,7 @@ export class PollenStage extends Stage{
             .addClickEvent(this.foreground)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.ElieSpeech5, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.blackberryMag, -3, 0, 1)
@@ -540,6 +577,8 @@ export class PollenStage extends Stage{
             .addFade(this.fSprites.redTube, 3, 0, 1)
             .addMovement(this.fSprites.redBee, [131, 450], 2, Movement.straightMvPattern)
             .addFade(this.fSprites.redBee, 3, 0, 1)
+            .addSoundFade(this.foreground, this.soundManager, "bee-hum", 0.001, 0, 0.075)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "bee-hum")
             .next()
 
             .setAnimationFlag(this.fSprites.redBee, true)
@@ -551,6 +590,7 @@ export class PollenStage extends Stage{
             .addDragEvent(this.fSprites.redBee)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "celeb-ding")
             .addForceLocationEvent(this.fSprites.redBee, [360, 370])
             .addBringBehind(this.fSprites.redBee, this.fSprites.redTube)
             .next()
@@ -565,6 +605,7 @@ export class PollenStage extends Stage{
             .addFrameEvent(this.fSprites.redBee, 1)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFrameEvent(this.fSprites.redBee, 0)
             .addFade(this.fSprites.redSpeech1, -3, 0, 1)
@@ -577,6 +618,7 @@ export class PollenStage extends Stage{
             .next()
 
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
+            .addFrameEvent(this.fSprites.Elie, 0)
             .addForceLocationEvent(this.fSprites.Elie, [100, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .next()
@@ -588,9 +630,11 @@ export class PollenStage extends Stage{
             .addRotationEvent(this.fSprites.redTube, 0, 90, 0.75)
             .addScaleEvent(this.fSprites.redTube, -0.3, 0.15, 1)
             .addMovement(this.fSprites.redTube, [1100, 700], 4, Movement.quadCurveMvPattern, 50, false)
+            .addSoundFade(this.foreground, this.soundManager, "bee-hum", -0.001, 0, 1)
             .addClickEvent(this.foreground)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.ElieSpeech6, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.Elie, -3, 0, 1)
