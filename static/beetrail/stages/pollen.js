@@ -13,8 +13,8 @@ export class PollenStage extends Stage{
     exitEventChain;
     textures;
 
-    constructor(app, stageManager){
-        super(app, stageManager);
+    constructor(app, stageManager, soundManager){
+        super(app, stageManager, soundManager);
         
         this.states = [this.entry, this.main, this.exit];
         this.state = this.entry;
@@ -182,6 +182,7 @@ export class PollenStage extends Stage{
         this.fSprites.clickNotice = new SpriteItem("assets/fSprites/buttons/click-anywhere.png", resources);
         this.fSprites.dragNotice = new SpriteItem("assets/fSprites/buttons/drag-the-bee.png", resources);
 
+        
         this.soundManager.add("meadow", "assets/sound/meadow.m4a", resources);
         this.soundManager.setVolume("meadow", 0.5);
         this.soundManager.setLoop("meadow", true);

@@ -1,16 +1,21 @@
 
 
 export class SoundManager{
-    sounds;
+    static sounds;
 
     constructor(){
-        this.sounds = {};
+        if(this.sounds == undefined){
+            this.sounds = {};
+            console.log(this.sounds);
+        }
+        
     }
 
     add(code, URI, resource){
-        let s = PIXI.sound.add(code, resource[URI]);
-        this.sounds[code] = s;
-        console.log("new sound: ", s);
+        if(!PIXI.sound.exists(code)){
+            let s = PIXI.sound.add(code, resource[URI]);
+            this.sounds[code] = s;
+        }
     }
     setVolume(code, volume){
         this.sounds[code].volume = volume;
