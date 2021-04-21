@@ -17,8 +17,8 @@ export class MinIONStage extends Stage{
 
     textures;
 
-    constructor(app, stageManager){
-        super(app, stageManager);
+    constructor(app, stageManager, soundManager){
+        super(app, stageManager, soundManager);
 
         this.states = [this.entry, this.main, this.exit];
         this.state = this.entry;
@@ -30,6 +30,7 @@ export class MinIONStage extends Stage{
         this.matchCurrent = 1; //start at 1, as the 0th match is done in event chain
         this.matches = [];
         this.flipTick = 0;
+        this.soundFlip = false;
 
         this.currentPollen = "poppy";
     }
@@ -112,7 +113,17 @@ export class MinIONStage extends Stage{
             
             "assets/fSprites/buttons/yellowflashing-lights.png",
             "assets/fSprites/buttons/greenflashing-lights.png",
-            "assets/fSprites/buttons/redflashing-lights.png"
+            "assets/fSprites/buttons/redflashing-lights.png",
+
+            "assets/sound/meadow.m4a",
+            "assets/sound/048863013-menu-click-casual-mobile-game.m4a",
+            "assets/sound/043738205-ting-game-sound.m4a",
+            "assets/sound/077024761-bees.m4a",
+            "assets/sound/040446042-basketball-swoosh-through-net-.m4a",
+            "assets/sound/066893573-casino-slot-machines-slot-mach.m4a",
+            "assets/sound/054250043-wrong-03.m4a",
+            "assets/sound/049974748-quiz-correct.m4a",
+            "assets/sound/049674596-supermarket-checkout-till-beep.m4a"
 
         ];
         return this.textures;
@@ -242,6 +253,32 @@ export class MinIONStage extends Stage{
         this.fSprites.eSpeech8 = new SpriteItem("assets/fSprites/speech-bubbles/minion/8-elie-speech-minion.png", resources);
 
         this.fSprites.dragInfoBox = new SpriteItem("assets/fSprites/buttons/1drag-pollen.png", resources);
+
+        this.soundManager.add("meadow", "assets/sound/meadow.m4a", resources);
+        this.soundManager.setVolume("meadow", 0.5);
+        this.soundManager.setLoop("meadow", true);
+
+        this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
+        this.soundManager.setVolume("speech-click", 0.5);
+
+        this.soundManager.add("celeb-ding", "assets/sound/043738205-ting-game-sound.m4a", resources);
+        this.soundManager.setVolume("celeb-ding", 0.5);
+
+        this.soundManager.add("bee-hum", "assets/sound/077024761-bees.m4a", resources);
+        this.soundManager.setVolume("bee-hum", 0);
+        this.soundManager.setLoop("bee-hum", true);
+
+        this.soundManager.add("lever", "assets/sound/066893573-casino-slot-machines-slot-mach.m4a", resources);
+        this.soundManager.setVolume("lever", 0.5);
+
+        this.soundManager.add("wrong", "assets/sound/054250043-wrong-03.m4a", resources);
+        this.soundManager.setVolume("wrong", 0.5);
+
+        this.soundManager.add("correct", "assets/sound/049974748-quiz-correct.m4a", resources);
+        this.soundManager.setVolume("correct", 0.5);
+
+        this.soundManager.add("scan", "assets/sound/049674596-supermarket-checkout-till-beep.m4a", resources);
+        this.soundManager.setVolume("scan", 0.5);
 
         this.matches.push([this.fSprites.DNABlackberryMatch, this.fSprites.blackberry, this.fSprites.labelBlackberry]);
         this.matches.push([this.fSprites.DNABluebellMatch, this.fSprites.bluebell, this.fSprites.labelBluebell]);
@@ -519,9 +556,11 @@ export class MinIONStage extends Stage{
         this.entryEventChain.initialise();
 
         this.eventChain
+            .addPlaySoundEvent(this.foreground, this.soundManager, "meadow")
             .addClickEvent(this.foreground)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFrameEvent(this.fSprites.Elie, 0)
             .addFade(this.fSprites.eSpeech1, -3, 0, 1)
             .addFade(this.fSprites.eSpeech2, 3, 0, 1)
@@ -529,6 +568,7 @@ export class MinIONStage extends Stage{
             .next()
 
             //-------------------------FIRST BEE MATCHING-------------------------//
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.eSpeech2, -3, 0, 1)
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.dragInfoBox, 3, 0, 1)
@@ -539,13 +579,13 @@ export class MinIONStage extends Stage{
             .addCollisionEvent(this.fSprites.pollenPoppy, this.fSprites.pollenDropBox)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "scan")
             .addFade(this.fSprites.dragInfoBox, -3, 0, 1)
             .setAnimationFlag(this.fSprites.dragInfoBox, false)
             .addForceLocationEvent(this.fSprites.Elie, [500, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .addFade(this.fSprites.eSpeech3, 3, 0, 1)
             .addFrameEvent(this.fSprites.Elie, 3)
-            //.addCustomAction(this.fSprites.Elie, 'flipX')
             .addForceLocationEvent(this.fSprites.pollenPoppy, [660, 280])
             .addFade(this.fSprites.pollenPoppy, 3, 0, 1)
             .addFade(this.fSprites.DNAPoppy, 100, 0, 1)
@@ -553,6 +593,7 @@ export class MinIONStage extends Stage{
             .addClickEvent(this.foreground)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addClickEvent(this.foreground)
             .addFrameEvent(this.fSprites.Elie, 0)
             .addFade(this.fSprites.eSpeech3, -3, 0, 1)
@@ -562,12 +603,15 @@ export class MinIONStage extends Stage{
             .addFade(this.fSprites.labelBlackberry, 3, 0, 1)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addClickEvent(this.fSprites.pullButton)
             .addCustomAction(this.fSprites.pullButton, 'enableInteractiveState')
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.eSpeech4, -3, 0, 1)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "lever")
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.DNABlackberryMatch, -100, 0, 1)
             .addFade(this.fSprites.blackberry, -100, 0, 1)
             .addFade(this.fSprites.labelBlackberry, -100, 0, 1)
@@ -578,12 +622,13 @@ export class MinIONStage extends Stage{
 
             .addForceLocationEvent(this.fSprites.Elie, [900, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
-            .addCustomAction(this.fSprites.Elie, 'flipX')
+            //.addCustomAction(this.fSprites.Elie, 'flipX')
             .addFrameEvent(this.fSprites.Elie, 2)
             .addFade(this.fSprites.eSpeech5, 3, 0, 1)
             .addClickEvent(this.foreground)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.eSpeech5, -3, 0, 1)
             .next()
@@ -595,6 +640,7 @@ export class MinIONStage extends Stage{
             .addCustomWait(this.fSprites.matchButton, 'getClickedStateAndReset')
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "correct")
             .setAnimationFlag(this.fSprites.LEDs1, true)
             .addFrameEvent(this.fSprites.LEDs1, 1)
             .setAnimationFlag(this.fSprites.LEDs2, true)
@@ -618,6 +664,7 @@ export class MinIONStage extends Stage{
             .addFrameEvent(this.fSprites.LEDs2, 0)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.eSpeech6, -3, 0, 1)
             .addFade(this.fSprites.dragInfoBox, 3, 0, 1)
@@ -631,6 +678,7 @@ export class MinIONStage extends Stage{
             .addCollisionEvent(this.fSprites.pollenBlackberry, this.fSprites.pollenDropBox)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "scan")
             .addForceLocationEvent(this.fSprites.pollenBlackberry, [660, 280])
             .addFade(this.fSprites.pollenBlackberry, 3, 0, 1)
             .addFade(this.fSprites.DNABlackberry, 100, 0, 1)
@@ -646,6 +694,7 @@ export class MinIONStage extends Stage{
             .addCustomWait(this.fSprites.matchButton, 'getClickedStateAndReset')
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "correct")
             .setAnimationFlag(this.fSprites.LEDs1, true)
             .addFrameEvent(this.fSprites.LEDs1, 1)
             .setAnimationFlag(this.fSprites.LEDs2, true)
@@ -669,6 +718,7 @@ export class MinIONStage extends Stage{
             .addFrameEvent(this.fSprites.LEDs2, 0)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.eSpeech7, -3, 0, 1)
             .addFade(this.fSprites.dragInfoBox, 3, 0, 1)
@@ -681,6 +731,7 @@ export class MinIONStage extends Stage{
             .addCollisionEvent(this.fSprites.pollenBluebell, this.fSprites.pollenDropBox)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "scan")
             .addForceLocationEvent(this.fSprites.pollenBluebell, [660, 280])
             .addFade(this.fSprites.pollenBluebell, 3, 0, 1)
             .addFade(this.fSprites.DNABluebell, 100, 0, 1)
@@ -691,6 +742,7 @@ export class MinIONStage extends Stage{
             .setAnimationFlag(this.fSprites.dragInfoBox, false)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "correct")
             .addCustomAction(this.fSprites.matchButton, 'enableInteractiveState')
             .addCustomWait(this, 'testForBluebell')
             .addCustomWait(this.fSprites.matchButton, 'getClickedStateAndReset')
@@ -719,6 +771,7 @@ export class MinIONStage extends Stage{
             .addFrameEvent(this.fSprites.LEDs2, 0)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addChangeStateEvent(this.foreground, this, 2);
         
         this.eventChain.initialise();
@@ -758,10 +811,21 @@ export class MinIONStage extends Stage{
             if(this.fSprites.matchButton._beingDragged){
                 this.fSprites.LEDs1.gotoFrame(2);
                 this.fSprites.LEDs2.gotoFrame(2);
+                if(this.soundFlip == false){
+                    this.soundManager.play("wrong");
+                    this.soundFlip = true;
+                }
             }else{
+                this.soundFlip = false;
                 this.fSprites.LEDs1.gotoFrame(0);
                 this.fSprites.LEDs2.gotoFrame(0);
             }
+            if(this.fSprites.matchButton.getClickedState()){
+                
+            }
+        }
+        if(this.fSprites.pullButton.getClickedStateAndReset()){
+            this.soundManager.play("lever");
         }
 
         if(this.fSprites.pullButton._beingDragged){

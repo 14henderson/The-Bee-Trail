@@ -122,7 +122,6 @@ export class MeadowStage extends Stage{
 
         this.fSprites.clickNotice = new SpriteItem("assets/fSprites/buttons/click-anywhere.png", resources);
 
-        console.log(this.soundManager);
         this.soundManager.add("meadow", "assets/sound/meadow.m4a", resources);
         this.soundManager.setVolume("meadow", 0.5);
         this.soundManager.setLoop("meadow", true);

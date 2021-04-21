@@ -29,6 +29,7 @@ export class SoundManager{
     }
 
     play(code){
+        PIXI.sound.stop(code);
         PIXI.sound.play(code);
     }
     getSound(code){
