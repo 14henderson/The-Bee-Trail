@@ -741,13 +741,13 @@ export class MinIONStage extends Stage{
             .addFade(this.fSprites.dragInfoBox, -3, 0, 1)
             .setAnimationFlag(this.fSprites.dragInfoBox, false)
             .next()
-
-            .addPlaySoundEvent(this.foreground, this.soundManager, "correct")
+            
             .addCustomAction(this.fSprites.matchButton, 'enableInteractiveState')
             .addCustomWait(this, 'testForBluebell')
             .addCustomWait(this.fSprites.matchButton, 'getClickedStateAndReset')
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "correct")
             .setAnimationFlag(this.fSprites.LEDs1, true)
             .addFrameEvent(this.fSprites.LEDs1, 1)
             .setAnimationFlag(this.fSprites.LEDs2, true)
