@@ -615,6 +615,7 @@ export class MinIONStage extends Stage{
             .next()
 
             .addPlaySoundEvent(this.foreground, this.soundManager, "lever")
+            .addFrameEvent(this.fSprites.lever, 1)
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.DNABlackberryMatch, -100, 0, 1)
             .addFade(this.fSprites.blackberry, -100, 0, 1)
@@ -626,7 +627,6 @@ export class MinIONStage extends Stage{
 
             .addForceLocationEvent(this.fSprites.Elie, [900, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
-            //.addCustomAction(this.fSprites.Elie, 'flipX')
             .addFrameEvent(this.fSprites.Elie, 2)
             .addFade(this.fSprites.eSpeech5, 3, 0, 1)
             .addClickEvent(this.foreground)
@@ -635,6 +635,7 @@ export class MinIONStage extends Stage{
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.eSpeech5, -3, 0, 1)
+            .addFrameEvent(this.fSprites.lever, 0)
             .next()
             
             
@@ -849,7 +850,7 @@ export class MinIONStage extends Stage{
                 this.matches[this.matchCurrent][1].setAlpha(1);
                 this.matches[this.matchCurrent][2].setAlpha(1);
             }
-        }else{
+        }else if(this.eventChain.eventNumber < 8 || this.eventChain.eventNumber > 10){
             this.flipTick = 0;
             this.fSprites.lever.gotoFrame(0);
         }

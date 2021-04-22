@@ -271,7 +271,7 @@ export class HubStage extends Stage{
 
         context.fSprites.meadowNav.tick();
         context.fSprites.pollenNav.tick();
-        //context.fSprites.minIONNav.tick();
+        context.fSprites.minIONNav.tick();
 
         context.foreground.tick();        
     }
