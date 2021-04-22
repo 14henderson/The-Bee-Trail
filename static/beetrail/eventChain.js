@@ -299,6 +299,32 @@ export class EventChain{
         return this;
     }
 
+    addStopSoundEvent(item, soundManager, code){
+        this.chain[this.chain.length-1].push({
+            'type':'stop-sound',
+            'item':item,
+            'soundManager':soundManager,
+            'code':code,
+            'completed':false
+        });
+        return this;
+    }
+    
+
+    addSoundFade(item, soundManager, code, delta, min, max){
+        this.chain[this.chain.length-1].push({
+            'type':'fade-sound',
+            'item':item,
+            'soundManager':soundManager,
+            'code':code,
+            'delta':delta,
+            'min':min,
+            'max':max,
+            'completed':false
+        });
+        return this;
+    }
+
 
     addCustomAction(item, itemFunction){
         this.chain[this.chain.length-1].push({
@@ -525,8 +551,26 @@ export class EventChain{
                                 this.chain[this.eventNumber][i].item.setAnimationFlag(true);
                             }
                         }
-                        
-                        
+                    }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    break;
+
+                case 'fade-sound':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        let code = this.chain[this.eventNumber][i].code;
+                        this.chain[this.eventNumber][i].soundManager.setVolume(code, 
+                            this.chain[this.eventNumber][i].soundManager.getVolume(code)
+                            + this.chain[this.eventNumber][i].delta);
+                    
+                        if(this.chain[this.eventNumber][i].soundManager.getVolume(code) <= this.chain[this.eventNumber][i].min){
+                            this.chain[this.eventNumber][i].soundManager.setVolume(code, this.chain[this.eventNumber][i].min);
+                            this.chain[this.eventNumber][i].completed = true;
+                        }
+
+                        if(this.chain[this.eventNumber][i].soundManager.getVolume(code) >= this.chain[this.eventNumber][i].max){
+                            this.chain[this.eventNumber][i].soundManager.setVolume(code, this.chain[this.eventNumber][i].max);
+                            this.chain[this.eventNumber][i].completed = true;
+                        }
                     }
                     eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
                     break;
@@ -566,6 +610,16 @@ export class EventChain{
                 case 'play-sound':
                     if(!this.chain[this.eventNumber][i].completed){
                         this.chain[this.eventNumber][i].soundManager.play(
+                            this.chain[this.eventNumber][i].code
+                        );
+                        this.chain[this.eventNumber][i].completed = true;
+                    }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    break;
+
+                case 'stop-sound':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].soundManager.stop(
                             this.chain[this.eventNumber][i].code
                         );
                         this.chain[this.eventNumber][i].completed = true;

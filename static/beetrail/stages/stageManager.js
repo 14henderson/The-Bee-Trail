@@ -4,7 +4,8 @@ import {MeadowStage} from '/beetrail/stages/meadow.js';
 import {PollenStage} from '/beetrail/stages/pollen.js';
 import {SpriteItem} from '/beetrail/item/spriteItem.js';
 import {ShapeItem} from '/beetrail/item/shapeItem.js';
-import {Foreground} from '/beetrail/foregroundContainer.js'
+import {Foreground} from '/beetrail/foregroundContainer.js';
+import {SoundManager} from '/beetrail/soundManager.js'
 
 
 export class StageManager{
@@ -18,13 +19,16 @@ export class StageManager{
     fpsErrorText;
     FPSTooLowTicker;
     fpsErrorFlag;
+    soundManager;
 
     constructor(app){
+        this.soundManager = new SoundManager();
+
         this.stages = {
-            "hub":new HubStage(app, this),
-            "meadow":new MeadowStage(app, this),            
-            "pollen":new PollenStage(app, this),
-            "minION":new MinIONStage(app, this)
+            "hub":new HubStage(app, this, this.soundManager),
+            "meadow":new MeadowStage(app, this, this.soundManager),            
+            "pollen":new PollenStage(app, this, this.soundManager),
+            "minION":new MinIONStage(app, this, this.soundManager)
         };
         this.stage = "hub";
         this.app = app;
