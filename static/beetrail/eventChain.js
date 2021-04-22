@@ -299,6 +299,18 @@ export class EventChain{
         return this;
     }
 
+    addStopSoundEvent(item, soundManager, code){
+        this.chain[this.chain.length-1].push({
+            'type':'stop-sound',
+            'item':item,
+            'soundManager':soundManager,
+            'code':code,
+            'completed':false
+        });
+        return this;
+    }
+    
+
     addSoundFade(item, soundManager, code, delta, min, max){
         this.chain[this.chain.length-1].push({
             'type':'fade-sound',
@@ -598,6 +610,16 @@ export class EventChain{
                 case 'play-sound':
                     if(!this.chain[this.eventNumber][i].completed){
                         this.chain[this.eventNumber][i].soundManager.play(
+                            this.chain[this.eventNumber][i].code
+                        );
+                        this.chain[this.eventNumber][i].completed = true;
+                    }
+                    eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
+                    break;
+
+                case 'stop-sound':
+                    if(!this.chain[this.eventNumber][i].completed){
+                        this.chain[this.eventNumber][i].soundManager.stop(
                             this.chain[this.eventNumber][i].code
                         );
                         this.chain[this.eventNumber][i].completed = true;

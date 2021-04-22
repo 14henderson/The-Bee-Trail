@@ -30,7 +30,7 @@ export class StageManager{
             "pollen":new PollenStage(app, this, this.soundManager),
             "minION":new MinIONStage(app, this, this.soundManager)
         };
-        this.stage = "minION";
+        this.stage = "hub";
         this.app = app;
         this.app.stage.sortableChildren = true;
 

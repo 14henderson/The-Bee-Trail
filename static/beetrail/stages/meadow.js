@@ -123,7 +123,7 @@ export class MeadowStage extends Stage{
         this.fSprites.clickNotice = new SpriteItem("assets/fSprites/buttons/click-anywhere.png", resources);
 
         this.soundManager.add("meadow", "assets/sound/meadow.m4a", resources);
-        this.soundManager.setVolume("meadow", 0.5);
+        this.soundManager.setVolume("meadow", 0);
         this.soundManager.setLoop("meadow", true);
 
         this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
@@ -228,7 +228,6 @@ export class MeadowStage extends Stage{
     //Defining the event chain(s) used in this stage.
     eventChainsDef(){
         this.eventChain
-            .addPlaySoundEvent(this.foreground, this.soundManager, "meadow")
             
             .addFade(this.fSprites.ElieSpeech1, 3, 0, 1)
             .next()
@@ -252,7 +251,7 @@ export class MeadowStage extends Stage{
             .addClickEvent(this.fSprites.honeyBee)
             .next()
             .addSoundFade(this.foreground, this.soundManager, "bee-hum", 0.0015, 0, 0.085)
-            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
+            .addPlaySoundEvent(this.foreground, this.soundManager, "celeb-ding")
             .addScaleEvent(this.fSprites.honeyBee, 1.5, 0.4, 0.65)
             .addFrameEvent(this.fSprites.honeyBee, 1)
             .addBringBefore(this.fSprites.honeyBee, this.fSprites.background1)
@@ -275,7 +274,7 @@ export class MeadowStage extends Stage{
 
             // Next Bee!
             .next()
-            .addSoundFade(this.foreground, this.soundManager, "bee-hum", 0.001, 0, 0.075)
+            .addSoundFade(this.foreground, this.soundManager, "bee-hum", 0.003, 0, 0.075)
             .addFade(this.fSprites.net1, -3, 0, 1)
             .addMovement(this.fSprites.buffBee, [1150, 400], 3, Movement.quadCurveMvPattern, -25)
             .addFade(this.fSprites.buffBee, 1.5, 0, .5)
@@ -290,7 +289,7 @@ export class MeadowStage extends Stage{
             .addClickEvent(this.fSprites.buffBee)
             .next()
             .addSoundFade(this.foreground, this.soundManager, "bee-hum", 0.0015, 0, 0.085)
-            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
+            .addPlaySoundEvent(this.foreground, this.soundManager, "celeb-ding")
             .addScaleEvent(this.fSprites.buffBee, 1.5, 0.4, 0.85)
             .addFrameEvent(this.fSprites.buffBee, 1)
             .addBringBefore(this.fSprites.buffBee, this.fSprites.background1)
@@ -321,7 +320,7 @@ export class MeadowStage extends Stage{
             .addClickEvent(this.fSprites.redBee)
             .next()
             .addSoundFade(this.foreground, this.soundManager, "bee-hum", 0.0015, 0, 0.085)
-            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
+            .addPlaySoundEvent(this.foreground, this.soundManager, "celeb-ding")
             .addScaleEvent(this.fSprites.redBee, 1.5, 0.4, 0.65)
             .addFrameEvent(this.fSprites.redBee, 1)
             .addBringBefore(this.fSprites.redBee, this.fSprites.background1)
@@ -332,20 +331,22 @@ export class MeadowStage extends Stage{
             .addIdle(this.fSprites.redBee)
             .addClickEvent(this.foreground)
             .next()
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.redSpeech1, -3, 0, 1)
             .addFade(this.fSprites.redSpeech2, 3, 0, 1)
             .addIdle(this.fSprites.redBee)
             .next()
             .addClickEvent(this.foreground)
             .addIdle(this.fSprites.redBee)
-            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .next()
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.redSpeech2, -3, 0, 1)
             .next()
             .addFade(this.fSprites.net3, 5, 0, 1)
             .addRotationEvent(this.fSprites.net3, 0, 100, 5)
             .addFade(this.fSprites.redBee, -3, 0, 1)
             .addPlaySoundEvent(this.foreground, this.soundManager, "swoosh")
+            .addSoundFade(this.foreground, this.soundManager, "bee-hum", -0.0015, 0, 1)
             .next()
             .addFade(this.fSprites.net3, -3, 0, 1)
             
@@ -363,12 +364,15 @@ export class MeadowStage extends Stage{
 
         this.entryEventChain
             .addFade(this.foreground, 3, 0, 1)
+            .addSoundFade(this.foreground, this.soundManager, "meadow", 0.01, 0, 0.5)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "meadow")
             .next()
             .addChangeStateEvent(this.foreground, this, 1);
         this.entryEventChain.initialise();
 
         this.exitEventChain
             .addFade(this.foreground, -3, 0, 1.1)
+            .addSoundFade(this.foreground, this.soundManager, "meadow", -0.01, 0, 0.5)
             .next()
             .addChangeStageEvent(this.fSprites.ElieSpeech2, this, "hub");
         this.exitEventChain.initialise();

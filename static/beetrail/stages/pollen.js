@@ -184,7 +184,7 @@ export class PollenStage extends Stage{
 
         
         this.soundManager.add("meadow", "assets/sound/meadow.m4a", resources);
-        this.soundManager.setVolume("meadow", 0.5);
+        this.soundManager.setVolume("meadow", 0);
         this.soundManager.setLoop("meadow", true);
 
         this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
@@ -382,7 +382,7 @@ export class PollenStage extends Stage{
     eventChainsDef(){
         this.eventChain
             //Elie!
-            .addPlaySoundEvent(this.foreground, this.soundManager, "meadow")
+            
             .addClickEvent(this.foreground)
             .next()
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
@@ -615,9 +615,11 @@ export class PollenStage extends Stage{
             .next()
 
             .addMovement(this.fSprites.redBee, [100, 100], 4, Movement.quadCurveMvPattern, 70)
+            .addSoundFade(this.foreground, this.soundManager, "bee-hum", -0.001, 0, 1)
             .addFade(this.fSprites.redBee, -1, 0, 1)
             .next()
 
+            .addStopSoundEvent(this.foreground, this.soundManager, "bee-hum")
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .addFrameEvent(this.fSprites.Elie, 0)
             .addForceLocationEvent(this.fSprites.Elie, [100, 353])
@@ -631,7 +633,6 @@ export class PollenStage extends Stage{
             .addRotationEvent(this.fSprites.redTube, 0, 90, 0.75)
             .addScaleEvent(this.fSprites.redTube, -0.3, 0.15, 1)
             .addMovement(this.fSprites.redTube, [1100, 700], 4, Movement.quadCurveMvPattern, 50, false)
-            .addSoundFade(this.foreground, this.soundManager, "bee-hum", -0.001, 0, 1)
             .addClickEvent(this.foreground)
             .next()
 
@@ -663,6 +664,8 @@ export class PollenStage extends Stage{
 
         this.entryEventChain
             .addFade(this.foreground, 3, 0, 1)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "meadow")
+            .addSoundFade(this.foreground, this.soundManager, "meadow", 0.01, 0, 0.5)
             .next()
             .addChangeStateEvent(this.foreground, this, 1);
         this.entryEventChain.initialise();
@@ -670,7 +673,9 @@ export class PollenStage extends Stage{
 
         this.exitEventChain
             .addFade(this.foreground, -3, 0, 1.1)
+            .addSoundFade(this.foreground, this.soundManager, "meadow", -0.01, 0, 0.5)
             .next()
+            .addStopSoundEvent(this.foreground, this.soundManager, "meadow")
             .addChangeStageEvent(this.foreground, this, "hub");
         this.exitEventChain.initialise();
         this.exitEventChain.name = "exit event chain";

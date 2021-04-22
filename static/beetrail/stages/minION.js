@@ -123,7 +123,7 @@ export class MinIONStage extends Stage{
             "assets/sound/066893573-casino-slot-machines-slot-mach.m4a",
             "assets/sound/054250043-wrong-03.m4a",
             "assets/sound/049974748-quiz-correct.m4a",
-            "assets/sound/049674596-supermarket-checkout-till-beep.m4a"
+            "assets/sound/143406883-machine-printer-02-scanning-ex.m4a"
 
         ];
         return this.textures;
@@ -255,7 +255,7 @@ export class MinIONStage extends Stage{
         this.fSprites.dragInfoBox = new SpriteItem("assets/fSprites/buttons/1drag-pollen.png", resources);
 
         this.soundManager.add("meadow", "assets/sound/meadow.m4a", resources);
-        this.soundManager.setVolume("meadow", 0.5);
+        this.soundManager.setVolume("meadow", 0);
         this.soundManager.setLoop("meadow", true);
 
         this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
@@ -277,7 +277,7 @@ export class MinIONStage extends Stage{
         this.soundManager.add("correct", "assets/sound/049974748-quiz-correct.m4a", resources);
         this.soundManager.setVolume("correct", 0.5);
 
-        this.soundManager.add("scan", "assets/sound/049674596-supermarket-checkout-till-beep.m4a", resources);
+        this.soundManager.add("scan", "assets/sound/143406883-machine-printer-02-scanning-ex.m4a", resources);
         this.soundManager.setVolume("scan", 0.5);
 
         this.matches.push([this.fSprites.DNABlackberryMatch, this.fSprites.blackberry, this.fSprites.labelBlackberry]);
@@ -551,12 +551,13 @@ export class MinIONStage extends Stage{
     eventChainsDef(){
         this.entryEventChain
             .addFade(this.foreground, 3, 0, 1)
+            .addSoundFade(this.foreground, this.soundManager, "meadow", 0.01, 0, 0.5)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "meadow")
             .next()
             .addChangeStateEvent(this.foreground, this, 1);
         this.entryEventChain.initialise();
 
         this.eventChain
-            .addPlaySoundEvent(this.foreground, this.soundManager, "meadow")
             .addClickEvent(this.foreground)
             .next()
 
@@ -583,13 +584,16 @@ export class MinIONStage extends Stage{
             .addFade(this.fSprites.dragInfoBox, -3, 0, 1)
             .setAnimationFlag(this.fSprites.dragInfoBox, false)
             .addForceLocationEvent(this.fSprites.Elie, [500, 353])
+            .addForceLocationEvent(this.fSprites.pollenPoppy, [660, 280])
+            .setAnimationFlag(this.fSprites.pollenPoppy, false)
+            .addFade(this.fSprites.pollenPoppy, 3, 0, 1)
+            .addSleep(this.foreground, 80)
+            .next()
+
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .addFade(this.fSprites.eSpeech3, 3, 0, 1)
             .addFrameEvent(this.fSprites.Elie, 3)
-            .addForceLocationEvent(this.fSprites.pollenPoppy, [660, 280])
-            .addFade(this.fSprites.pollenPoppy, 3, 0, 1)
             .addFade(this.fSprites.DNAPoppy, 100, 0, 1)
-            .setAnimationFlag(this.fSprites.pollenPoppy, false)
             .addClickEvent(this.foreground)
             .next()
 
@@ -678,12 +682,14 @@ export class MinIONStage extends Stage{
             .addCollisionEvent(this.fSprites.pollenBlackberry, this.fSprites.pollenDropBox)
             .next()
 
+
             .addPlaySoundEvent(this.foreground, this.soundManager, "scan")
             .addForceLocationEvent(this.fSprites.pollenBlackberry, [660, 280])
             .addFade(this.fSprites.pollenBlackberry, 3, 0, 1)
-            .addFade(this.fSprites.DNABlackberry, 100, 0, 1)
+            .addSleep(this.foreground, 80)
             .next()
 
+            .addFade(this.fSprites.DNABlackberry, 100, 0, 1)
             .setAnimationFlag(this.fSprites.pollenBlackberry, false)
             .addFade(this.fSprites.dragInfoBox, -3, 0, 1)
             .setAnimationFlag(this.fSprites.dragInfoBox, false)
@@ -734,9 +740,10 @@ export class MinIONStage extends Stage{
             .addPlaySoundEvent(this.foreground, this.soundManager, "scan")
             .addForceLocationEvent(this.fSprites.pollenBluebell, [660, 280])
             .addFade(this.fSprites.pollenBluebell, 3, 0, 1)
-            .addFade(this.fSprites.DNABluebell, 100, 0, 1)
+            .addSleep(this.foreground, 80)
             .next()
 
+            .addFade(this.fSprites.DNABluebell, 100, 0, 1)
             .setAnimationFlag(this.fSprites.pollenBluebell, false)
             .addFade(this.fSprites.dragInfoBox, -3, 0, 1)
             .setAnimationFlag(this.fSprites.dragInfoBox, false)
@@ -778,6 +785,7 @@ export class MinIONStage extends Stage{
 
         this.exitEventChain
             .addFade(this.foreground, -3, 0, 1.1)
+            .addSoundFade(this.foreground, this.soundManager, "meadow", -0.01, 0, 0.5)
             .next()
             .addChangeStageEvent(this.foreground, this, "hub");
         this.exitEventChain.initialise();
@@ -804,9 +812,9 @@ export class MinIONStage extends Stage{
         this.fSprites.LEDs2.tick();
 
         if(!(
-                ((this.eventChain.eventNumber == 10 || this.eventChain.eventNumber == 11) && this.testForPoppy())
-            ||  ((this.eventChain.eventNumber == 17 || this.eventChain.eventNumber == 18) && this.testForBlackberry())
-            ||  ((this.eventChain.eventNumber == 24 || this.eventChain.eventNumber == 25) && this.testForBluebell())
+                ((this.eventChain.eventNumber == 11 || this.eventChain.eventNumber == 12) && this.testForPoppy())
+            ||  ((this.eventChain.eventNumber == 18 || this.eventChain.eventNumber == 19) && this.testForBlackberry())
+            ||  ((this.eventChain.eventNumber == 25 || this.eventChain.eventNumber == 26) && this.testForBluebell())
         )){
             if(this.fSprites.matchButton._beingDragged){
                 this.fSprites.LEDs1.gotoFrame(2);

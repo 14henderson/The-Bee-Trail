@@ -18,8 +18,8 @@ export class HubStage extends Stage{
     customState;    //increases on completion of stage.
     textures;
 
-    constructor(app, stageManager){
-        super(app, stageManager);
+    constructor(app, stageManager, soundManager){
+        super(app, stageManager, soundManager);
         
         this.states = [this.start, this.entry, this.main, this.exit];
         this.state = this.start;
@@ -61,6 +61,10 @@ export class HubStage extends Stage{
             "assets/fSprites/buttons/minIONNav_L.png",
             "assets/fSprites/buttons/pollenNav.png",
             "assets/fSprites/buttons/pollenNav_L.png",
+
+            "assets/sound/048863013-menu-click-casual-mobile-game.m4a",
+            "assets/sound/043738205-ting-game-sound.m4a",
+            "assets/sound/012669614-my-little-adventure-60-sec-hap.m4a"
         ];
         return this.textures;
     }
@@ -77,14 +81,12 @@ export class HubStage extends Stage{
         this.mainEventChain.resetChain();
         this.entryEventChain.resetChain();
         this.exitEventChain.resetChain();
-        this.eventChainsDef();
 
         this.state = this.states[1];
     }
 
 
     loadSprites(resources){
-        //this.bSprites.foregroundMeadow = new SpriteItem("assets/bSprites/Artboard 1meadow-foreground.png", loader);
         //---------------------------
         this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", resources);
         this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", resources);
@@ -108,13 +110,23 @@ export class HubStage extends Stage{
         this.fSprites.minIONNav = new AnimatedItem([
             "assets/fSprites/buttons/minIONNav.png",
             "assets/fSprites/buttons/minIONNav_L.png"
-        ], resources, "minION_Nav");
+        ], resources, "minion nav ");
 
         this.fSprites.playButton = new AnimatedItem([
             "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-hover.png",
             "assets/fSprites/buttons/Artboard 2click-to-apply-newspaper-static.png"
-            
         ], resources);
+
+
+        this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
+        this.soundManager.setVolume("speech-click", 0.5);
+
+        this.soundManager.add("soundtrack", "assets/sound/012669614-my-little-adventure-60-sec-hap.m4a", resources);
+        this.soundManager.setVolume("soundtrack", 0.3);
+        this.soundManager.setLoop("soundtrack", true);
+
+
+
     }
 
 
@@ -136,7 +148,6 @@ export class HubStage extends Stage{
         this.fSprites.minION.setScale(0.4);
         this.fSprites.minION.setLocation(750, 750);
 
-        //this.fSprites.playButton.setScale(0.2);
         this.fSprites.playButton.centerPivot();//?????????????????????
         this.fSprites.playButton.setLocation(970, 680);
         this.fSprites.playButton.enableInteractiveState();
@@ -188,18 +199,22 @@ export class HubStage extends Stage{
 
     eventChainsDef(){
         this.entryEventChain
+            .addSoundFade(this.foreground, this.soundManager, "soundtrack", 0.01, 0, 0.5)
             .addFade(this.foreground, 3, -0.1, 1)
+            .addCustomAction(this.fSprites.playButton, "dissableInteractiveState")
             .next()
             .addChangeStateEvent(this.foreground, this, 2);
         this.entryEventChain.initialise();
 
 
         this.startEventChain
+            .addPlaySoundEvent(this.foreground, this.soundManager, "soundtrack")
             .addFade(this.fSprites.newspaper, 3, 0, 1)
             .addFade(this.fSprites.playButton, 3, 0, 1)
             .next()
             .addClickEvent(this.fSprites.playButton)
             .next()
+            .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.newspaper, -3, 0, 1)
             .addFade(this.fSprites.playButton, -3, 0, 1)
             .addCustomAction(this.fSprites.meadowNav, "enableInteractiveState")
@@ -210,45 +225,22 @@ export class HubStage extends Stage{
         this.startEventChain.initialise();
 
         this.exitEventChain
+            .addSoundFade(this.foreground, this.soundManager, "soundtrack", -0.01, 0, 1)
             .addFade(this.foreground, -3, 0, 1);
         this.exitEventChain.initialise();
 
     }
 
     navigateAction(item, customStateNum, stage){
-        if(item.getClickedState()){
-            if(this.customState == customStateNum-1){this.customState = customStateNum;}
+        if(item.getClickedStateAndReset()){
+            this.customState = customStateNum;
             this.exitEventChain.next().addChangeStageEvent(this.foreground, this, stage);
             this.exitEventChain.initialise();
             this.setState(3);
-            item.resetClickedState();
-        }
-    }
-    hoverAnimation(item){
-        if(item.onMouseHover()){
-            item.setFadeAnimation(0.19, 1, 0.05);
-        }else{
-            item.setFadeAnimation(0.2, 1, -0.05);
+            this.soundManager.play("speech-click");
         }
     }
 
-    pulseAnimation(item){
-        if(this.animationTick == 0){
-            item.setFadeAnimation(0, 1, 0.005);
-        }else if(this.animationTick == 150){
-            item.setFadeAnimation(0, 1, -0.005);
-        }
-        this.animationTick++;
-        if(this.animationTick == 300){
-            this.animationTick = 0;
-        }
-    }
-
-
-    loop(delta, context){
-        context.state(delta, context);
-    }
-    
 
 
     //STATES    
@@ -272,16 +264,16 @@ export class HubStage extends Stage{
        // if(this.customState == 1){context.pulseAnimation(context.fSprites.pollenNav);}
        // }else{context.hoverAnimation(context.fSprites.pollenNav);}
 
-        context.navigateAction(context.fSprites.minIONNav, 3, "minION");
+        context.navigateAction(context.fSprites.minIONNav, 2, "minION");
         //if(this.customState == 2){context.pulseAnimation(context.fSprites.minIONNav);}
        // }else{context.hoverAnimation(context.fSprites.minIONNav);}
 
 
         context.fSprites.meadowNav.tick();
         context.fSprites.pollenNav.tick();
-        context.fSprites.minIONNav.tick();
+        //context.fSprites.minIONNav.tick();
 
-        context.foreground.tick();
+        context.foreground.tick();        
     }
 
     exit(delta, context){
