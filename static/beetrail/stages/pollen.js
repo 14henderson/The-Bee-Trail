@@ -82,10 +82,10 @@ export class PollenStage extends Stage{
             "assets/fSprites/buttons/click-anywhere.png",
             "assets/fSprites/buttons/drag-the-bee.png",
 
-            "assets/sound/meadow.m4a",
+            "assets/sound/meadow.wav",
             "assets/sound/048863013-menu-click-casual-mobile-game.m4a",
-            "assets/sound/043738205-ting-game-sound.m4a",
-            "assets/sound/077024761-bees.m4a"
+            "assets/sound/043738205-ting-game-sound.wav",
+            "assets/sound/077024761-bees.wav"
         ];
         return this.textures;
     }
@@ -183,17 +183,17 @@ export class PollenStage extends Stage{
         this.fSprites.dragNotice = new SpriteItem("assets/fSprites/buttons/drag-the-bee.png", resources);
 
         
-        this.soundManager.add("meadow", "assets/sound/meadow.m4a", resources);
+        this.soundManager.add("meadow", "assets/sound/meadow.wav", resources);
         this.soundManager.setVolume("meadow", 0);
         this.soundManager.setLoop("meadow", true);
 
         this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
         this.soundManager.setVolume("speech-click", 0.5);
 
-        this.soundManager.add("celeb-ding", "assets/sound/043738205-ting-game-sound.m4a", resources);
+        this.soundManager.add("celeb-ding", "assets/sound/043738205-ting-game-sound.wav", resources);
         this.soundManager.setVolume("celeb-ding", 0.5);
 
-        this.soundManager.add("bee-hum", "assets/sound/077024761-bees.m4a", resources);
+        this.soundManager.add("bee-hum", "assets/sound/077024761-bees.wav", resources);
         this.soundManager.setVolume("bee-hum", 0);
         this.soundManager.setLoop("bee-hum", true);
 

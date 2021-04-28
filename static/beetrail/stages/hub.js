@@ -64,7 +64,7 @@ export class HubStage extends Stage{
 
             "assets/sound/048863013-menu-click-casual-mobile-game.m4a",
             "assets/sound/043738205-ting-game-sound.m4a",
-            "assets/sound/012669614-my-little-adventure-60-sec-hap.m4a"
+            "assets/sound/012669617-my-little-adventure-60-sec-loo.wav"
         ];
         return this.textures;
     }
@@ -121,7 +121,7 @@ export class HubStage extends Stage{
         this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
         this.soundManager.setVolume("speech-click", 0.5);
 
-        this.soundManager.add("soundtrack", "assets/sound/012669614-my-little-adventure-60-sec-hap.m4a", resources);
+        this.soundManager.add("soundtrack", "assets/sound/012669617-my-little-adventure-60-sec-loo.wav", resources);
         this.soundManager.setVolume("soundtrack", 0.3);
         this.soundManager.setLoop("soundtrack", true);
 
@@ -148,28 +148,29 @@ export class HubStage extends Stage{
         this.fSprites.minION.setScale(0.4);
         this.fSprites.minION.setLocation(750, 750);
 
-        this.fSprites.playButton.centerPivot();//?????????????????????
+        this.fSprites.playButton.centerPivot();
         this.fSprites.playButton.setLocation(970, 680);
         this.fSprites.playButton.enableInteractiveState();
         this.fSprites.playButton.enableMouseHoverFrame(1);
         this.fSprites.playButton.setAlpha(0);
 
-        this.fSprites.meadowNav.enableInteractiveState();
+        this.fSprites.meadowNav.dissableInteractiveState();
         this.fSprites.meadowNav.setLocation(0, 70);
         this.fSprites.meadowNav.setAnimationFunction(Animation.halfAlphaPulse);
         this.fSprites.meadowNav.gotoFrame(1);
         this.fSprites.meadowNav.setAnimationFlag(false);
         this.fSprites.meadowNav.setAlpha(0.5);
 
-        this.fSprites.pollenNav.enableInteractiveState();
+        
         this.fSprites.pollenNav.setLocation(0, 500);
         this.fSprites.pollenNav.setAnimationFunction(Animation.halfAlphaPulse);
         this.fSprites.pollenNav.gotoFrame(1);
         this.fSprites.pollenNav.setAnimationFlag(false);
         this.fSprites.pollenNav.setAlpha(0.5);
+        this.fSprites.pollenNav.dissableInteractiveState();
         
 
-        this.fSprites.minIONNav.enableInteractiveState();
+        this.fSprites.minIONNav.dissableInteractiveState();
         this.fSprites.minIONNav.setLocation(660, 500);
         this.fSprites.minIONNav.setAnimationFunction(Animation.halfAlphaPulse);
         this.fSprites.minIONNav.gotoFrame(1);
@@ -177,15 +178,21 @@ export class HubStage extends Stage{
         this.fSprites.minIONNav.setAlpha(0.5);
 
         if(this.customState == 0){
+            this.fSprites.meadowNav.enableInteractiveState();
             this.fSprites.meadowNav.gotoFrame(0);
             this.fSprites.meadowNav.setAnimationFlag(true);
             this.fSprites.meadowNav.setAlpha(1);
         }else if(this.customState == 1){
+            this.fSprites.meadowNav.enableInteractiveState();
             this.fSprites.meadowNav.gotoFrame(0);
+            this.fSprites.pollenNav.enableInteractiveState();
             this.fSprites.pollenNav.gotoFrame(0);
             this.fSprites.pollenNav.setAnimationFlag(true);
             this.fSprites.pollenNav.setAlpha(1);
         }else if(this.customState == 2){
+            this.fSprites.meadowNav.enableInteractiveState();
+            this.fSprites.pollenNav.enableInteractiveState();
+            this.fSprites.minIONNav.enableInteractiveState();
             this.fSprites.meadowNav.gotoFrame(0);
             this.fSprites.pollenNav.gotoFrame(0);
             this.fSprites.minIONNav.gotoFrame(0);
@@ -217,9 +224,6 @@ export class HubStage extends Stage{
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.newspaper, -3, 0, 1)
             .addFade(this.fSprites.playButton, -3, 0, 1)
-            .addCustomAction(this.fSprites.meadowNav, "enableInteractiveState")
-            .addCustomAction(this.fSprites.pollenNav, "enableInteractiveState")
-            .addCustomAction(this.fSprites.minIONNav, "enableInteractiveState")
             .next()
             .addChangeStateEvent(this.foreground, this, 2);
         this.startEventChain.initialise();

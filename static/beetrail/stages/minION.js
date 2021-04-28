@@ -115,13 +115,13 @@ export class MinIONStage extends Stage{
             "assets/fSprites/buttons/greenflashing-lights.png",
             "assets/fSprites/buttons/redflashing-lights.png",
 
-            "assets/sound/meadow.m4a",
+            "assets/sound/meadow.wav",
             "assets/sound/048863013-menu-click-casual-mobile-game.m4a",
-            "assets/sound/043738205-ting-game-sound.m4a",
-            "assets/sound/077024761-bees.m4a",
+            "assets/sound/043738205-ting-game-sound.wav",
+            "assets/sound/077024761-bees.wav",
             "assets/sound/040446042-basketball-swoosh-through-net-.m4a",
-            "assets/sound/066893573-casino-slot-machines-slot-mach.m4a",
-            "assets/sound/054250043-wrong-03.m4a",
+            "assets/sound/066893573-casino-slot-machines-slot-mach.wav",
+            "assets/sound/054250043-wrong-03.wav",
             "assets/sound/049974748-quiz-correct.m4a",
             "assets/sound/143406883-machine-printer-02-scanning-ex.m4a"
 
@@ -254,24 +254,24 @@ export class MinIONStage extends Stage{
 
         this.fSprites.dragInfoBox = new SpriteItem("assets/fSprites/buttons/1drag-pollen.png", resources);
 
-        this.soundManager.add("meadow", "assets/sound/meadow.m4a", resources);
+        this.soundManager.add("meadow", "assets/sound/meadow.wav", resources);
         this.soundManager.setVolume("meadow", 0);
         this.soundManager.setLoop("meadow", true);
 
         this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
         this.soundManager.setVolume("speech-click", 0.5);
 
-        this.soundManager.add("celeb-ding", "assets/sound/043738205-ting-game-sound.m4a", resources);
+        this.soundManager.add("celeb-ding", "assets/sound/043738205-ting-game-sound.wav", resources);
         this.soundManager.setVolume("celeb-ding", 0.5);
 
-        this.soundManager.add("bee-hum", "assets/sound/077024761-bees.m4a", resources);
+        this.soundManager.add("bee-hum", "assets/sound/077024761-bees.wav", resources);
         this.soundManager.setVolume("bee-hum", 0);
         this.soundManager.setLoop("bee-hum", true);
 
-        this.soundManager.add("lever", "assets/sound/066893573-casino-slot-machines-slot-mach.m4a", resources);
+        this.soundManager.add("lever", "assets/sound/066893573-casino-slot-machines-slot-mach.wav", resources);
         this.soundManager.setVolume("lever", 0.5);
 
-        this.soundManager.add("wrong", "assets/sound/054250043-wrong-03.m4a", resources);
+        this.soundManager.add("wrong", "assets/sound/054250043-wrong-03.wav", resources);
         this.soundManager.setVolume("wrong", 0.5);
 
         this.soundManager.add("correct", "assets/sound/049974748-quiz-correct.m4a", resources);
