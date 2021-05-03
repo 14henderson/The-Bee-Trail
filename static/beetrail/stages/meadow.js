@@ -57,10 +57,13 @@ export class MeadowStage extends Stage{
             "assets/fSprites/buttons/click-anywhere.png",
 
             "assets/sound/meadow.wav",
-            "assets/sound/048863013-menu-click-casual-mobile-game.m4a",
+            "assets/sound/048863013-menu-click-casual-mobile-game.wav",
             "assets/sound/043738205-ting-game-sound.wav",
             "assets/sound/077024761-bees.wav",
-            "assets/sound/040446042-basketball-swoosh-through-net-.m4a"
+            "assets/sound/145752541-net-swoosh-02.wav",
+
+            "assets/sound/Elie/meadow/1-hello-Im-elie.mp3",
+            "assets/sound/Elie/meadow/2-Well-done.mp3"
         ];
         return this.textures;
     }
@@ -126,7 +129,7 @@ export class MeadowStage extends Stage{
         this.soundManager.setVolume("meadow", 0);
         this.soundManager.setLoop("meadow", true);
 
-        this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
+        this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.wav", resources);
         this.soundManager.setVolume("speech-click", 0.5);
 
         this.soundManager.add("celeb-ding", "assets/sound/043738205-ting-game-sound.wav", resources);
@@ -136,15 +139,19 @@ export class MeadowStage extends Stage{
         this.soundManager.setVolume("bee-hum", 0);
         this.soundManager.setLoop("bee-hum", true);
 
-        this.soundManager.add("swoosh", "assets/sound/040446042-basketball-swoosh-through-net-.m4a", resources);
-        this.soundManager.setVolume("swoosh", 0.5);
+        this.soundManager.add("swoosh", "assets/sound/145752541-net-swoosh-02.wav", resources);
+        this.soundManager.setVolume("swoosh", 0.2);
 
+        this.soundManager.add("elie1", "assets/sound/Elie/meadow/1-hello-Im-elie.mp3", resources);
+        this.soundManager.setVolume("elie1", 0.5);
+
+        this.soundManager.add("elie2", "assets/sound/Elie/meadow/2-Well-done.mp3", resources);
+        this.soundManager.setVolume("elie2", 0.5);
     }
 
 
     //Positioning and scaling of Items
     assetPositioning(){
-        //this.soundManager.play("golden");
         this.fSprites.background3.setSize(1280, 960);
         this.fSprites.background2.setSize(1280, 960);
         this.fSprites.background1.setSize(1280, 960);
@@ -217,7 +224,7 @@ export class MeadowStage extends Stage{
         this.fSprites.ElieSpeech1.setLocation(350, 100);
         this.fSprites.ElieSpeech1.setAlpha(1);
         this.fSprites.ElieSpeech2.setScale(0.8);
-        this.fSprites.ElieSpeech2.setLocation(450, 200);
+        this.fSprites.ElieSpeech2.setLocation(470, 100);
         this.fSprites.ElieSpeech2.setAlpha(0);
 //---------------
         this.fSprites.clickNotice.setScale(0.8);
@@ -234,12 +241,15 @@ export class MeadowStage extends Stage{
     //Defining the event chain(s) used in this stage.
     eventChainsDef(){
         this.eventChain
+            .next()
             .addPlaySoundEvent(this.foreground, this.soundManager, "meadow")
+            .addPlaySoundEvent(this.foreground, this.soundManager, "elie1")
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .next()
             .setAnimationFlag(this.fSprites.clickNotice, true)
             .addClickEvent(this.foreground)
             .next()
+            .addStopSoundEvent(this.foreground, this.soundManager, "elie1")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFrameEvent(this.fSprites.Elie, 0)
@@ -356,9 +366,12 @@ export class MeadowStage extends Stage{
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .next()
             .addFade(this.fSprites.ElieSpeech2, 3, 0, 1)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "elie2")
             .addClickEvent(this.foreground)
             .next()
+            .addStopSoundEvent(this.foreground, this.soundManager, "elie2")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
+            .next()
             .addChangeStateEvent(this.foreground, this, 2);
 
         this.eventChain.initialise();

@@ -2,6 +2,7 @@ import {HubStage} from '/beetrail/stages/hub.js';
 import {MinIONStage} from '/beetrail/stages/minION.js';
 import {MeadowStage} from '/beetrail/stages/meadow.js';
 import {PollenStage} from '/beetrail/stages/pollen.js';
+import {FinalStage} from '/beetrail/stages/final.js';
 import {SpriteItem} from '/beetrail/item/spriteItem.js';
 import {ShapeItem} from '/beetrail/item/shapeItem.js';
 import {Foreground} from '/beetrail/foregroundContainer.js';
@@ -28,7 +29,8 @@ export class StageManager{
             "hub":new HubStage(app, this, this.soundManager),
             "meadow":new MeadowStage(app, this, this.soundManager),            
             "pollen":new PollenStage(app, this, this.soundManager),
-            "minION":new MinIONStage(app, this, this.soundManager)
+            "minION":new MinIONStage(app, this, this.soundManager),
+            "final":new FinalStage(app, this, this.soundManager)
         };
         this.stage = "hub";
         this.app = app;
@@ -220,11 +222,6 @@ export class StageManager{
         this.app.stage.addChild(this.stages[this.stage].foreground);
         
     }
-
-    start(){
-       // this.stages[this.stage].play();
-    }
-
 
 
 

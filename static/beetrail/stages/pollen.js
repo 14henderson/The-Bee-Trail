@@ -83,9 +83,16 @@ export class PollenStage extends Stage{
             "assets/fSprites/buttons/drag-the-bee.png",
 
             "assets/sound/meadow.wav",
-            "assets/sound/048863013-menu-click-casual-mobile-game.m4a",
+            "assets/sound/048863013-menu-click-casual-mobile-game.wav",
             "assets/sound/043738205-ting-game-sound.wav",
-            "assets/sound/077024761-bees.wav"
+            "assets/sound/077024761-bees.wav",
+
+            "assets/sound/Elie/Pollen/3-Now-we-have.wav",
+            "assets/sound/Elie/Pollen/4-Instead-were-going.mp3",
+            "assets/sound/Elie/Pollen/5-First-can-you.mp3",
+            "assets/sound/Elie/Pollen/6-We-can-look-at.mp3",
+            "assets/sound/Elie/Pollen/7-If-I-know-the-dna.mp3",
+            "assets/sound/Elie/Pollen/8-Thanks-it-looks-like.mp3"
         ];
         return this.textures;
     }
@@ -187,7 +194,7 @@ export class PollenStage extends Stage{
         this.soundManager.setVolume("meadow", 0);
         this.soundManager.setLoop("meadow", true);
 
-        this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
+        this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.wav", resources);
         this.soundManager.setVolume("speech-click", 0.5);
 
         this.soundManager.add("celeb-ding", "assets/sound/043738205-ting-game-sound.wav", resources);
@@ -196,6 +203,26 @@ export class PollenStage extends Stage{
         this.soundManager.add("bee-hum", "assets/sound/077024761-bees.wav", resources);
         this.soundManager.setVolume("bee-hum", 0);
         this.soundManager.setLoop("bee-hum", true);
+
+        this.soundManager.add("elie3", "assets/sound/Elie/Pollen/3-Now-we-have.wav", resources);
+        this.soundManager.setVolume("elie3", 0.5);
+
+        this.soundManager.add("elie4", "assets/sound/Elie/Pollen/4-Instead-were-going.mp3", resources);
+        this.soundManager.setVolume("elie4", 0.5);
+
+        this.soundManager.add("elie5", "assets/sound/Elie/Pollen/5-First-can-you.mp3", resources);
+        this.soundManager.setVolume("elie5", 0.5);
+
+        this.soundManager.add("elie6", "assets/sound/Elie/Pollen/6-We-can-look-at.mp3", resources);
+        this.soundManager.setVolume("elie6", 0.5);
+
+        this.soundManager.add("elie7", "assets/sound/Elie/Pollen/7-If-I-know-the-dna.mp3", resources);
+        this.soundManager.setVolume("elie7", 0.5);
+
+        this.soundManager.add("elie8", "assets/sound/Elie/Pollen/8-Thanks-it-looks-like.mp3", resources);
+        this.soundManager.setVolume("elie8", 0.5);
+
+
 
         this.miscAssetCreation();
     }
@@ -382,20 +409,29 @@ export class PollenStage extends Stage{
     eventChainsDef(){
         this.eventChain
             //Elie!
-            
+            .next()
+            .addPlaySoundEvent(this.foreground, this.soundManager, "elie3")
             .addClickEvent(this.foreground)
             .next()
+
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFrameEvent(this.fSprites.Elie, 0)
             .addClickEvent(this.foreground)
+            .addStopSoundEvent(this.foreground, this.soundManager, "elie3")
+            .addPlaySoundEvent(this.foreground, this.soundManager, "elie4")
             .addFade(this.fSprites.ElieSpeech1, -3, 0, 1)
             .addFade(this.fSprites.ElieSpeech2, 3, 0, 1)
             .next()
+
+            .addStopSoundEvent(this.foreground, this.soundManager, "elie4")
+            .addPlaySoundEvent(this.foreground, this.soundManager, "elie5")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.ElieSpeech2, -3, 0, 1)
             .addFade(this.fSprites.ElieSpeech3, 3, 0, 1)
             .addClickEvent(this.foreground)            
             .next()
+
+            .addStopSoundEvent(this.foreground, this.soundManager, "elie5")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.ElieSpeech3, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
@@ -454,9 +490,11 @@ export class PollenStage extends Stage{
             .next()
 
             .addFade(this.fSprites.ElieSpeech4, 3, 0, 1)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "elie6")
             .addClickEvent(this.foreground)
             .next()
 
+            .addStopSoundEvent(this.foreground, this.soundManager, "elie6")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.ElieSpeech4, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
@@ -539,10 +577,12 @@ export class PollenStage extends Stage{
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "elie7")
             .addFade(this.fSprites.ElieSpeech5, 3, 0, 1)
             .addClickEvent(this.foreground)
             .next()
 
+            .addStopSoundEvent(this.foreground, this.soundManager, "elie7")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.ElieSpeech5, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
@@ -626,6 +666,7 @@ export class PollenStage extends Stage{
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .next()
 
+            .addPlaySoundEvent(this.foreground, this.soundManager, "elie8")
             .addFade(this.fSprites.ElieSpeech6, 3, 0, 1)
             .addFade(this.fSprites.pollenC1, -10, 0, 1)
             .addFade(this.fSprites.pollenC2, -10, 0, 1)
@@ -636,6 +677,7 @@ export class PollenStage extends Stage{
             .addClickEvent(this.foreground)
             .next()
 
+            .addStopSoundEvent(this.foreground, this.soundManager, "elie8")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.ElieSpeech6, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)

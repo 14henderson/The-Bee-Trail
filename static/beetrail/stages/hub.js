@@ -62,8 +62,8 @@ export class HubStage extends Stage{
             "assets/fSprites/buttons/pollenNav.png",
             "assets/fSprites/buttons/pollenNav_L.png",
 
-            "assets/sound/048863013-menu-click-casual-mobile-game.m4a",
-            "assets/sound/043738205-ting-game-sound.m4a",
+            "assets/sound/048863013-menu-click-casual-mobile-game.wav",
+            "assets/sound/043738205-ting-game-sound.wav",
             "assets/sound/012669617-my-little-adventure-60-sec-loo.wav"
         ];
         return this.textures;
@@ -118,7 +118,7 @@ export class HubStage extends Stage{
         ], resources);
 
 
-        this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.m4a", resources);
+        this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.wav", resources);
         this.soundManager.setVolume("speech-click", 0.5);
 
         this.soundManager.add("soundtrack", "assets/sound/012669617-my-little-adventure-60-sec-loo.wav", resources);
@@ -200,6 +200,12 @@ export class HubStage extends Stage{
             this.fSprites.minIONNav.setAlpha(1);
         }
         
+        //For debugging purposes only - not to go in final v
+        this.fSprites.meadowNav.enableInteractiveState();
+        this.fSprites.pollenNav.enableInteractiveState();
+        this.fSprites.minIONNav.enableInteractiveState();
+
+
     
         this.fSprites.newspaper.bringBefore(this.fSprites.minIONNav);        
     }

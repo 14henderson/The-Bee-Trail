@@ -6,7 +6,6 @@ export class SoundManager{
     constructor(){
         if(this.sounds == undefined){
             this.sounds = {};
-            console.log(this.sounds);
         }
         
     }
