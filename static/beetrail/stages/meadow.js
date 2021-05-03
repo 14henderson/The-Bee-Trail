@@ -62,8 +62,8 @@ export class MeadowStage extends Stage{
             "assets/sound/077024761-bees.wav",
             "assets/sound/145752541-net-swoosh-02.wav",
 
-            "assets/sound/Elie/meadow/1-hello-Im-elie.mp3",
-            "assets/sound/Elie/meadow/2-Well-done.mp3"
+            "assets/sound/Elie/Meadow/1-hello-Im-elie.mp3",
+            "assets/sound/Elie/Meadow/2-Well-done.mp3"
         ];
         return this.textures;
     }
@@ -142,10 +142,10 @@ export class MeadowStage extends Stage{
         this.soundManager.add("swoosh", "assets/sound/145752541-net-swoosh-02.wav", resources);
         this.soundManager.setVolume("swoosh", 0.2);
 
-        this.soundManager.add("elie1", "assets/sound/Elie/meadow/1-hello-Im-elie.mp3", resources);
+        this.soundManager.add("elie1", "assets/sound/Elie/Meadow/1-hello-Im-elie.mp3", resources);
         this.soundManager.setVolume("elie1", 0.5);
 
-        this.soundManager.add("elie2", "assets/sound/Elie/meadow/2-Well-done.mp3", resources);
+        this.soundManager.add("elie2", "assets/sound/Elie/Meadow/2-Well-done.mp3", resources);
         this.soundManager.setVolume("elie2", 0.5);
     }
 
@@ -187,7 +187,7 @@ export class MeadowStage extends Stage{
         this.fSprites.buffBee.setAnimationFlag(false);
 
         this.fSprites.buffSpeech.setScale(0.8);
-        this.fSprites.buffSpeech.setLocation(400, 250);
+        this.fSprites.buffSpeech.setLocation(410, 210);
         this.fSprites.buffSpeech.setAlpha(0);
 
         this.fSprites.net2.setScale(.8);
@@ -205,10 +205,10 @@ export class MeadowStage extends Stage{
         this.fSprites.redBee.setAnimationFlag(false);
 
         this.fSprites.redSpeech1.setScale(0.8);
-        this.fSprites.redSpeech1.setLocation(350, 50);
+        this.fSprites.redSpeech1.setLocation(360, 50);
         this.fSprites.redSpeech1.setAlpha(0);
         this.fSprites.redSpeech2.setScale(0.8);
-        this.fSprites.redSpeech2.setLocation(350, 50);
+        this.fSprites.redSpeech2.setLocation(360, 50);
         this.fSprites.redSpeech2.setAlpha(0);
 
         this.fSprites.net3.setScale(.8);
@@ -221,10 +221,10 @@ export class MeadowStage extends Stage{
         this.fSprites.Elie.gotoFrame(1);
 
         this.fSprites.ElieSpeech1.setScale(0.8);
-        this.fSprites.ElieSpeech1.setLocation(350, 100);
+        this.fSprites.ElieSpeech1.setLocation(400, 80);
         this.fSprites.ElieSpeech1.setAlpha(1);
         this.fSprites.ElieSpeech2.setScale(0.8);
-        this.fSprites.ElieSpeech2.setLocation(470, 100);
+        this.fSprites.ElieSpeech2.setLocation(490, 100);
         this.fSprites.ElieSpeech2.setAlpha(0);
 //---------------
         this.fSprites.clickNotice.setScale(0.8);

@@ -370,7 +370,7 @@ export class MinIONStage extends Stage{
         this.fSprites.pollenBlackberry.setScale(0.3);
         this.fSprites.pollenBlackberry.setLocation(144, 277);
         this.fSprites.pollenBlackberry.enableInteractiveState();
-        this.fSprites.pollenBlackberry.setAlpha(0.5);
+        //this.fSprites.pollenBlackberry.setAlpha(0.5);
         this.fSprites.pollenBlackberry.setAnimationFunction(Animation.halfAlphaPulse);
         this.fSprites.pollenBlackberry.setAnimationFlag(false);
         this.fSprites.pollenBlackberry.setSpriteAnchor(0.5, 0.5);
@@ -378,7 +378,7 @@ export class MinIONStage extends Stage{
         this.fSprites.pollenBluebell.setScale(0.3);
         this.fSprites.pollenBluebell.setLocation(143, 381);
         this.fSprites.pollenBluebell.enableInteractiveState();
-        this.fSprites.pollenBluebell.setAlpha(0.5);
+        //this.fSprites.pollenBluebell.setAlpha(0.5);
         this.fSprites.pollenBluebell.setAnimationFunction(Animation.halfAlphaPulse);
         this.fSprites.pollenBluebell.setAnimationFlag(false);
         this.fSprites.pollenBluebell.setSpriteAnchor(0.5, 0.5);

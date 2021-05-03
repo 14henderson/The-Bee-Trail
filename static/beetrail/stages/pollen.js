@@ -339,7 +339,7 @@ export class PollenStage extends Stage{
         this.fSprites.ElieSpeech5.setLocation(50, 100);
         this.fSprites.ElieSpeech5.setAlpha(0);
         this.fSprites.ElieSpeech6.setScale(0.8);
-        this.fSprites.ElieSpeech6.setLocation(50, 100);
+        this.fSprites.ElieSpeech6.setLocation(50, 50);
         this.fSprites.ElieSpeech6.setAlpha(0);
 
 
@@ -511,7 +511,7 @@ export class PollenStage extends Stage{
             .next()
 
         this.speechEventChain
-            .addEventChainWait(this.foreground, this.eventChain, 8)
+            .addEventChainWait(this.foreground, this.eventChain, 9)
             .next()
             .addSleep(this.foreground, 70)
             .next()
@@ -599,7 +599,7 @@ export class PollenStage extends Stage{
             .next();
 
         this.speechEventChain
-            .addEventChainWait(this.foreground, this.eventChain, 19)
+            .addEventChainWait(this.foreground, this.eventChain, 20)
             .next()
             .addSleep(this.foreground, 90)
             .next()
@@ -687,7 +687,7 @@ export class PollenStage extends Stage{
 
 
         this.speechEventChain
-            .addEventChainWait(this.foreground, this.eventChain, 31)
+            .addEventChainWait(this.foreground, this.eventChain, 32)
             .next()
             .addSleep(this.foreground, 80)
             .next()

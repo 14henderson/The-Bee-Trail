@@ -149,7 +149,8 @@ export class HubStage extends Stage{
         this.fSprites.minION.setLocation(750, 750);
 
         this.fSprites.playButton.centerPivot();
-        this.fSprites.playButton.setLocation(970, 680);
+        this.fSprites.playButton.setScale(0.9);
+        this.fSprites.playButton.setLocation(970, 690);
         this.fSprites.playButton.enableInteractiveState();
         this.fSprites.playButton.enableMouseHoverFrame(1);
         this.fSprites.playButton.setAlpha(0);
