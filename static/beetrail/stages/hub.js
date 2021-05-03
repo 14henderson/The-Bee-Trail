@@ -201,9 +201,9 @@ export class HubStage extends Stage{
         }
         
         //For debugging purposes only - not to go in final v
-        this.fSprites.meadowNav.enableInteractiveState();
-        this.fSprites.pollenNav.enableInteractiveState();
-        this.fSprites.minIONNav.enableInteractiveState();
+        //this.fSprites.meadowNav.enableInteractiveState();
+        //this.fSprites.pollenNav.enableInteractiveState();
+        //this.fSprites.minIONNav.enableInteractiveState();
 
 
     
