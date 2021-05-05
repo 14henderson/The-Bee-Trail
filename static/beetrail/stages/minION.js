@@ -540,7 +540,7 @@ export class MinIONStage extends Stage{
         this.fSprites.pullButton.setLocation(70, 750);
         this.fSprites.pullButton.enableMouseHoverFrame(1);
 
-        this.fSprites.arrowHighlight.setScale(0.8);
+        this.fSprites.arrowHighlight.setScale(0.81);
         this.fSprites.arrowHighlight.setLocation(647, 149);
         this.fSprites.arrowHighlight.setAnimationFunction(Animation.fullAlphaPulse);
         this.fSprites.arrowHighlight.setAnimationFlag(true);
