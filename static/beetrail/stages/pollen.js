@@ -92,7 +92,14 @@ export class PollenStage extends Stage{
             "assets/sound/Elie/Pollen/5-First-can-you.mp3",
             "assets/sound/Elie/Pollen/6-We-can-look-at.mp3",
             "assets/sound/Elie/Pollen/7-If-I-know-the-dna.mp3",
-            "assets/sound/Elie/Pollen/8-Thanks-it-looks-like.mp3"
+            "assets/sound/Elie/Pollen/8-Thanks-it-looks-like.mp3",
+
+            "assets/sound/bees/2-This-doesnt-hurt-barney.mp3",
+            "assets/sound/bees/3-You-can-see-that.mp3",
+            "assets/sound/bees/2-bella-did-you-know.mp3",
+            "assets/sound/bees/3-bella-dna-is-what-makes-unique.mp3",
+            "assets/sound/bees/3 im-so-excited.wav",
+            "assets/sound/bees/4 if-we-can-find-out.wav"
         ];
         return this.textures;
     }
@@ -222,7 +229,20 @@ export class PollenStage extends Stage{
         this.soundManager.add("elie8", "assets/sound/Elie/Pollen/8-Thanks-it-looks-like.mp3", resources);
         this.soundManager.setVolume("elie8", 0.5);
 
+        this.soundManager.add("barney2", "assets/sound/bees/2-This-doesnt-hurt-barney.mp3", resources);
+        this.soundManager.setVolume("barney2", 0.5);
+        this.soundManager.add("barney3", "assets/sound/bees/3-You-can-see-that.mp3", resources);
+        this.soundManager.setVolume("barney3", 0.5);
 
+        this.soundManager.add("bella2", "assets/sound/bees/2-bella-did-you-know.mp3", resources);
+        this.soundManager.setVolume("bella2", 2.5);
+        this.soundManager.add("bella3", "assets/sound/bees/3-bella-dna-is-what-makes-unique.mp3", resources);
+        this.soundManager.setVolume("bella3", 2.5);
+
+        this.soundManager.add("billie3", "assets/sound/bees/3 im-so-excited.wav", resources);
+        this.soundManager.setVolume("billie3", 1);
+        this.soundManager.add("billie4", "assets/sound/bees/4 if-we-can-find-out.wav", resources);
+        this.soundManager.setVolume("billie4", 1);
 
         this.miscAssetCreation();
     }
@@ -516,6 +536,7 @@ export class PollenStage extends Stage{
             .addSleep(this.foreground, 70)
             .next()
             .addFade(this.fSprites.honeySpeech1, 3, 0, 1)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "barney2")
             .addFade(this.fSprites.pollenA1, .5, 0, 1)
             .addSleep(this.foreground, 200)
             .next()
@@ -523,6 +544,7 @@ export class PollenStage extends Stage{
             .addSleep(this.foreground, 200)
             .next()
             .addFade(this.fSprites.honeySpeech2, 3, 0, 1)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "barney3")
             .next();
 
 
@@ -604,6 +626,7 @@ export class PollenStage extends Stage{
             .addSleep(this.foreground, 90)
             .next()
             .addFade(this.fSprites.buffSpeech1, 3, -1, 1)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "bella2")
             .addFade(this.fSprites.pollenB1, .5, -1, 1)
             .addSleep(this.foreground, 200)
             .next()
@@ -611,6 +634,7 @@ export class PollenStage extends Stage{
             .addSleep(this.foreground, 200)
             .next()
             .addFade(this.fSprites.buffSpeech2, 3, 0, 1)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "bella3")
             .next();
 
         //Bee 3
@@ -692,6 +716,7 @@ export class PollenStage extends Stage{
             .addSleep(this.foreground, 80)
             .next()
             .addFade(this.fSprites.redSpeech1, 3, -1, 1)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "billie3")
             .addFade(this.fSprites.pollenC1, .5, -1, 1)
             .addSleep(this.foreground, 200)
             .next()
@@ -699,6 +724,7 @@ export class PollenStage extends Stage{
             .addSleep(this.foreground, 200)
             .next()
             .addFade(this.fSprites.redSpeech2, 3, 0, 1)
+            .addPlaySoundEvent(this.foreground, this.soundManager, "billie4")
             .next();
 
         this.eventChain.initialise();
