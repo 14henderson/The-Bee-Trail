@@ -27,6 +27,7 @@ export class Item {
         this.spriteDirection = 'l';
         this.animationTick = 0;
         this.animationFunc = null;
+        this.animationAmp = 1;
         this.animationFlag = true;
 
         this.dragged = false;
@@ -310,7 +311,7 @@ export class Item {
         if(this.animationTick == 100){this.animationTick = 0;}
 
         if(this.animationFunc != null && this.animationFlag){
-            this.animationFunc(this, this.animationTick);
+            this.animationFunc(this, this.animationTick, this.animationAmp);
         }
     }
 
@@ -337,7 +338,8 @@ export class Item {
         this.sprite.x = (window.innerWidth/2)-(this.getSize()[0]/2);
     }
 
-    setAnimationFunction(func){
+    setAnimationFunction(func, amplification=1){
+        this.animationAmp = amplification;
         this.animationFunc = func;
     }
 }

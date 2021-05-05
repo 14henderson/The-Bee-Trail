@@ -41,13 +41,13 @@ export class Animation{
         item.setAlpha(a);
     }
 
-    static idle(item, x){
+    static idle(item, x, amplification=1){
         item.setLocation(
             item.getX(),
             item.getY()+Movement.sinMvPattern(
                 x,
                 0,
-                1
+                amplification
             ));
         if(item.animationTick == 63){
             item.animationTick = 0;
