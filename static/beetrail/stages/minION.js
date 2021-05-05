@@ -261,6 +261,7 @@ export class MinIONStage extends Stage{
         this.fSprites.eSpeech8 = new SpriteItem("assets/fSprites/speech-bubbles/minion/8-elie-speech-minion.png", resources);
 
         this.fSprites.dragInfoBox = new SpriteItem("assets/fSprites/buttons/1drag-pollen.png", resources);
+        this.fSprites.clickNotice = new SpriteItem("assets/fSprites/buttons/click-anywhere.png", resources);
 
         this.soundManager.add("meadow", "assets/sound/meadow.wav", resources);
         this.soundManager.setVolume("meadow", 0);
@@ -567,6 +568,12 @@ export class MinIONStage extends Stage{
         this.fSprites.dragInfoBox.setLocation(640, 830);
         this.fSprites.dragInfoBox.setAlpha(0);
 
+        this.fSprites.clickNotice.setScale(0.8);
+        this.fSprites.clickNotice.setLocation(640, 830);
+        this.fSprites.clickNotice.setSpriteAnchor(0.5, 0.5);
+        this.fSprites.clickNotice.setAnimationFunction(Animation.halfAlphaPulse);
+        this.fSprites.clickNotice.setAnimationFlag(true);
+
         this.fSprites.pollenDropBox.setLocation(630, 230);
         this.foreground.setAlpha(0);
     }
@@ -597,6 +604,7 @@ export class MinIONStage extends Stage{
             .addFrameEvent(this.fSprites.Elie, 0)
             .addFade(this.fSprites.eSpeech1, -3, 0, 1)
             .addFade(this.fSprites.eSpeech2, 3, 0, 1)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .addClickEvent(this.foreground)
             .next()
 
@@ -605,6 +613,7 @@ export class MinIONStage extends Stage{
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.eSpeech2, -3, 0, 1)
             .addFade(this.fSprites.Elie, -3, 0, 1)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.dragInfoBox, 3, 0, 1)
             .next()
             
@@ -626,6 +635,7 @@ export class MinIONStage extends Stage{
             .addPlaySoundEvent(this.foreground, this.soundManager, "elie11")
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .addFade(this.fSprites.eSpeech3, 3, 0, 1)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .addFrameEvent(this.fSprites.Elie, 3)
             .addFade(this.fSprites.DNAPoppy, 100, 0, 1)
             .addClickEvent(this.foreground)
@@ -648,6 +658,7 @@ export class MinIONStage extends Stage{
             .addClickEvent(this.fSprites.pullButton)
             .addCustomAction(this.fSprites.pullButton, 'enableInteractiveState')
             .addFade(this.fSprites.Elie, -3, 0, 1)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.eSpeech4, -3, 0, 1)
             .next()
 
@@ -665,6 +676,7 @@ export class MinIONStage extends Stage{
             .addPlaySoundEvent(this.foreground, this.soundManager, "elie13")
             .addForceLocationEvent(this.fSprites.Elie, [900, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .addFrameEvent(this.fSprites.Elie, 2)
             .addFade(this.fSprites.eSpeech5, 3, 0, 1)
             .addClickEvent(this.foreground)
@@ -673,6 +685,7 @@ export class MinIONStage extends Stage{
             .addStopSoundEvent(this.foreground, this.soundManager, "elie13")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.Elie, -3, 0, 1)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.eSpeech5, -3, 0, 1)
             .addFrameEvent(this.fSprites.lever, 0)
             .next()
@@ -701,6 +714,7 @@ export class MinIONStage extends Stage{
             .addFrameEvent(this.fSprites.Elie, 0)
             .addForceLocationEvent(this.fSprites.Elie, [600, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .addFade(this.fSprites.eSpeech6, 3, 0, 1)
             .addClickEvent(this.foreground)
             .setAnimationFlag(this.fSprites.LEDs1, false)
@@ -712,6 +726,7 @@ export class MinIONStage extends Stage{
             .addStopSoundEvent(this.foreground, this.soundManager, "elie14")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.Elie, -3, 0, 1)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.eSpeech6, -3, 0, 1)
             .addFade(this.fSprites.dragInfoBox, 3, 0, 1)
             .next()
@@ -759,6 +774,7 @@ export class MinIONStage extends Stage{
             .addFrameEvent(this.fSprites.Elie, 0)
             .addForceLocationEvent(this.fSprites.Elie, [750, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .addFade(this.fSprites.eSpeech7, 3, 0, 1)
             .addClickEvent(this.foreground)
             .setAnimationFlag(this.fSprites.LEDs1, false)
@@ -770,6 +786,7 @@ export class MinIONStage extends Stage{
             .addStopSoundEvent(this.foreground, this.soundManager, "elie15")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.Elie, -3, 0, 1)
+            .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.eSpeech7, -3, 0, 1)
             .addFade(this.fSprites.dragInfoBox, 3, 0, 1)
             .next()
@@ -815,6 +832,7 @@ export class MinIONStage extends Stage{
             .addFrameEvent(this.fSprites.Elie, 0)
             .addForceLocationEvent(this.fSprites.Elie, [500, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
+            .addFade(this.fSprites.clickNotice, 3, 0, 1)
             .addFade(this.fSprites.eSpeech8, 3, 0, 1)
             .addClickEvent(this.foreground)
             .setAnimationFlag(this.fSprites.LEDs1, false)
@@ -854,6 +872,7 @@ export class MinIONStage extends Stage{
         this.fSprites.pollenPoppy.tick();
         this.fSprites.arrowHighlight.tick();
         this.fSprites.dragInfoBox.tick();
+        this.fSprites.clickNotice.tick();
         this.fSprites.LEDs1.tick();
         this.fSprites.LEDs2.tick();
 
