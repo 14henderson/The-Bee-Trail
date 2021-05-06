@@ -98,8 +98,8 @@ export class PollenStage extends Stage{
             "assets/sound/bees/3-You-can-see-that.mp3",
             "assets/sound/bees/2-bella-did-you-know.mp3",
             "assets/sound/bees/3-bella-dna-is-what-makes-unique.mp3",
-            "assets/sound/bees/3 im-so-excited.wav",
-            "assets/sound/bees/4 if-we-can-find-out.wav"
+            "assets/sound/bees/3 im-so-excited.mp3",
+            "assets/sound/bees/4 if-we-can-find-out.mp3"
         ];
         return this.textures;
     }
@@ -239,9 +239,9 @@ export class PollenStage extends Stage{
         this.soundManager.add("bella3", "assets/sound/bees/3-bella-dna-is-what-makes-unique.mp3", resources);
         this.soundManager.setVolume("bella3", 2.5);
 
-        this.soundManager.add("billie3", "assets/sound/bees/3 im-so-excited.wav", resources);
+        this.soundManager.add("billie3", "assets/sound/bees/3 im-so-excited.mp3", resources);
         this.soundManager.setVolume("billie3", 1);
-        this.soundManager.add("billie4", "assets/sound/bees/4 if-we-can-find-out.wav", resources);
+        this.soundManager.add("billie4", "assets/sound/bees/4 if-we-can-find-out.mp3", resources);
         this.soundManager.setVolume("billie4", 1);
 
         this.miscAssetCreation();

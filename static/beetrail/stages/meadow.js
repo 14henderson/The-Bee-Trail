@@ -66,8 +66,8 @@ export class MeadowStage extends Stage{
             "assets/sound/Elie/Meadow/2-Well-done.mp3",
             "assets/sound/bees/1-Hi-im-Barney.mp3",
             "assets/sound/bees/1-bella-hi-im-bella-bee.mp3",
-            "assets/sound/bees/1 Hi-im-billie-bee.wav",
-            "assets/sound/bees/2 you-can-see.wav"
+            "assets/sound/bees/1 Hi-im-billie-bee.mp3",
+            "assets/sound/bees/2 you-can-see.mp3"
         ];
         return this.textures;
     }
@@ -158,8 +158,8 @@ export class MeadowStage extends Stage{
         this.soundManager.add("bella1", "assets/sound/bees/1-bella-hi-im-bella-bee.mp3", resources);
         this.soundManager.setVolume("bella1", 2.5);
 
-        this.soundManager.add("billie1", "assets/sound/bees/1 Hi-im-billie-bee.wav", resources);
-        this.soundManager.add("billie2", "assets/sound/bees/2 you-can-see.wav", resources);
+        this.soundManager.add("billie1", "assets/sound/bees/1 Hi-im-billie-bee.mp3", resources);
+        this.soundManager.add("billie2", "assets/sound/bees/2 you-can-see.mp3", resources);
         this.soundManager.setVolume("billie1", 1);
         this.soundManager.setVolume("billie2", 1);
     }
