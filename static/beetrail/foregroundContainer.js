@@ -61,10 +61,10 @@ export class Foreground extends PIXI.Container{
     getAlpha(){return this.alpha;}
     setAlpha(a){this.alpha = a;}
     dissableInteractiveState(){
-        this.interactiveChildren = false;
+        //this.interactiveChildren = false;
     }
     enableInteractiveState(){
-        this.interactiveChildren = true;
+        //this.interactiveChildren = true;
     }
     dissableDrag(){
         //do nothing

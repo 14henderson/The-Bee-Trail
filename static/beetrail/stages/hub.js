@@ -130,6 +130,12 @@ export class HubStage extends Stage{
     }
 
 
+    setState(stateNum){
+        this.fSprites.meadowNav.resetClickedState();
+        this.fSprites.pollenNav.resetClickedState();
+        this.fSprites.minIONNav.resetClickedState();
+        this.state = this.states[stateNum];
+    }
 
     assetPositioning(){
         this.fSprites.background3.setSize(1280, 960);
@@ -228,12 +234,10 @@ export class HubStage extends Stage{
             .next()
             .addClickEvent(this.fSprites.playButton)
             .next()
-            .addCustomAction(this.foreground, "dissableInteractiveState")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addFade(this.fSprites.newspaper, -3, 0, 1)
             .addFade(this.fSprites.playButton, -3, 0, 1)
             .next()
-            .addCustomAction(this.foreground, "enableInteractiveState")
             .addChangeStateEvent(this.foreground, this, 2);
         this.startEventChain.initialise();
 
