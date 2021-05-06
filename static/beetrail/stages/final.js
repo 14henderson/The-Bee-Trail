@@ -37,6 +37,7 @@ export class FinalStage extends Stage{
             "assets/fSprites/objects/Artboard 1newspaper-backpage.png",
             "assets/fSprites/buttons/Artboard 2certificate-button-green.png",
             "assets/fSprites/buttons/Artboard 2certificate-button-pink.png",
+            "assets/fSprites/buttons/video-play-button.png",
 
             "assets/sound/012669617-my-little-adventure-60-sec-loo.wav"
         ];
@@ -71,6 +72,10 @@ export class FinalStage extends Stage{
             "assets/fSprites/buttons/Artboard 2certificate-button-pink.png"
         ], resources);
 
+        this.fSprites.vidButton = new AnimatedItem([
+            "assets/fSprites/buttons/video-play-button.png"
+        ], resources);
+
         this.soundManager.add("soundtrack", "assets/sound/012669617-my-little-adventure-60-sec-loo.wav", resources);
         this.soundManager.setVolume("soundtrack", 0.3);
         this.soundManager.setLoop("soundtrack", true);
@@ -92,6 +97,10 @@ export class FinalStage extends Stage{
         this.fSprites.certButton.setLocation(1000, 383);
         this.fSprites.certButton.enableInteractiveState();
         this.fSprites.certButton.enableMouseHoverFrame(1);
+
+        this.fSprites.vidButton.centerPivot();
+        this.fSprites.vidButton.setLocation(620, 760);
+        this.fSprites.vidButton.enableInteractiveState();
 
         this.foreground.setAlpha(0);
     }
@@ -121,6 +130,11 @@ export class FinalStage extends Stage{
         if(this.fSprites.certButton.getClickedStateAndReset()){
             window.open("/assets/certificate/certificate.pdf");
         }
+
+        if(this.fSprites.vidButton.getClickedStateAndReset()){
+            window.open("http://example.org/");
+        }
+
 
 
         context.foreground.tick();
