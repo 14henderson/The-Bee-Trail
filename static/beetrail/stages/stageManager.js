@@ -10,8 +10,8 @@ import {SoundManager} from '/beetrail/soundManager.js'
 
 
 export class StageManager{
-    #stages;
-    #stage;
+    stages;
+    stage;
     assetTextures;
     app;
     loader;
