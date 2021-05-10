@@ -18,6 +18,7 @@ export class StageManager{
     bSprites;
     errorText;
     fpsErrorText;
+    loadingText;
     FPSTooLowTicker;
     fpsErrorFlag;
     soundManager;
@@ -55,6 +56,30 @@ export class StageManager{
         this.loader.add(assets);
 
 
+
+
+
+        //loading Screen done here
+        this.loader.onStart.add((loader, resources) => {
+            this.loadBack = new PIXI.Sprite.from("assets/fSprites/backgrounds/loading.jpg");
+            let ratio = 2520/1080;
+            this.loadBack.height = window.innerHeight;
+            this.loadBack.width = this.loadBack.height * ratio;
+            this.loadBack.x = (window.innerWidth/2)-(this.loadBack.width/2);
+
+
+            let loadingText = new PIXI.Text("Loading: 0%", {fontFamily : 'Arial', fontSize: 40, fill : 0xffffff,  align : 'center'});
+            this.loadingText = new ShapeItem(loadingText, false);
+            this.loadingText.setLocation((window.innerWidth/2)-140, 420);
+
+            this.app.stage.addChild(this.loadBack);
+            this.app.stage.addChild(this.loadingText.getSprite());
+        });
+
+
+
+
+
         //create assets for each stage.
         this.loader.load((loader, resources) => {
             this.createBSprites(resources); //create background sprites        
@@ -68,11 +93,14 @@ export class StageManager{
 
 
         this.loader.onProgress.add(() => {
-        //    console.log(this.loader.progress);
+            this.loadingText.getSprite().text = "Loading: "+this.loader.progress.toFixed(0)+"%";
+            console.log(this.loader.progress);
         })
 
         //init first stage...
         this.loader.onComplete.add(() => {
+            this.loadingText.setAlpha(0);
+
             this.addToApp();    //add background assets to container.
             this.app.stage.addChild(this.stages[this.stage].foreground);
             this.app.ticker.maxFPS = 60;
@@ -108,7 +136,8 @@ export class StageManager{
     getBackgroundAssets(){
         return [
             "assets/bSprites/merged_background.fw.png",
-            "assets/bSprites/Artboard 1sky-background.png"
+            "assets/bSprites/Artboard 1sky-background.png",
+            "assets/fSprites/backgrounds/loading.jpg"
         ];
     }
     centerAndScaleSprites(sprites){
