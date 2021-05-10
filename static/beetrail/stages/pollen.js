@@ -698,8 +698,11 @@ export class PollenStage extends Stage{
             .addRotationEvent(this.fSprites.redTube, 0, 90, 0.75)
             .addScaleEvent(this.fSprites.redTube, -0.3, 0.15, 1)
             .addMovement(this.fSprites.redTube, [1100, 700], 4, Movement.quadCurveMvPattern, 50, false)
+            .next()
+
             .addClickEvent(this.foreground)
             .next()
+
 
             .addStopSoundEvent(this.foreground, this.soundManager, "elie8")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
