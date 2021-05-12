@@ -212,22 +212,22 @@ export class PollenStage extends Stage{
         this.soundManager.setLoop("bee-hum", true);
 
         this.soundManager.add("elie3", "assets/sound/Elie/Pollen/3-Now-we-have.wav", resources);
-        this.soundManager.setVolume("elie3", 0.5);
+        this.soundManager.setVolume("elie3", 0.8);
 
         this.soundManager.add("elie4", "assets/sound/Elie/Pollen/4-Instead-were-going.mp3", resources);
-        this.soundManager.setVolume("elie4", 0.5);
+        this.soundManager.setVolume("elie4", 0.8);
 
         this.soundManager.add("elie5", "assets/sound/Elie/Pollen/5-First-can-you.mp3", resources);
-        this.soundManager.setVolume("elie5", 0.5);
+        this.soundManager.setVolume("elie5", 0.8);
 
         this.soundManager.add("elie6", "assets/sound/Elie/Pollen/6-We-can-look-at.mp3", resources);
-        this.soundManager.setVolume("elie6", 0.5);
+        this.soundManager.setVolume("elie6", 0.8);
 
         this.soundManager.add("elie7", "assets/sound/Elie/Pollen/7-If-I-know-the-dna.mp3", resources);
-        this.soundManager.setVolume("elie7", 0.5);
+        this.soundManager.setVolume("elie7", 0.8);
 
         this.soundManager.add("elie8", "assets/sound/Elie/Pollen/8-Thanks-it-looks-like.mp3", resources);
-        this.soundManager.setVolume("elie8", 0.5);
+        this.soundManager.setVolume("elie8", 0.8);
 
         this.soundManager.add("barney2", "assets/sound/bees/2-This-doesnt-hurt-barney.mp3", resources);
         this.soundManager.setVolume("barney2", 0.5);

@@ -68,9 +68,9 @@ export class StageManager{
             this.loadBack.x = (window.innerWidth/2)-(this.loadBack.width/2);
 
 
-            let loadingText = new PIXI.Text("Loading: 0%", {fontFamily : 'Arial', fontSize: 40, fill : 0xffffff,  align : 'center'});
+            let loadingText = new PIXI.Text("Loading: 0%", {fontFamily : 'Arial', fontSize: 42, fill : 0x000000,  align : 'center'});
             this.loadingText = new ShapeItem(loadingText, false);
-            this.loadingText.setLocation((window.innerWidth/2)-140, 420);
+            this.loadingText.setLocation((window.innerWidth/2)+460, 370);
 
             this.app.stage.addChild(this.loadBack);
             this.app.stage.addChild(this.loadingText.getSprite());

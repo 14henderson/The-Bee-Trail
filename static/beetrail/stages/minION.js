@@ -305,7 +305,7 @@ export class MinIONStage extends Stage{
         this.soundManager.add("elie15", "assets/sound/Elie/MinION/15-Great-Bella-blackberry-match.wav", resources);
         this.soundManager.setVolume("elie15", 0.8);
         this.soundManager.add("elie16", "assets/sound/Elie/MinION/16-Great-Billie-bluebell.mp3", resources);
-        this.soundManager.setVolume("elie16", 0.5);
+        this.soundManager.setVolume("elie16", 0.8);
 
 
 

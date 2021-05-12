@@ -147,10 +147,10 @@ export class MeadowStage extends Stage{
         this.soundManager.setVolume("swoosh", 0.2);
 
         this.soundManager.add("elie1", "assets/sound/Elie/Meadow/1-hello-Im-elie.mp3", resources);
-        this.soundManager.setVolume("elie1", 0.5);
+        this.soundManager.setVolume("elie1", 0.8);
 
         this.soundManager.add("elie2", "assets/sound/Elie/Meadow/2-Well-done.mp3", resources);
-        this.soundManager.setVolume("elie2", 0.5);
+        this.soundManager.setVolume("elie2", 0.8);
 
         this.soundManager.add("barney1", "assets/sound/bees/1-Hi-im-Barney.mp3", resources);
         this.soundManager.setVolume("barney1", 0.4);
