@@ -38,6 +38,7 @@ export class FinalStage extends Stage{
             "assets/fSprites/buttons/Artboard 2certificate-button-green.png",
             "assets/fSprites/buttons/Artboard 2certificate-button-pink.png",
             "assets/fSprites/buttons/video-play-button.png",
+            "assets/fSprites/buttons/Artboard 3video-play-green.png",
 
             "assets/sound/012669617-my-little-adventure-60-sec-loo.wav"
         ];
@@ -73,7 +74,8 @@ export class FinalStage extends Stage{
         ], resources);
 
         this.fSprites.vidButton = new AnimatedItem([
-            "assets/fSprites/buttons/video-play-button.png"
+            "assets/fSprites/buttons/Artboard 3video-play-green.png",
+            "assets/fSprites/buttons/video-play-button.png"            
         ], resources);
 
         this.soundManager.add("soundtrack", "assets/sound/012669617-my-little-adventure-60-sec-loo.wav", resources);
@@ -101,6 +103,7 @@ export class FinalStage extends Stage{
         this.fSprites.vidButton.centerPivot();
         this.fSprites.vidButton.setLocation(620, 760);
         this.fSprites.vidButton.enableInteractiveState();
+        this.fSprites.vidButton.enableMouseHoverFrame(1);
 
         this.foreground.setAlpha(0);
     }
@@ -132,13 +135,10 @@ export class FinalStage extends Stage{
         }
 
         if(this.fSprites.vidButton.getClickedStateAndReset()){
-            window.open("http://example.org/");
+            window.open("https://www.earlham.ac.uk/");
         }
 
-
-
         context.foreground.tick();
-        //context.eventChain.tick();
     }
 
 }
