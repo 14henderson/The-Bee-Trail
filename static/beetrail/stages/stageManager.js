@@ -103,6 +103,8 @@ export class StageManager{
         //init first stage...
         this.loader.onComplete.add(() => {
             this.loadingText.setAlpha(0);
+            this.app.stage.removeChild(this.loadingText.getSprite());
+            this.app.stage.removeChild(this.loadBack);
 
             this.addToApp();    //add background assets to container.
             this.app.stage.addChild(this.stages[this.stage].foreground);
