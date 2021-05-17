@@ -68,9 +68,12 @@ export class StageManager{
             this.loadBack.x = (window.innerWidth/2)-(this.loadBack.width/2);
 
 
-            let loadingText = new PIXI.Text("Loading: 0%", {fontFamily : 'Arial', fontSize: 42, fill : 0x000000,  align : 'center'});
+            let loadingText = new PIXI.Text("Loading: 0%", {fontFamily : 'Roboto', fontSize: window.innerHeight/24, fill : 0x000000});
             this.loadingText = new ShapeItem(loadingText, false);
-            this.loadingText.setLocation((window.innerWidth/2)+460, 370);
+
+            let x = (window.innerWidth/2) + ((window.innerHeight/1080)*2520)/20;
+            let y = window.innerHeight*0.395
+            this.loadingText.setLocation(x, y);
 
             this.app.stage.addChild(this.loadBack);
             this.app.stage.addChild(this.loadingText.getSprite());
