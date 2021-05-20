@@ -64,7 +64,7 @@ export class HubStage extends Stage{
 
             "assets/sound/048863013-menu-click-casual-mobile-game.wav",
             "assets/sound/043738205-ting-game-sound.wav",
-            "assets/sound/012669617-my-little-adventure-60-sec-loo.wav"
+            "assets/sound/012669617-my-little-adventure-60-sec-loo.mp3"
         ];
         return this.textures;
     }
@@ -121,7 +121,7 @@ export class HubStage extends Stage{
         this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.wav", resources);
         this.soundManager.setVolume("speech-click", 0.5);
 
-        this.soundManager.add("soundtrack", "assets/sound/012669617-my-little-adventure-60-sec-loo.wav", resources);
+        this.soundManager.add("soundtrack", "assets/sound/012669617-my-little-adventure-60-sec-loo.mp3", resources);
         this.soundManager.setVolume("soundtrack", 0.3);
         this.soundManager.setLoop("soundtrack", true);
 

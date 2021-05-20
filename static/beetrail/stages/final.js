@@ -40,7 +40,7 @@ export class FinalStage extends Stage{
             "assets/fSprites/buttons/video-play-button.png",
             "assets/fSprites/buttons/Artboard 3video-play-green.png",
 
-            "assets/sound/012669617-my-little-adventure-60-sec-loo.wav"
+            "assets/sound/012669617-my-little-adventure-60-sec-loo.mp3"
         ];
         return this.textures;
     }
@@ -78,7 +78,7 @@ export class FinalStage extends Stage{
             "assets/fSprites/buttons/video-play-button.png"            
         ], resources);
 
-        this.soundManager.add("soundtrack", "assets/sound/012669617-my-little-adventure-60-sec-loo.wav", resources);
+        this.soundManager.add("soundtrack", "assets/sound/012669617-my-little-adventure-60-sec-loo.mp3", resources);
         this.soundManager.setVolume("soundtrack", 0.3);
         this.soundManager.setLoop("soundtrack", true);
     }

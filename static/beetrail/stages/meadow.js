@@ -56,10 +56,10 @@ export class MeadowStage extends Stage{
 
             "assets/fSprites/buttons/click-anywhere.png",
 
-            "assets/sound/meadow.wav",
+            "assets/sound/meadow.mp3",
             "assets/sound/048863013-menu-click-casual-mobile-game.wav",
             "assets/sound/043738205-ting-game-sound.wav",
-            "assets/sound/077024761-bees.wav",
+            "assets/sound/077024761-bees.mp3",
             "assets/sound/145752541-net-swoosh-02.wav",
 
             "assets/sound/Elie/Meadow/1-hello-Im-elie.mp3",
@@ -129,7 +129,7 @@ export class MeadowStage extends Stage{
 
         this.fSprites.clickNotice = new SpriteItem("assets/fSprites/buttons/click-anywhere.png", resources);
 
-        this.soundManager.add("meadow", "assets/sound/meadow.wav", resources);
+        this.soundManager.add("meadow", "assets/sound/meadow.mp3", resources);
         this.soundManager.setVolume("meadow", 0);
         this.soundManager.setLoop("meadow", true);
 
@@ -139,7 +139,7 @@ export class MeadowStage extends Stage{
         this.soundManager.add("celeb-ding", "assets/sound/043738205-ting-game-sound.wav", resources);
         this.soundManager.setVolume("celeb-ding", 0.5);
 
-        this.soundManager.add("bee-hum", "assets/sound/077024761-bees.wav", resources);
+        this.soundManager.add("bee-hum", "assets/sound/077024761-bees.mp3", resources);
         this.soundManager.setVolume("bee-hum", 0);
         this.soundManager.setLoop("bee-hum", true);
 
