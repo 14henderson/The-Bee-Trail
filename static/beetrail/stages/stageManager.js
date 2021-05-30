@@ -167,7 +167,7 @@ export class StageManager{
             .endFill();
         this.bSprites.pauseScreen = new ShapeItem(pausedColour, false);
         this.bSprites.pauseScreen.setAlpha(0);
-        let errorText = new PIXI.Text("Screen size is too small. If on mobile \n view this page in landscape mode.", {fontFamily : 'Arial', fontSize: 30, fill : 0xffffff,  align : 'center'});
+        let errorText = new PIXI.Text("Screen width is too small. \n If on desktop increase screen width. \n If on mobile view this page in landscape mode.", {fontFamily : 'Arial', fontSize: 30, fill : 0xffffff,  align : 'center'});
         this.errorText = new ShapeItem(errorText, false);
         this.errorText.alpha = 0;
 
@@ -203,6 +203,7 @@ export class StageManager{
     }
     addFPSErrorScreen(){
         if(this.fpsErrorFlag){
+            this.errorText.setAlpha(0);
             this.bSprites.pauseScreen.setSize(window.innerWidth, window.innerHeight);
             this.bSprites.pauseScreen.setAlpha(1);
             this.fpsErrorText.setAlpha(1);
