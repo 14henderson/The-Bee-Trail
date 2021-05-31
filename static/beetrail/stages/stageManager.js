@@ -97,7 +97,6 @@ export class StageManager{
 
         this.loader.onProgress.add(() => {
             this.loadingText.getSprite().text = "Loading: "+this.loader.progress.toFixed(0)+"%";
-            console.log(this.loader.progress);
         })
 
         //init first stage...
@@ -239,7 +238,6 @@ export class StageManager{
                 textures.add(_t[i]);
             }
         }
-        console.log(textures);
         return textures;
     }
 

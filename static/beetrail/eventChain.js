@@ -30,23 +30,20 @@ export class EventChain{
         return this;
     }
     nextEvent(){
-        console.log("---------- Next Event Function for ", this.name, "----------");
+        //console.log("---------- Next Event Function for ", this.name, "----------");
         this.eventNumber += 1;
-        console.log("Event ", this.eventNumber, " of ", this.chain.length);
+        //console.log("Event ", this.eventNumber, " of ", this.chain.length);
         if(this.eventNumber >= this.chain.length){
-            console.log("End of Event Chain!");
             return;
         }
 
         let i;
         
-        console.log("First Loop! Dissables all by default");
         for(i=0; i<this.chain[this.eventNumber].length; i++){
             this.chain[this.eventNumber][i].item.dissableInteractiveState();
             this.chain[this.eventNumber][i].item.dissableDrag();
         }
         
-        console.log("Second loop! Enables if neceessary");
         for(i=0; i<this.chain[this.eventNumber].length; i++){
             if(this.chain[this.eventNumber][i].type == "movement"){
                 if(this.chain[this.eventNumber][i].origin[0] < this.chain[this.eventNumber][i].dest[0] && this.chain[this.eventNumber][i].faceWith){
@@ -60,7 +57,6 @@ export class EventChain{
                 this.chain[this.eventNumber][i].item.enableInteractiveState();
             }
             if(this.chain[this.eventNumber][i].type == "drag"){
-                console.log("Dragging enabled from nextEvent() function");
                 this.chain[this.eventNumber][i].item.enableDrag();
             }
             
@@ -466,7 +462,6 @@ export class EventChain{
                         this.chain[this.eventNumber][i].item.gotoFrame(
                             this.chain[this.eventNumber][i].frameNum
                         );
-                        console.log("MOVED TO FRAME: ", this.chain[this.eventNumber][i].frameNum);
                         this.chain[this.eventNumber][i].completed = true;
                     }
                     eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
@@ -495,7 +490,6 @@ export class EventChain{
                             this.chain[this.eventNumber][i].dest[0],
                             this.chain[this.eventNumber][i].dest[1]
                         );
-                        console.log("Location Set!");
                         this.chain[this.eventNumber][i].completed = true;
                     }
                     eGroupComp = eGroupComp && this.chain[this.eventNumber][i].completed;
@@ -577,8 +571,6 @@ export class EventChain{
                 
                 case 'scale':
                     if(!this.chain[this.eventNumber][i].completed){
-                        console.log("Current Scale: ", this.chain[this.eventNumber][i].item.getScale());
-                        console.log("Current Delta: ", this.chain[this.eventNumber][i].delta);
                         this.chain[this.eventNumber][i].item.setScale(
                             this.chain[this.eventNumber][i].item.getScale()
                             +this.chain[this.eventNumber][i].delta/100);
@@ -630,7 +622,6 @@ export class EventChain{
                 case 'customAction':
                     if(!this.chain[this.eventNumber][i].completed){
                         let func = this.chain[this.eventNumber][i].funcPointer;
-                        console.log(func);
                         this.chain[this.eventNumber][i].item[func]();
                         this.chain[this.eventNumber][i].completed = true;
                     }

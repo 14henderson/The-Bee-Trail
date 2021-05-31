@@ -38,7 +38,6 @@ export class Stage{
 
     destroyAllItems(){
         for(let singleSprite in this.bSprites){
-            console.log(singleSprite);
             this.bSprites[singleSprite].getSprite().destroy();
         }
         this.bSprites = {}
