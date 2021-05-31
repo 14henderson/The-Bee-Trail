@@ -150,9 +150,9 @@ export class HubStage extends Stage{
         this.fSprites.bench.setLocation(0, 686);
 
         this.fSprites.laptop.setScale(0.5);
-        this.fSprites.laptop.setLocation(700, 550);
-        this.fSprites.minION.setScale(0.4);
-        this.fSprites.minION.setLocation(750, 750);
+        this.fSprites.laptop.setLocation(800, 520);
+        this.fSprites.minION.setScale(0.7);
+        this.fSprites.minION.setLocation(850, 720);
 
         this.fSprites.playButton.centerPivot();
         this.fSprites.playButton.setScale(0.9);
@@ -207,7 +207,7 @@ export class HubStage extends Stage{
             this.fSprites.minIONNav.setAlpha(1);
         }
         
-        //For debugging purposes only - not to go in final v
+        //For debugging purposes only
         //this.fSprites.meadowNav.enableInteractiveState();
         //this.fSprites.pollenNav.enableInteractiveState();
         //this.fSprites.minIONNav.enableInteractiveState();
