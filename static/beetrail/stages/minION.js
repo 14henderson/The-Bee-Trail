@@ -115,14 +115,14 @@ export class MinIONStage extends Stage{
             "assets/fSprites/buttons/greenflashing-lights.png",
             "assets/fSprites/buttons/redflashing-lights.png",
 
-            "assets/sound/meadow.wav",
+            "assets/sound/meadow.mp3",
             "assets/sound/048863013-menu-click-casual-mobile-game.wav",
             "assets/sound/043738205-ting-game-sound.wav",
-            "assets/sound/077024761-bees.wav",
+            "assets/sound/077024761-bees.mp3",
             "assets/sound/066893573-casino-slot-machines-slot-mach.wav",
             "assets/sound/054250043-wrong-03.wav",
             "assets/sound/049974748-quiz-correct.wav",
-            "assets/sound/143406883-machine-printer-02-scanning-ex.wav",
+            "assets/sound/143406883-machine-printer-02-scanning-ex.mp3",
             
             "assets/sound/Elie/MinION/9-This-machine.mp3",
             "assets/sound/Elie/MinION/10-If-we-can-match.mp3",
@@ -263,7 +263,7 @@ export class MinIONStage extends Stage{
         this.fSprites.dragInfoBox = new SpriteItem("assets/fSprites/buttons/1drag-pollen.png", resources);
         this.fSprites.clickNotice = new SpriteItem("assets/fSprites/buttons/click-anywhere.png", resources);
 
-        this.soundManager.add("meadow", "assets/sound/meadow.wav", resources);
+        this.soundManager.add("meadow", "assets/sound/meadow.mp3", resources);
         this.soundManager.setVolume("meadow", 0);
         this.soundManager.setLoop("meadow", true);
 
@@ -273,7 +273,7 @@ export class MinIONStage extends Stage{
         this.soundManager.add("celeb-ding", "assets/sound/043738205-ting-game-sound.wav", resources);
         this.soundManager.setVolume("celeb-ding", 0.5);
 
-        this.soundManager.add("bee-hum", "assets/sound/077024761-bees.wav", resources);
+        this.soundManager.add("bee-hum", "assets/sound/077024761-bees.mp3", resources);
         this.soundManager.setVolume("bee-hum", 0);
         this.soundManager.setLoop("bee-hum", true);
 
@@ -286,7 +286,7 @@ export class MinIONStage extends Stage{
         this.soundManager.add("correct", "assets/sound/049974748-quiz-correct.wav", resources);
         this.soundManager.setVolume("correct", 0.5);
 
-        this.soundManager.add("scan", "assets/sound/143406883-machine-printer-02-scanning-ex.wav", resources);
+        this.soundManager.add("scan", "assets/sound/143406883-machine-printer-02-scanning-ex.mp3", resources);
         this.soundManager.setVolume("scan", 0.3);
 
 
@@ -305,7 +305,7 @@ export class MinIONStage extends Stage{
         this.soundManager.add("elie15", "assets/sound/Elie/MinION/15-Great-Bella-blackberry-match.wav", resources);
         this.soundManager.setVolume("elie15", 0.8);
         this.soundManager.add("elie16", "assets/sound/Elie/MinION/16-Great-Billie-bluebell.mp3", resources);
-        this.soundManager.setVolume("elie16", 0.5);
+        this.soundManager.setVolume("elie16", 0.8);
 
 
 

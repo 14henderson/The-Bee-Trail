@@ -10,14 +10,15 @@ import {SoundManager} from '/beetrail/soundManager.js'
 
 
 export class StageManager{
-    #stages;
-    #stage;
+    stages;
+    stage;
     assetTextures;
     app;
     loader;
     bSprites;
     errorText;
     fpsErrorText;
+    loadingText;
     FPSTooLowTicker;
     fpsErrorFlag;
     soundManager;
@@ -55,6 +56,33 @@ export class StageManager{
         this.loader.add(assets);
 
 
+
+
+
+        //loading Screen done here
+        this.loader.onStart.add((loader, resources) => {
+            this.loadBack = new PIXI.Sprite.from("assets/fSprites/backgrounds/loading.jpg");
+            let ratio = 2520/1080;
+            this.loadBack.height = window.innerHeight;
+            this.loadBack.width = this.loadBack.height * ratio;
+            this.loadBack.x = (window.innerWidth/2)-(this.loadBack.width/2);
+
+
+            let loadingText = new PIXI.Text("Loading: 0%", {fontFamily : 'Roboto', fontSize: window.innerHeight/24, fill : 0x000000});
+            this.loadingText = new ShapeItem(loadingText, false);
+
+            let x = (window.innerWidth/2) + ((window.innerHeight/1080)*2520)/20;
+            let y = window.innerHeight*0.395
+            this.loadingText.setLocation(x, y);
+
+            this.app.stage.addChild(this.loadBack);
+            this.app.stage.addChild(this.loadingText.getSprite());
+        });
+
+
+
+
+
         //create assets for each stage.
         this.loader.load((loader, resources) => {
             this.createBSprites(resources); //create background sprites        
@@ -68,11 +96,15 @@ export class StageManager{
 
 
         this.loader.onProgress.add(() => {
-        //    console.log(this.loader.progress);
+            this.loadingText.getSprite().text = "Loading: "+this.loader.progress.toFixed(0)+"%";
         })
 
         //init first stage...
         this.loader.onComplete.add(() => {
+            this.loadingText.setAlpha(0);
+            this.app.stage.removeChild(this.loadingText.getSprite());
+            this.app.stage.removeChild(this.loadBack);
+
             this.addToApp();    //add background assets to container.
             this.app.stage.addChild(this.stages[this.stage].foreground);
             this.app.ticker.maxFPS = 60;
@@ -108,7 +140,8 @@ export class StageManager{
     getBackgroundAssets(){
         return [
             "assets/bSprites/merged_background.fw.png",
-            "assets/bSprites/Artboard 1sky-background.png"
+            "assets/bSprites/Artboard 1sky-background.png",
+            "assets/fSprites/backgrounds/loading.jpg"
         ];
     }
     centerAndScaleSprites(sprites){
@@ -133,7 +166,7 @@ export class StageManager{
             .endFill();
         this.bSprites.pauseScreen = new ShapeItem(pausedColour, false);
         this.bSprites.pauseScreen.setAlpha(0);
-        let errorText = new PIXI.Text("Screen size is too small. If on mobile \n view this page in landscape mode.", {fontFamily : 'Arial', fontSize: 30, fill : 0xffffff,  align : 'center'});
+        let errorText = new PIXI.Text("Screen width is too small. \n If on desktop increase screen width. \n If on mobile view this page in landscape mode.", {fontFamily : 'Arial', fontSize: 30, fill : 0xffffff,  align : 'center'});
         this.errorText = new ShapeItem(errorText, false);
         this.errorText.alpha = 0;
 
@@ -169,6 +202,7 @@ export class StageManager{
     }
     addFPSErrorScreen(){
         if(this.fpsErrorFlag){
+            this.errorText.setAlpha(0);
             this.bSprites.pauseScreen.setSize(window.innerWidth, window.innerHeight);
             this.bSprites.pauseScreen.setAlpha(1);
             this.fpsErrorText.setAlpha(1);
@@ -204,7 +238,6 @@ export class StageManager{
                 textures.add(_t[i]);
             }
         }
-        console.log(textures);
         return textures;
     }
 

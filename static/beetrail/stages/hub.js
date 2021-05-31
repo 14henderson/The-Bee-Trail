@@ -64,7 +64,7 @@ export class HubStage extends Stage{
 
             "assets/sound/048863013-menu-click-casual-mobile-game.wav",
             "assets/sound/043738205-ting-game-sound.wav",
-            "assets/sound/012669617-my-little-adventure-60-sec-loo.wav"
+            "assets/sound/012669617-my-little-adventure-60-sec-loo.mp3"
         ];
         return this.textures;
     }
@@ -121,7 +121,7 @@ export class HubStage extends Stage{
         this.soundManager.add("speech-click", "assets/sound/048863013-menu-click-casual-mobile-game.wav", resources);
         this.soundManager.setVolume("speech-click", 0.5);
 
-        this.soundManager.add("soundtrack", "assets/sound/012669617-my-little-adventure-60-sec-loo.wav", resources);
+        this.soundManager.add("soundtrack", "assets/sound/012669617-my-little-adventure-60-sec-loo.mp3", resources);
         this.soundManager.setVolume("soundtrack", 0.3);
         this.soundManager.setLoop("soundtrack", true);
 
@@ -130,6 +130,12 @@ export class HubStage extends Stage{
     }
 
 
+    setState(stateNum){
+        this.fSprites.meadowNav.resetClickedState();
+        this.fSprites.pollenNav.resetClickedState();
+        this.fSprites.minIONNav.resetClickedState();
+        this.state = this.states[stateNum];
+    }
 
     assetPositioning(){
         this.fSprites.background3.setSize(1280, 960);
@@ -144,9 +150,9 @@ export class HubStage extends Stage{
         this.fSprites.bench.setLocation(0, 686);
 
         this.fSprites.laptop.setScale(0.5);
-        this.fSprites.laptop.setLocation(700, 550);
-        this.fSprites.minION.setScale(0.4);
-        this.fSprites.minION.setLocation(750, 750);
+        this.fSprites.laptop.setLocation(800, 520);
+        this.fSprites.minION.setScale(0.7);
+        this.fSprites.minION.setLocation(850, 720);
 
         this.fSprites.playButton.centerPivot();
         this.fSprites.playButton.setScale(0.9);
@@ -201,7 +207,7 @@ export class HubStage extends Stage{
             this.fSprites.minIONNav.setAlpha(1);
         }
         
-        //For debugging purposes only - not to go in final v
+        //For debugging purposes only
         //this.fSprites.meadowNav.enableInteractiveState();
         //this.fSprites.pollenNav.enableInteractiveState();
         //this.fSprites.minIONNav.enableInteractiveState();
