@@ -1,5 +1,5 @@
 import { StageManager } from '/beetrail/stages/stageManager.js';
-
+PIXI.utils.skipHello();
 //Create a Pixi Application
 var app = new PIXI.Application({ 
         width: 256, 
@@ -11,6 +11,7 @@ var app = new PIXI.Application({
 );
 app.renderer.view.style.position = "absolute";
 app.renderer.view.style.display = "block";
+
 
 
 app.renderer.resize(window.innerWidth, window.innerHeight);
