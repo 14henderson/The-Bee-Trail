@@ -166,11 +166,11 @@ export class StageManager{
             .endFill();
         this.bSprites.pauseScreen = new ShapeItem(pausedColour, false);
         this.bSprites.pauseScreen.setAlpha(0);
-        let errorText = new PIXI.Text("Screen width is too small. \n If on desktop increase screen width. \n If on mobile view this page in landscape mode.", {fontFamily : 'Arial', fontSize: 30, fill : 0xffffff,  align : 'center'});
+        let errorText = new PIXI.Text("Screen width is too small. \n If on desktop increase screen width. \n If on mobile view this page in landscape mode.", {fontFamily : 'Arial', fontSize: window.innerWidth/24, fill : 0xffffff,  align : 'center'});
         this.errorText = new ShapeItem(errorText, false);
         this.errorText.alpha = 0;
 
-        let fpsErrorText = new PIXI.Text("Minimum browser requirements not met. \nConsider enabling hardware acceleration or \nswitching to a different browser.", {fontFamily : 'Arial', fontSize: 30, fill : 0xffffff,  align : 'center'});
+        let fpsErrorText = new PIXI.Text("Minimum browser requirements not met. \nConsider enabling hardware acceleration or \nswitching to a different browser.", {fontFamily : 'Arial', fontSize: window.innerWidth/24, fill : 0xffffff,  align : 'center'});
         this.fpsErrorText = new ShapeItem(fpsErrorText, false);
         this.fpsErrorText.setAlpha(0);
     }
@@ -193,6 +193,8 @@ export class StageManager{
                 (window.innerWidth/2)-(this.errorText.getSize()[0]/2),
                 (window.innerHeight/2)-100
             );
+            this.errorText.getSprite().width = window.innerWidth/1.3;
+            this.errorText.getSprite().height = window.innerWidth/8;
         }else{
             this.bSprites.pauseScreen.setAlpha(0);
             this.errorText.setAlpha(0);
@@ -241,9 +243,6 @@ export class StageManager{
         return textures;
     }
 
-
-
-
     changeStage(newStage){
         this.stages[this.stage].stop();
         this.app.stage.removeChild(this.stages[this.stage].foreground);
@@ -253,7 +252,6 @@ export class StageManager{
         this.stages[this.stage].assetPositioning();
         this.stages[this.stage].eventChainsDef();
         this.app.stage.addChild(this.stages[this.stage].foreground);
-        
     }
 
 
