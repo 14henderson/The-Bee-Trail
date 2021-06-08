@@ -29,10 +29,10 @@ export class FinalStage extends Stage{
 
     getTextures(){
         this.textures = [
-            "assets/fSprites/backgrounds/background3.fw.png",
-            "assets/fSprites/backgrounds/background2.fw.png",
-            "assets/fSprites/backgrounds/background1.fw.png",
-            "assets/fSprites/backgrounds/foreground.fw.png",
+            "assets/fSprites/backgrounds/background3.webp",
+            "assets/fSprites/backgrounds/background2.webp",
+            "assets/fSprites/backgrounds/background1.webp",
+            "assets/fSprites/backgrounds/foreground.webp",
 
             "assets/fSprites/objects/Artboard 1newspaper-backpage.png",
             "assets/fSprites/buttons/Artboard 2certificate-button-green.png",
@@ -62,10 +62,10 @@ export class FinalStage extends Stage{
 
     loadSprites(resources){
         //------------------//
-        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", resources);
-        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", resources);
-        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", resources);
-        this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.fw.png", resources);
+        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.webp", resources);
+        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.webp", resources);
+        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.webp", resources);
+        this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.webp", resources);
 
         this.fSprites.newspaper = new SpriteItem("assets/fSprites/objects/Artboard 1newspaper-backpage.png", resources);
         this.fSprites.certButton = new AnimatedItem([

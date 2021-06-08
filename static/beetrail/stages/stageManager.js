@@ -61,7 +61,7 @@ export class StageManager{
 
         //loading Screen done here
         this.loader.onStart.add((loader, resources) => {
-            this.loadBack = new PIXI.Sprite.from("assets/fSprites/backgrounds/loading.jpg");
+            this.loadBack = new PIXI.Sprite.from("assets/fSprites/backgrounds/loading.webp");
             let ratio = 2520/1080;
             this.loadBack.height = window.innerHeight;
             this.loadBack.width = this.loadBack.height * ratio;
@@ -139,9 +139,9 @@ export class StageManager{
    //---------------- Background Sprite Management ---------------//
     getBackgroundAssets(){
         return [
-            "assets/bSprites/merged_background.fw.png",
-            "assets/bSprites/Artboard 1sky-background.png",
-            "assets/fSprites/backgrounds/loading.jpg"
+            "assets/bSprites/merged_background.webp",
+            "assets/bSprites/Artboard 1sky-background.webp"
+            //"assets/fSprites/backgrounds/loading.webp"
         ];
     }
     centerAndScaleSprites(sprites){
@@ -151,8 +151,8 @@ export class StageManager{
         }
     }
     createBSprites(resources){
-        this.bSprites.mBackground = new SpriteItem("assets/bSprites/merged_background.fw.png", resources);
-        this.bSprites.skyBackground = new SpriteItem("assets/bSprites/Artboard 1sky-background.png", resources);
+        this.bSprites.mBackground = new SpriteItem("assets/bSprites/merged_background.webp", resources);
+        this.bSprites.skyBackground = new SpriteItem("assets/bSprites/Artboard 1sky-background.webp", resources);
         
         let backColour = new PIXI.Graphics()
             .beginFill(0xFFFFFF)

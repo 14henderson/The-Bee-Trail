@@ -37,11 +37,11 @@ export class MinIONStage extends Stage{
 
     getTextures(){
         this.textures = [
-            "assets/fSprites/backgrounds/background3.fw.png",
-            "assets/fSprites/backgrounds/background2.fw.png",
-            "assets/fSprites/backgrounds/background1.fw.png",
-            "assets/fSprites/backgrounds/foreground.fw.png",
-            "assets/fSprites/backgrounds/minion-markIII.png",
+            "assets/fSprites/backgrounds/background3.webp",
+            "assets/fSprites/backgrounds/background2.webp",
+            "assets/fSprites/backgrounds/background1.webp",
+            "assets/fSprites/backgrounds/foreground.webp",
+            "assets/fSprites/backgrounds/minion-markIII.webp",
         
             "assets/fSprites/objects/elie-standing-NEW.png", 
             "assets/fSprites/objects/elie-waving-NEW.png",
@@ -52,9 +52,9 @@ export class MinIONStage extends Stage{
             "assets/fSprites/objects/blackberry-pollen.png",
             "assets/fSprites/objects/poppy-pollen.png",
 
-            "assets/fSprites/bees/minion/buff-blackberry-yellow.png",
-            "assets/fSprites/bees/minion/honey-poppy-orange.png",
-            "assets/fSprites/bees/minion/red-bluebell-purple.png",
+            "assets/fSprites/bees/minion/buff-blackberry-yellow.webp",
+            "assets/fSprites/bees/minion/honey-poppy-orange.webp",
+            "assets/fSprites/bees/minion/red-bluebell-purple.webp",
 
             "assets/fSprites/objects/DNA/dna-poppy.png",
             "assets/fSprites/objects/DNA/dna-poppy-large-match.png",
@@ -71,25 +71,25 @@ export class MinIONStage extends Stage{
             "assets/fSprites/objects/top-layer-grabber.png",
             "assets/fSprites/objects/flashing-arrow-green.png",
 
-            "assets/flowers/blackberry.png",
-            "assets/flowers/bluebell.png",
-            "assets/flowers/buttercup.png",
-            "assets/flowers/forget.png",
-            "assets/flowers/foxglove.png",
-            "assets/flowers/lavender.png",
-            "assets/flowers/poppy.png",
-            "assets/flowers/scarlet.png",
-            "assets/flowers/daisy.png",
+            "assets/flowers/blackberry.webp",
+            "assets/flowers/bluebell.webp",
+            "assets/flowers/buttercup.webp",
+            "assets/flowers/forget.webp",
+            "assets/flowers/foxglove.webp",
+            "assets/flowers/lavender.webp",
+            "assets/flowers/poppy.webp",
+            "assets/flowers/scarlet.webp",
+            "assets/flowers/daisy.webp",
             
-            "assets/flowers/label-poppy.fw.png",
-            "assets/flowers/label-blackberry.fw.png",
-            "assets/flowers/label-bluebell.fw.png",
-            "assets/flowers/label-buttercup.fw.png",
-            "assets/flowers/label-daisy.fw.png",
-            "assets/flowers/label-forget.fw.png",
-            "assets/flowers/label-foxglove.fw.png",
-            "assets/flowers/label-lavender.fw.png",
-            "assets/flowers/label-scarlet.fw.png",
+            "assets/flowers/label-poppy.webp",
+            "assets/flowers/label-blackberry.webp",
+            "assets/flowers/label-bluebell.webp",
+            "assets/flowers/label-buttercup.webp",
+            "assets/flowers/label-daisy.webp",
+            "assets/flowers/label-forget.webp",
+            "assets/flowers/label-foxglove.webp",
+            "assets/flowers/label-lavender.webp",
+            "assets/flowers/label-scarlet.webp",
 
             "assets/fSprites/objects/Elie/elie.fw.png",
             "assets/fSprites/objects/Elie/elie-waving.fw.png",
@@ -130,7 +130,7 @@ export class MinIONStage extends Stage{
             "assets/sound/Elie/MinION/12-Can-you-pull.mp3",
             "assets/sound/Elie/MinION/13-Does-this-DNA-match.mp3",
             "assets/sound/Elie/MinION/14-Great-Barney-poppy-match.mp3",
-            "assets/sound/Elie/MinION/15-Great-Bella-blackberry-match.wav",
+            "assets/sound/Elie/MinION/15-Great-Bella-blackberry-match.mp3",
             "assets/sound/Elie/MinION/16-Great-Billie-bluebell.mp3"
         ];
 
@@ -155,11 +155,11 @@ export class MinIONStage extends Stage{
 
     loadSprites(resources){
         //------------------//
-        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", resources);
-        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", resources);
-        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", resources);
-        this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.fw.png", resources);
-        this.fSprites.minion = new SpriteItem("assets/fSprites/backgrounds/minion-markIII.png", resources);
+        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.webp", resources);
+        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.webp", resources);
+        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.webp", resources);
+        this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.webp", resources);
+        this.fSprites.minion = new SpriteItem("assets/fSprites/backgrounds/minion-markIII.webp", resources);
 
         this.fSprites.tGrabber1 = new SpriteItem("assets/fSprites/objects/top-layer-grabber.png", resources);
         this.fSprites.tGrabber2 = new SpriteItem("assets/fSprites/objects/top-layer-grabber.png", resources);
@@ -194,15 +194,15 @@ export class MinIONStage extends Stage{
         ], resources);
 
 
-        this.fSprites.labelBlackberry = new SpriteItem("assets/flowers/label-blackberry.fw.png", resources);
-        this.fSprites.labelPoppy = new SpriteItem("assets/flowers/label-poppy.fw.png", resources);
-        this.fSprites.labelBluebell = new SpriteItem("assets/flowers/label-bluebell.fw.png", resources);
-        this.fSprites.labelButtercup = new SpriteItem("assets/flowers/label-buttercup.fw.png", resources);
-        this.fSprites.labelDaisy = new SpriteItem("assets/flowers/label-daisy.fw.png", resources);
-        this.fSprites.labelForget = new SpriteItem("assets/flowers/label-forget.fw.png", resources);
-        this.fSprites.labelFoxglove = new SpriteItem("assets/flowers/label-foxglove.fw.png", resources);
-        this.fSprites.labelLavender = new SpriteItem("assets/flowers/label-lavender.fw.png", resources);
-        this.fSprites.labelScarlet = new SpriteItem("assets/flowers/label-scarlet.fw.png", resources);
+        this.fSprites.labelBlackberry = new SpriteItem("assets/flowers/label-blackberry.webp", resources);
+        this.fSprites.labelPoppy = new SpriteItem("assets/flowers/label-poppy.webp", resources);
+        this.fSprites.labelBluebell = new SpriteItem("assets/flowers/label-bluebell.webp", resources);
+        this.fSprites.labelButtercup = new SpriteItem("assets/flowers/label-buttercup.webp", resources);
+        this.fSprites.labelDaisy = new SpriteItem("assets/flowers/label-daisy.webp", resources);
+        this.fSprites.labelForget = new SpriteItem("assets/flowers/label-forget.webp", resources);
+        this.fSprites.labelFoxglove = new SpriteItem("assets/flowers/label-foxglove.webp", resources);
+        this.fSprites.labelLavender = new SpriteItem("assets/flowers/label-lavender.webp", resources);
+        this.fSprites.labelScarlet = new SpriteItem("assets/flowers/label-scarlet.webp", resources);
 
         this.fSprites.DNABlackberryMatch = new SpriteItem("assets/fSprites/objects/DNA/dna-blackberry-large-match.fw.png", resources);
         this.fSprites.DNAPoppyMatch = new SpriteItem("assets/fSprites/objects/DNA/dna-poppy-large-match.png", resources);
@@ -220,24 +220,24 @@ export class MinIONStage extends Stage{
         this.fSprites.DNAPoppy = new SpriteItem("assets/fSprites/objects/DNA/dna-poppy-large-match.png", resources);
 
 
-        this.fSprites.blackberry = new SpriteItem("assets/flowers/blackberry.png", resources);
-        this.fSprites.blackberry2 = new SpriteItem("assets/flowers/blackberry.png", resources);
-        this.fSprites.bluebell = new SpriteItem("assets/flowers/bluebell.png", resources);
-        this.fSprites.bluebell2 = new SpriteItem("assets/flowers/bluebell.png", resources);
-        this.fSprites.poppy = new SpriteItem("assets/flowers/poppy.png", resources);
-        this.fSprites.poppy2 = new SpriteItem("assets/flowers/poppy.png", resources);
-        this.fSprites.lavender = new SpriteItem("assets/flowers/lavender.png", resources);
-        this.fSprites.foxglove= new SpriteItem("assets/flowers/foxglove.png", resources);
-        this.fSprites.buttercup = new SpriteItem("assets/flowers/buttercup.png", resources);
-        this.fSprites.daisy = new SpriteItem("assets/flowers/daisy.png", resources);
-        this.fSprites.forget = new SpriteItem("assets/flowers/forget.png", resources);
-        this.fSprites.scarlet = new SpriteItem("assets/flowers/scarlet.png", resources);
+        this.fSprites.blackberry = new SpriteItem("assets/flowers/blackberry.webp", resources);
+        this.fSprites.blackberry2 = new SpriteItem("assets/flowers/blackberry.webp", resources);
+        this.fSprites.bluebell = new SpriteItem("assets/flowers/bluebell.webp", resources);
+        this.fSprites.bluebell2 = new SpriteItem("assets/flowers/bluebell.webp", resources);
+        this.fSprites.poppy = new SpriteItem("assets/flowers/poppy.webp", resources);
+        this.fSprites.poppy2 = new SpriteItem("assets/flowers/poppy.webp", resources);
+        this.fSprites.lavender = new SpriteItem("assets/flowers/lavender.webp", resources);
+        this.fSprites.foxglove= new SpriteItem("assets/flowers/foxglove.webp", resources);
+        this.fSprites.buttercup = new SpriteItem("assets/flowers/buttercup.webp", resources);
+        this.fSprites.daisy = new SpriteItem("assets/flowers/daisy.webp", resources);
+        this.fSprites.forget = new SpriteItem("assets/flowers/forget.webp", resources);
+        this.fSprites.scarlet = new SpriteItem("assets/flowers/scarlet.webp", resources);
 
         
         
-        this.fSprites.redBee = new SpriteItem("assets/fSprites/bees/minion/red-bluebell-purple.png", resources);
-        this.fSprites.buffBee = new SpriteItem("assets/fSprites/bees/minion/buff-blackberry-yellow.png", resources);
-        this.fSprites.honeyBee = new SpriteItem("assets/fSprites/bees/minion/honey-poppy-orange.png", resources);
+        this.fSprites.redBee = new SpriteItem("assets/fSprites/bees/minion/red-bluebell-purple.webp", resources);
+        this.fSprites.buffBee = new SpriteItem("assets/fSprites/bees/minion/buff-blackberry-yellow.webp", resources);
+        this.fSprites.honeyBee = new SpriteItem("assets/fSprites/bees/minion/honey-poppy-orange.webp", resources);
         
 
         this.fSprites.pollenBlackberry = new SpriteItem("assets/fSprites/objects/blackberry-pollen.png", resources);       
@@ -302,7 +302,7 @@ export class MinIONStage extends Stage{
         this.soundManager.setVolume("elie13", 0.8);
         this.soundManager.add("elie14", "assets/sound/Elie/MinION/14-Great-Barney-poppy-match.mp3", resources);
         this.soundManager.setVolume("elie14", 0.8);
-        this.soundManager.add("elie15", "assets/sound/Elie/MinION/15-Great-Bella-blackberry-match.wav", resources);
+        this.soundManager.add("elie15", "assets/sound/Elie/MinION/15-Great-Bella-blackberry-match.mp3", resources);
         this.soundManager.setVolume("elie15", 0.8);
         this.soundManager.add("elie16", "assets/sound/Elie/MinION/16-Great-Billie-bluebell.mp3", resources);
         this.soundManager.setVolume("elie16", 0.8);

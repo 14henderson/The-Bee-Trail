@@ -35,10 +35,10 @@ export class HubStage extends Stage{
 
     getTextures(){
         this.textures = [       
-            "assets/fSprites/backgrounds/background3.fw.png",
-            "assets/fSprites/backgrounds/background2.fw.png",
-            "assets/fSprites/backgrounds/background1.fw.png",
-            "assets/fSprites/backgrounds/foreground.fw.png",
+            "assets/fSprites/backgrounds/background3.webp",
+            "assets/fSprites/backgrounds/background2.webp",
+            "assets/fSprites/backgrounds/background1.webp",
+            "assets/fSprites/backgrounds/foreground.webp",
         
             "assets/fSprites/objects/elie-standing.png",
             "assets/fSprites/objects/elie-waving.png",
@@ -88,10 +88,10 @@ export class HubStage extends Stage{
 
     loadSprites(resources){
         //---------------------------
-        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", resources);
-        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", resources);
-        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", resources);
-        this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.fw.png", resources);
+        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.webp", resources);
+        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.webp", resources);
+        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.webp", resources);
+        this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.webp", resources);
         //---------------------------
         this.fSprites.bench = new SpriteItem("assets/fSprites/objects/bench.png", resources);
         this.fSprites.laptop = new SpriteItem("assets/fSprites/objects/laptop.png", resources);

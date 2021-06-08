@@ -27,16 +27,16 @@ export class PollenStage extends Stage{
 
     getTextures(){
         this.textures = [
-            "assets/fSprites/backgrounds/background3.fw.png",
-            "assets/fSprites/backgrounds/background2.fw.png",
-            "assets/fSprites/backgrounds/background1.fw.png",
+            "assets/fSprites/backgrounds/background3.webp",
+            "assets/fSprites/backgrounds/background2.webp",
+            "assets/fSprites/backgrounds/background1.webp",
         
-            "assets/fSprites/bees/Small-buff-tail-profile.png",
-            "assets/fSprites/bees/Small-buff-tail-facing.png",
-            "assets/fSprites/bees/Small-honey-bee-profile.png",
-            "assets/fSprites/bees/Small-honey-bee-facing.png",
-            "assets/fSprites/bees/Small-red-tail-profile.png",
-            "assets/fSprites/bees/Small-redtail-facing.png",
+            "assets/fSprites/bees/Small-buff-tail-profile.webp",
+            "assets/fSprites/bees/Small-buff-tail-facing.webp",
+            "assets/fSprites/bees/Small-honey-bee-profile.webp",
+            "assets/fSprites/bees/Small-honey-bee-facing.webp",
+            "assets/fSprites/bees/Small-red-tail-profile.webp",
+            "assets/fSprites/bees/Small-redtail-facing.webp",
 
             "assets/fSprites/objects/elie-standing-NEW.png",
             "assets/fSprites/objects/elie-waving-NEW.png",
@@ -87,7 +87,7 @@ export class PollenStage extends Stage{
             "assets/sound/043738205-ting-game-sound.wav",
             "assets/sound/077024761-bees.mp3",
 
-            "assets/sound/Elie/Pollen/3-Now-we-have.wav",
+            "assets/sound/Elie/Pollen/3-Now-we-have.mp3",
             "assets/sound/Elie/Pollen/4-Instead-were-going.mp3",
             "assets/sound/Elie/Pollen/5-First-can-you.mp3",
             "assets/sound/Elie/Pollen/6-We-can-look-at.mp3",
@@ -123,10 +123,10 @@ export class PollenStage extends Stage{
     }
 
     loadSprites(resources){
-        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.fw.png", resources);
-        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.fw.png", resources);
-        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.fw.png", resources);
-        this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.fw.png", resources);
+        this.fSprites.background3 = new SpriteItem("assets/fSprites/backgrounds/background3.webp", resources);
+        this.fSprites.background2 = new SpriteItem("assets/fSprites/backgrounds/background2.webp", resources);
+        this.fSprites.background1 = new SpriteItem("assets/fSprites/backgrounds/background1.webp", resources);
+        this.fSprites.foregroundPlants = new SpriteItem("assets/fSprites/backgrounds/foreground.webp", resources);
 
         this.fSprites.bench = new SpriteItem("assets/fSprites/objects/bench.png", resources);
         this.fSprites.pollenA1 = new SpriteItem("assets/fSprites/objects/pollen-tube-poppy.png", resources);
@@ -157,16 +157,16 @@ export class PollenStage extends Stage{
         this.fSprites.net = new SpriteItem("assets/fSprites/objects/net-yellow.png", resources);
 
         this.fSprites.honeyBee = new AnimatedItem([
-            "assets/fSprites/bees/Small-honey-bee-profile.png",
-            "assets/fSprites/bees/Small-honey-bee-facing.png"
+            "assets/fSprites/bees/Small-honey-bee-profile.webp",
+            "assets/fSprites/bees/Small-honey-bee-facing.webp"
         ], resources);
         this.fSprites.buffBee = new AnimatedItem([
-            "assets/fSprites/bees/Small-buff-tail-profile.png",
-            "assets/fSprites/bees/Small-buff-tail-facing.png"
+            "assets/fSprites/bees/Small-buff-tail-profile.webp",
+            "assets/fSprites/bees/Small-buff-tail-facing.webp"
         ], resources);
         this.fSprites.redBee = new AnimatedItem([
-            "assets/fSprites/bees/Small-red-tail-profile.png",
-            "assets/fSprites/bees/Small-redtail-facing.png"
+            "assets/fSprites/bees/Small-red-tail-profile.webp",
+            "assets/fSprites/bees/Small-redtail-facing.webp"
         ], resources);
 
         this.fSprites.ElieSpeech1 = new SpriteItem("assets/fSprites/speech-bubbles/pollen/1-elie-speech-bubble-pollen.png", resources);
@@ -211,7 +211,7 @@ export class PollenStage extends Stage{
         this.soundManager.setVolume("bee-hum", 0);
         this.soundManager.setLoop("bee-hum", true);
 
-        this.soundManager.add("elie3", "assets/sound/Elie/Pollen/3-Now-we-have.wav", resources);
+        this.soundManager.add("elie3", "assets/sound/Elie/Pollen/3-Now-we-have.mp3", resources);
         this.soundManager.setVolume("elie3", 0.8);
 
         this.soundManager.add("elie4", "assets/sound/Elie/Pollen/4-Instead-were-going.mp3", resources);
