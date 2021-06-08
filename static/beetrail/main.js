@@ -3,10 +3,11 @@ PIXI.utils.skipHello();
 //Create a Pixi Application
 var app = new PIXI.Application({ 
         width: 256, 
-        height: 256,                       
-        antialias: true, 
+        height: 256,
+        antialias: true,                        
         transparent: false,
-        resolution: 1
+        resolution: window.devicePixelRatio,
+        autoDensity: true
     }
 );
 app.renderer.view.style.position = "absolute";
