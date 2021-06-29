@@ -656,12 +656,12 @@ export class MinIONStage extends Stage{
             .addStopSoundEvent(this.foreground, this.soundManager, "elie12")
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
             .addClickEvent(this.fSprites.pullButton)
-            .addCustomAction(this.fSprites.pullButton, 'enableInteractiveState')
             .addFade(this.fSprites.Elie, -3, 0, 1)
             .addFade(this.fSprites.clickNotice, -3, 0, 1)
             .addFade(this.fSprites.eSpeech4, -3, 0, 1)
             .next()
 
+            .addCustomAction(this.fSprites.pullButton, 'enableInteractiveState')
             .addPlaySoundEvent(this.foreground, this.soundManager, "lever")
             .addFrameEvent(this.fSprites.lever, 1)
             .addPlaySoundEvent(this.foreground, this.soundManager, "speech-click")
@@ -673,7 +673,9 @@ export class MinIONStage extends Stage{
             .addFade(this.fSprites.labelBluebell, 100, 0, 1)
             .next()
 
+            .addFrameEvent(this.fSprites.pullButton, 0)
             .addPlaySoundEvent(this.foreground, this.soundManager, "elie13")
+            .addCustomAction(this.fSprites.pullButton, 'dissableInteractiveState')
             .addForceLocationEvent(this.fSprites.Elie, [900, 353])
             .addFade(this.fSprites.Elie, 3, 0, 1)
             .addFade(this.fSprites.clickNotice, 3, 0, 1)
@@ -697,6 +699,8 @@ export class MinIONStage extends Stage{
             .addCustomWait(this.fSprites.matchButton, 'getClickedStateAndReset')
             .next()
 
+            .addFrameEvent(this.fSprites.matchButton, 0)
+            .addFrameEvent(this.fSprites.pullButton, 0)
             .addPlaySoundEvent(this.foreground, this.soundManager, "correct")
             .setAnimationFlag(this.fSprites.LEDs1, true)
             .addFrameEvent(this.fSprites.LEDs1, 1)
@@ -708,6 +712,8 @@ export class MinIONStage extends Stage{
             .addFade(this.fSprites.poppy2, 100, 0, 1)
             .addMovement(this.fSprites.poppy2, [393, 782], 3, Movement.straightMvPattern, 30, false)
             .addScaleEvent(this.fSprites.poppy2, -0.14, 0.15, 1)
+            .addCustomAction(this.fSprites.matchButton, 'dissableInteractiveState')
+            .addCustomAction(this.fSprites.pullButton, 'dissableInteractiveState')
             .next()
 
             .addPlaySoundEvent(this.foreground, this.soundManager, "elie14")
@@ -753,10 +759,15 @@ export class MinIONStage extends Stage{
             .next()
 
             .addCustomAction(this.fSprites.matchButton, 'enableInteractiveState')
+            .addCustomAction(this.fSprites.pullButton, 'enableInteractiveState')
             .addCustomWait(this, 'testForBlackberry')
             .addCustomWait(this.fSprites.matchButton, 'getClickedStateAndReset')
             .next()
 
+            .addFrameEvent(this.fSprites.matchButton, 0)
+            .addFrameEvent(this.fSprites.pullButton, 0)
+            .addCustomAction(this.fSprites.matchButton, 'dissableInteractiveState')
+            .addCustomAction(this.fSprites.pullButton, 'dissableInteractiveState')
             .addPlaySoundEvent(this.foreground, this.soundManager, "correct")
             .setAnimationFlag(this.fSprites.LEDs1, true)
             .addFrameEvent(this.fSprites.LEDs1, 1)
@@ -811,10 +822,15 @@ export class MinIONStage extends Stage{
             .next()
             
             .addCustomAction(this.fSprites.matchButton, 'enableInteractiveState')
+            .addCustomAction(this.fSprites.pullButton, 'enableInteractiveState')
             .addCustomWait(this, 'testForBluebell')
             .addCustomWait(this.fSprites.matchButton, 'getClickedStateAndReset')
             .next()
 
+            .addFrameEvent(this.fSprites.matchButton, 0)
+            .addFrameEvent(this.fSprites.pullButton, 0)
+            .addCustomAction(this.fSprites.matchButton, 'dissableInteractiveState')
+            .addCustomAction(this.fSprites.pullButton, 'dissableInteractiveState')
             .addPlaySoundEvent(this.foreground, this.soundManager, "correct")
             .setAnimationFlag(this.fSprites.LEDs1, true)
             .addFrameEvent(this.fSprites.LEDs1, 1)
