@@ -912,28 +912,26 @@ export class MinIONStage extends Stage{
         }
 
 
-        
         if(this.fSprites.pullButton.getClickedStateAndReset()){
             this.soundManager.play("lever");
-        }
 
+            this.matches[this.matchCurrent][0].setAlpha(0);
+            this.matches[this.matchCurrent][1].setAlpha(0);
+            this.matches[this.matchCurrent][2].setAlpha(0);
+            this.matchCurrent++;
+            if(this.matchCurrent == this.matches.length){this.matchCurrent = 0;}
+            this.matches[this.matchCurrent][0].setAlpha(1);
+            this.matches[this.matchCurrent][1].setAlpha(1);
+            this.matches[this.matchCurrent][2].setAlpha(1);
+        }
+        
         if(this.fSprites.pullButton._beingDragged){
-            this.flipTick++;
-            if(this.flipTick == 1){
                 this.fSprites.lever.gotoFrame(1);
-                this.matches[this.matchCurrent][0].setAlpha(0);
-                this.matches[this.matchCurrent][1].setAlpha(0);
-                this.matches[this.matchCurrent][2].setAlpha(0);
-                this.matchCurrent++;
-                if(this.matchCurrent == this.matches.length){this.matchCurrent = 0;}
-                this.matches[this.matchCurrent][0].setAlpha(1);
-                this.matches[this.matchCurrent][1].setAlpha(1);
-                this.matches[this.matchCurrent][2].setAlpha(1);
-            }
         }else if(this.eventChain.eventNumber < 8 || this.eventChain.eventNumber > 10){
-            this.flipTick = 0;
             this.fSprites.lever.gotoFrame(0);
         }
+        
+        
     }
 
     exit(delta, context){
