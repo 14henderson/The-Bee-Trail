@@ -696,9 +696,10 @@ export class MinIONStage extends Stage{
             .addCustomAction(this.fSprites.matchButton, 'enableInteractiveState')
             .addCustomAction(this.fSprites.pullButton, 'enableInteractiveState')
             .addCustomWait(this, 'testForPoppy')
-            .addCustomWait(this.fSprites.matchButton, 'getClickedStateAndReset')
+            .addCustomWait(this.fSprites.matchButton, 'getClickedState')
             .next()
 
+            .addCustomAction(this.fSprites.matchButton, 'resetClickedState')
             .addFrameEvent(this.fSprites.matchButton, 0)
             .addFrameEvent(this.fSprites.pullButton, 0)
             .addPlaySoundEvent(this.foreground, this.soundManager, "correct")
@@ -761,9 +762,10 @@ export class MinIONStage extends Stage{
             .addCustomAction(this.fSprites.matchButton, 'enableInteractiveState')
             .addCustomAction(this.fSprites.pullButton, 'enableInteractiveState')
             .addCustomWait(this, 'testForBlackberry')
-            .addCustomWait(this.fSprites.matchButton, 'getClickedStateAndReset')
+            .addCustomWait(this.fSprites.matchButton, 'getClickedState')
             .next()
 
+            .addCustomAction(this.fSprites.matchButton, 'resetClickedState')
             .addFrameEvent(this.fSprites.matchButton, 0)
             .addFrameEvent(this.fSprites.pullButton, 0)
             .addCustomAction(this.fSprites.matchButton, 'dissableInteractiveState')
@@ -824,9 +826,10 @@ export class MinIONStage extends Stage{
             .addCustomAction(this.fSprites.matchButton, 'enableInteractiveState')
             .addCustomAction(this.fSprites.pullButton, 'enableInteractiveState')
             .addCustomWait(this, 'testForBluebell')
-            .addCustomWait(this.fSprites.matchButton, 'getClickedStateAndReset')
+            .addCustomWait(this.fSprites.matchButton, 'getClickedState')
             .next()
 
+            .addCustomAction(this.fSprites.matchButton, 'resetClickedState')
             .addFrameEvent(this.fSprites.matchButton, 0)
             .addFrameEvent(this.fSprites.pullButton, 0)
             .addCustomAction(this.fSprites.matchButton, 'dissableInteractiveState')
@@ -892,25 +895,37 @@ export class MinIONStage extends Stage{
         this.fSprites.LEDs1.tick();
         this.fSprites.LEDs2.tick();
 
+        //console.log("Match button state: ", this.fSprites.matchButton.getClickedState(), "\nPull button state: ", this.fSprites.pullButton.getClickedState());
+        if(this.fSprites.matchButton.getClickedStateAndReset()){
+            if(!(
+                ((this.eventChain.eventNumber == 12 || this.eventChain.eventNumber == 13) && this.testForPoppy())
+            ||  ((this.eventChain.eventNumber == 19 || this.eventChain.eventNumber == 20) && this.testForBlackberry())
+            ||  ((this.eventChain.eventNumber == 26 || this.eventChain.eventNumber == 27) && this.testForBluebell())
+            )){
+                this.soundManager.play("wrong");
+            }
+        }
+
         if(this.fSprites.matchButton._beingDragged){
             if(!(
-                    ((this.eventChain.eventNumber == 12 || this.eventChain.eventNumber == 13) && this.testForPoppy())
-                ||  ((this.eventChain.eventNumber == 19 || this.eventChain.eventNumber == 20) && this.testForBlackberry())
-                ||  ((this.eventChain.eventNumber == 26 || this.eventChain.eventNumber == 27) && this.testForBluebell())
+                    ((this.eventChain.eventNumber == 12 || this.eventChain.eventNumber == 12) && this.testForPoppy())
+                ||  ((this.eventChain.eventNumber == 19 || this.eventChain.eventNumber == 19) && this.testForBlackberry())
+                ||  ((this.eventChain.eventNumber == 26 || this.eventChain.eventNumber == 26) && this.testForBluebell())
             )){
                 this.fSprites.LEDs1.gotoFrame(2);
                 this.fSprites.LEDs2.gotoFrame(2);
-                if(this.soundFlip == false){
-                    this.soundManager.play("wrong");
-                    this.soundFlip = true;
-                }
             }
-        }else{
-            this.soundFlip = false;
+        }
+        else if(
+            (this.eventChain.eventNumber == 12 || this.eventChain.eventNumber == 12)
+        ||  (this.eventChain.eventNumber == 19 || this.eventChain.eventNumber == 19)
+        ||  (this.eventChain.eventNumber == 26 || this.eventChain.eventNumber == 26)
+        ){
             this.fSprites.LEDs1.gotoFrame(0);
             this.fSprites.LEDs2.gotoFrame(0);
         }
 
+        
 
         if(this.fSprites.pullButton.getClickedStateAndReset()){
             this.soundManager.play("lever");
