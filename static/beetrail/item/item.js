@@ -45,9 +45,7 @@ export class Item {
             //this.animationFlag = false;
         });
         this.sprite.on('pointerup', event =>{
-            for(var n=0; n<100; n++){}
             this._beingDragged = false;
-            
             //this.animationFlag = true;
             this.animationTick = 0;
         });

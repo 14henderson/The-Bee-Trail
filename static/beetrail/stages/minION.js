@@ -892,27 +892,27 @@ export class MinIONStage extends Stage{
         this.fSprites.LEDs1.tick();
         this.fSprites.LEDs2.tick();
 
-        if(!(
-                ((this.eventChain.eventNumber == 12 || this.eventChain.eventNumber == 13) && this.testForPoppy())
-            ||  ((this.eventChain.eventNumber == 19 || this.eventChain.eventNumber == 20) && this.testForBlackberry())
-            ||  ((this.eventChain.eventNumber == 26 || this.eventChain.eventNumber == 27) && this.testForBluebell())
-        )){
-            if(this.fSprites.matchButton._beingDragged){
+        if(this.fSprites.matchButton._beingDragged){
+            if(!(
+                    ((this.eventChain.eventNumber == 12 || this.eventChain.eventNumber == 13) && this.testForPoppy())
+                ||  ((this.eventChain.eventNumber == 19 || this.eventChain.eventNumber == 20) && this.testForBlackberry())
+                ||  ((this.eventChain.eventNumber == 26 || this.eventChain.eventNumber == 27) && this.testForBluebell())
+            )){
                 this.fSprites.LEDs1.gotoFrame(2);
                 this.fSprites.LEDs2.gotoFrame(2);
                 if(this.soundFlip == false){
                     this.soundManager.play("wrong");
                     this.soundFlip = true;
                 }
-            }else{
-                this.soundFlip = false;
-                this.fSprites.LEDs1.gotoFrame(0);
-                this.fSprites.LEDs2.gotoFrame(0);
             }
-            if(this.fSprites.matchButton.getClickedState()){
-                
-            }
+        }else{
+            this.soundFlip = false;
+            this.fSprites.LEDs1.gotoFrame(0);
+            this.fSprites.LEDs2.gotoFrame(0);
         }
+
+
+        
         if(this.fSprites.pullButton.getClickedStateAndReset()){
             this.soundManager.play("lever");
         }
