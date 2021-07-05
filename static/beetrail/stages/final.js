@@ -135,7 +135,7 @@ export class FinalStage extends Stage{
         }
 
         if(this.fSprites.vidButton.getClickedStateAndReset()){
-            window.open("https://www.earlham.ac.uk/");
+            window.open("https://youtu.be/VyQT8T_YkE0");
         }
 
         context.foreground.tick();
