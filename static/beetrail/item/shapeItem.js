@@ -5,8 +5,6 @@ export class ShapeItem extends Item{
     constructor(spriteObj){
         super();
         this.sprite = spriteObj;
-        //this.sprite.anchor.x = 0;
-       // this.sprite.anchor.y = 0;
         this.sprite.interactive = false;
         this.size = [this.sprite.width, this.sprite.height];
         this._mouseHovered = false;
@@ -23,8 +21,8 @@ export class ShapeItem extends Item{
 
         this.sprite.on('pointermove', event => {
             if(this.dragged && this._beingDragged){
-                this.sprite.x = event.data.getLocalPosition(this.sprite.parent).x;// - this.sprite.anchor.x*(this.sprite.width/2);
-                this.sprite.y = event.data.getLocalPosition(this.sprite.parent).y;// - (this.sprite.height/2);                
+                this.sprite.x = event.data.getLocalPosition(this.sprite.parent).x;
+                this.sprite.y = event.data.getLocalPosition(this.sprite.parent).y;             
             }
         });
 

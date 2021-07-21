@@ -57,12 +57,6 @@ export class Item {
                 );                
             }
         });
-        //this.sprite.on('pointerover', event => {
-        //    this._mouseHovered = true;
-        //});
-        //this.sprite.on('pointerout', event => {
-        //    this._mouseHovered = false;
-        //});
     }
 
     onMouseHover(){

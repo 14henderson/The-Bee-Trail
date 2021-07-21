@@ -1,6 +1,7 @@
 import {Item} from '/beetrail/item/item.js';
 
-
+//Animated Item is similar to Item, but uses a number of sprites that the user can cycle through.
+//Functionality such as gotoFrame, and enableMouseHoverFrame uses this effectively.
 export class AnimatedItem extends Item{
     constructor(textureURIArray, resources, name=null){
         super();
@@ -41,7 +42,6 @@ export class AnimatedItem extends Item{
         if(this._pivotCentered){
             this.centerPivot();
         }
-        //this.centerPivot();
     }
 
     enableMouseHoverFrame(fNum){
