@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="?raw=true" width=100% alt="Gameplay image from The Bee Trail game.">
+    <img src="https://github.com/14henderson/TheBeeTrail/blob/main/other/Gameplay-capture.PNG?raw=true" width=100% alt="Gameplay image from The Bee Trail game.">
 </p>
 
 ## About
